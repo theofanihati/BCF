@@ -381,6 +381,7 @@ data class Pagination(
 )
 
 
+// TODO: will be refactored, bakal jadi reusable table
 @Composable
 fun ScrollableTable(headers : List<Header>, participants : List<Participant>) {
   val scrollState = rememberScrollState()

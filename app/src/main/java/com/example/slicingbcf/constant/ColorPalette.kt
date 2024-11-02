@@ -42,6 +42,8 @@ object ColorPalette {
   val Danger500 = Color(0xFFDC3545) // #DC3545
   val Shade1 = Color(0xFFFCFCFC) // #FCFCFC
   val Shade2 = Color(0xFFD1D1D1) // #D1D1D1
+  val Yellow = Color(0xFFE89229) // #E89229
+  val Blue = Color(0xFF3B82F6) // #3B82F6
 
   // keeping the original color from figma aswell
   val colors = mapOf(

@@ -46,8 +46,6 @@ fun LoginScreen() {
     TopSection()
     CenteredAuthImage()
     BottomSection(isPasswordVisible = isPasswordVisible)
-
-
   }
 }
 

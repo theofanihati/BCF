@@ -59,3 +59,36 @@ val kelompoksMentoring = listOf(
     jumlahSesi = 10,
   ),
 )
+
+
+data class HeaderKelompokMentoring(
+  val name : String,
+  val weight : Float
+)
+
+val headerKelompokMentorings = listOf(
+  HeaderKelompokMentoring(
+    name = "No",
+    weight = 0.5f,
+  ),
+  HeaderKelompokMentoring(
+    name = "Nama Lembaga",
+    weight = 1.5f,
+  ),
+  HeaderKelompokMentoring(
+    name = "Fokus Isu",
+    weight = 1f,
+  ),
+  HeaderKelompokMentoring(
+    name = "Jumlah Peserta",
+    weight = 1f,
+  ),
+  HeaderKelompokMentoring(
+    name = "Jumlah Mentor",
+    weight = 1f,
+  ),
+  HeaderKelompokMentoring(
+    name = "Jumlah Sesi",
+    weight = 1f,
+  ),
+)

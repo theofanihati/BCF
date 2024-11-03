@@ -1,18 +1,19 @@
 package com.example.slicingbcf.implementation.peserta.worksheet_peserta
 
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.NavigateNext
 import androidx.compose.material.icons.outlined.Folder
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.slicingbcf.constant.ColorPalette
@@ -20,19 +21,27 @@ import com.example.slicingbcf.constant.StyledText
 import com.example.slicingbcf.data.local.WorksheetPeserta
 import com.example.slicingbcf.data.local.worksheetsPeserta
 
-// TODO: RAPIHIN LAYOUT
 @Composable
 @Preview(showSystemUi = true)
-fun WorksheetPeserta() {
-  Column() {
+fun WorksheetPeserta(
+  modifier : Modifier = Modifier
+) {
+  Column(
+    verticalArrangement = Arrangement.spacedBy(32.dp),
+    modifier = modifier.padding(
+      horizontal = 16.dp
+    )
+  ) {
     Text(
       text = "Lembar Kerja",
-
-      // Mobile/medium/Medium
       style = StyledText.MobileMediumMedium,
-      color = ColorPalette.Black
+      color = ColorPalette.Black,
+      textAlign = TextAlign.Center,
+      modifier = Modifier.fillMaxWidth()
     )
-    LazyColumn() {
+    LazyColumn(
+      verticalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
       items(worksheetsPeserta.size) { index ->
         WorksheetItem(
           worksheet = worksheetsPeserta[index]
@@ -53,16 +62,27 @@ fun WorksheetItem(worksheet : WorksheetPeserta) {
         color = ColorPalette.OnSurfaceVariant,
         shape = RoundedCornerShape(8.dp),
       )
-
+      .padding(
+        horizontal = 4.dp,
+        vertical = 8.dp
+      ),
+    horizontalArrangement = Arrangement.SpaceBetween,
   ) {
-    Icon(
-      Icons.Outlined.Folder,
-      contentDescription = "" // Add a valid content description
-    )
-    Column {
+    IconButton(
+      onClick = { /*TODO*/ }
+    ) {
+      Icon(
+        Icons.Outlined.Folder,
+        contentDescription = ""
+      )
+    }
+    Column(
+      modifier = Modifier.weight(1f)
+
+    ) {
       Text(
         text = worksheet.title,
-        style = StyledText.MobileSmallMedium,
+        style = StyledText.MobileSmallSemibold,
         color = ColorPalette.OnSurface
       )
       Text(
@@ -70,12 +90,14 @@ fun WorksheetItem(worksheet : WorksheetPeserta) {
         style = StyledText.MobileSmallRegular,
         color = ColorPalette.OnSurface
       )
-
-
     }
-    Icon(
-      Icons.AutoMirrored.Default.NavigateNext,
-      contentDescription = "" // Add a valid content description
-    )
+    IconButton(
+      onClick = { /*todo*/ }
+    ) {
+      Icon(
+        Icons.AutoMirrored.Default.NavigateNext,
+        contentDescription = ""
+      )
+    }
   }
 }

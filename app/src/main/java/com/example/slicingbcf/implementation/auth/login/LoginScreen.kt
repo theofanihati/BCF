@@ -29,7 +29,9 @@ import com.example.slicingbcf.ui.shared.CustomOutlinedTextField
 
 @Composable
 @Preview(showSystemUi = true)
-fun LoginScreen() {
+fun LoginScreen(
+  modifier : Modifier = Modifier
+) {
   val isPasswordVisible = remember { mutableStateOf(false) }
 
   Column(
@@ -37,10 +39,10 @@ fun LoginScreen() {
       32.dp,
       Alignment.Top
     ),
-    modifier = Modifier
-      // TODO: DELETE LATER
+    modifier = modifier
+      .statusBarsPadding()
       .padding(
-        top = 20.dp,
+        horizontal = 16.dp
       )
   ) {
     TopSection()
@@ -56,7 +58,12 @@ fun TopSection() {
     modifier = Modifier.fillMaxWidth(),
     verticalArrangement = Arrangement.spacedBy(8.dp)
   ) {
-    CenteredLogo()
+    CenteredLogo(
+      modifier = Modifier.size(
+        width = 72.dp,
+        height = 45.dp
+      )
+    )
     Text(
       text = buildAnnotatedString {
         append("Selamat datang di \n")

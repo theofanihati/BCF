@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
@@ -13,6 +14,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
@@ -28,15 +30,18 @@ import com.example.slicingbcf.data.local.toColor
 import com.example.slicingbcf.data.local.toDisplayText
 import kotlin.math.ceil
 
-// TODO: WILL BE REFACTORED
 
+// TODO: TAMBAHIN SORT DI SETIAP HEADER
 @Composable
 @Preview(showSystemUi = true)
 fun DataPesertaScreen(
   modifier : Modifier = Modifier
 ) {
   Column(
-    modifier = modifier,
+    modifier = modifier
+      .padding(
+        horizontal = 16.dp
+      ),
     verticalArrangement = Arrangement.spacedBy(28.dp),
   ) {
     TopSection()
@@ -52,10 +57,7 @@ fun DataPesertaScreen(
 fun TopSection() {
   Column(
     modifier = Modifier
-      .fillMaxWidth()
-      .padding(
-        horizontal = 16.dp
-      ),
+      .fillMaxWidth(),
     verticalArrangement = Arrangement.spacedBy(16.dp)
   ) {
     Text(
@@ -142,51 +144,54 @@ fun SearchBarCustom() {
 
 @Composable
 fun BottomSection(participants : List<Participant>, headers : List<Header>) {
+  // Variabel untuk mengelola halaman saat ini dan item per halaman
   var currentPage by remember { mutableIntStateOf(1) }
   var itemsPerPage by remember { mutableIntStateOf(5) }
-  val totalItems = participants.size
-  val totalPages = ceil(totalItems.toFloat() / itemsPerPage).toInt()
+  val totalItems = participants.size  // Jumlah total data peserta
+  val totalPages = ceil(totalItems.toFloat() / itemsPerPage).toInt()  // Menghitung total halaman
+
+  // Reset ke halaman 1 jika jumlah item per halaman berubah
 
   LaunchedEffect(itemsPerPage) {
     currentPage = 1
   }
 
-  // Hitung data yang ditampilkan di halaman saat ini
+  // Menghitung indeks awal dan akhir untuk item yang ditampilkan pada halaman saat ini
   val startIndex = (currentPage - 1) * itemsPerPage
   val endIndex = minOf(startIndex + itemsPerPage, totalItems)
+  // Mengambil item yang akan ditampilkan pada halaman saat ini
   val currentPageItems = participants.subList(startIndex, endIndex)
 
   Column(
-    modifier = Modifier
-      .fillMaxWidth()
-      .padding(horizontal = 16.dp),
+    modifier = Modifier,
     verticalArrangement = Arrangement.spacedBy(16.dp),
   ) {
     ScrollableTable(headers, currentPageItems)
     CustomPagination(
       pagination = Pagination(
-        currentPage = currentPage,
-        totalPage = totalPages,
-        totalData = totalItems,
-        limit = itemsPerPage
+        currentPage = currentPage,  // Halaman saat ini
+        totalPage = totalPages,     // Total halaman
+        totalData = totalItems,     // Total data peserta
+        limit = itemsPerPage        // Jumlah item per halaman
       ),
-      onPageClick = { newPage ->
+      onPageClick = { newPage ->   // Ketika halaman baru dipilih
         currentPage = newPage
       },
-      onPreviousClick = {
+      onPreviousClick = {          // Ketika tombol sebelumnya diklik
         if (currentPage > 1) {
           currentPage --
         }
       },
-      onNextClick = {
+      onNextClick = {              // Ketika tombol berikutnya diklik
         if (currentPage < totalPages) {
           currentPage ++
         }
       },
-      onLimitChange = { newLimit ->
+      onLimitChange = { newLimit -> // Ketika limit item per halaman berubah
         itemsPerPage = newLimit
       }
     )
+
   }
 }
 
@@ -388,8 +393,14 @@ fun ScrollableTable(headers : List<Header>, participants : List<Participant>) {
 
   Box(
     modifier = Modifier
-      .fillMaxWidth()
       .horizontalScroll(scrollState)
+      .clip(RoundedCornerShape(8.dp))
+      .background(Color.White)
+      .border(
+        width = 1.dp,
+        color = ColorPalette.Monochrome300,
+        shape = RoundedCornerShape(8.dp)
+      )
   ) {
     Column {
       HeaderRow(headers)
@@ -405,6 +416,10 @@ fun HeaderRow(headers : List<Header>) {
   Row(
     modifier = Modifier
       .background(ColorPalette.PrimaryColor100)
+      .border(
+        width = 1.dp,
+        color = ColorPalette.Monochrome300,
+      )
   ) {
     headers.forEach { header ->
       TableCell(
@@ -427,6 +442,10 @@ fun ParticipantRow(participant : Participant, index : Int) {
   Row(
     modifier = Modifier
       .background(backgroundColor)
+      .border(
+        width = 1.dp,
+        color = ColorPalette.Monochrome300,
+      )
   ) {
     TableCell(text = participant.namaLembaga, weight = 1.5f)
     TableCell(text = participant.batch.toString(), weight = 0.7f)
@@ -452,7 +471,9 @@ fun TableCell(
     color = color,
     modifier = Modifier
       .width(120.dp * weight)
-      .padding(8.dp)
+      .padding(
+        12.dp
+      )
   )
 }
 

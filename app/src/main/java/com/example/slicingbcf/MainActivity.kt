@@ -4,7 +4,10 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.example.slicingbcf.implementation.peserta.worksheet_peserta.DetailWorksheetPeserta
+import androidx.compose.foundation.layout.padding
+import androidx.compose.ui.Modifier
+import com.example.slicingbcf.implementation.all.LandingPageScreen
+import com.example.slicingbcf.implementation.peserta.kelompok_mentoring.KelompokMentoringScreen
 import com.example.slicingbcf.ui.shared.MainScaffold
 import com.example.slicingbcf.ui.theme.SlicingBcfTheme
 
@@ -15,10 +18,18 @@ class MainActivity : ComponentActivity() {
     enableEdgeToEdge()
     setContent {
       SlicingBcfTheme {
+
         MainScaffold() { paddingValues ->
-          DetailWorksheetPeserta(
+          LandingPageScreen(
+            modifier = Modifier.padding(paddingValues)
           )
         }
+//        CustomBackScaffold() {
+//          DetailPengumumanPeserta(
+//            modifier = Modifier.padding(it)
+//          )
+//        }
+
       }
     }
   }

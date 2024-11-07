@@ -1,8 +1,9 @@
 package com.example.slicingbcf.ui.shared
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -15,7 +16,12 @@ import com.example.slicingbcf.R
 
 @Composable
 @Preview(showBackground = true)
-fun CenteredLogo() {
+fun CenteredLogo(
+  modifier : Modifier = Modifier.size(
+    width = 56.dp,
+    height = 35.dp
+  )
+) {
   Box(
     modifier = Modifier
       .fillMaxWidth(),
@@ -26,11 +32,8 @@ fun CenteredLogo() {
       painter = painterResource(id = R.drawable.logo_lead),
       contentDescription = stringResource(id = R.string.logo),
       contentScale = ContentScale.Crop,
-      modifier = Modifier
-        .size(
-          width = 56.dp,
-          height = 35.dp
-        )
-        )
+      modifier = modifier
+
+    )
   }
 }

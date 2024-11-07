@@ -27,7 +27,9 @@ import com.example.slicingbcf.ui.shared.CustomOutlinedTextField
 
 @Composable
 @Preview(showSystemUi = true)
-fun ForgotPasswordScreen() {
+fun ForgotPasswordScreen(
+  modifier : Modifier = Modifier
+) {
   val isPasswordVisible = remember { mutableStateOf(false) }
 
   Column(
@@ -35,10 +37,9 @@ fun ForgotPasswordScreen() {
       32.dp,
       Alignment.Top
     ),
-    modifier = Modifier
-      // TODO: DELETE LATER
+    modifier = modifier
       .padding(
-        top = 20.dp,
+        horizontal = 16.dp
       )
   ) {
     TopSection()

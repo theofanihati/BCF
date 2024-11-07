@@ -25,10 +25,12 @@ fun MainScaffold(
   Scaffold(
     topBar = {
       TopAppBar(
-
         colors = TopAppBarDefaults.topAppBarColors(
           containerColor = ColorPalette.Monochrome100,
         ),
+        modifier = Modifier
+          .statusBarsPadding()
+        ,
         title = {
           Image(
             painter = painterResource(id = R.drawable.logo_lead),

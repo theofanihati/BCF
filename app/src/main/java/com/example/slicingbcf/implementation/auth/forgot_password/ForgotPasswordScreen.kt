@@ -2,53 +2,97 @@
 
 package com.example.slicingbcf.implementation.auth.forgot_password
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.slicingbcf.constant.ColorPalette
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import com.example.slicingbcf.constant.StyledText
+import com.example.slicingbcf.implementation.auth.login.ForgotPasswordEvent
+import com.example.slicingbcf.implementation.auth.login.ForgotPasswordViewModel
 import com.example.slicingbcf.ui.shared.CenteredAuthImage
 import com.example.slicingbcf.ui.shared.CenteredLogo
 import com.example.slicingbcf.ui.shared.CustomOutlinedTextField
+import com.example.slicingbcf.ui.shared.PrimaryButton
+import com.example.slicingbcf.ui.shared.message.ErrorMessage
+import com.example.slicingbcf.ui.shared.message.SuccessMessage
 
 @Composable
-@Preview(showSystemUi = true)
 fun ForgotPasswordScreen(
-  modifier : Modifier = Modifier
+  modifier : Modifier = Modifier,
+  viewModel : ForgotPasswordViewModel = hiltViewModel(),
+  navController : NavHostController
 ) {
-  val isPasswordVisible = remember { mutableStateOf(false) }
+  val state by viewModel.state.collectAsState()
+  val snackbarHostState = remember { SnackbarHostState() }
 
-  Column(
-    verticalArrangement = Arrangement.spacedBy(
-      32.dp,
-      Alignment.Top
-    ),
-    modifier = modifier
-      .padding(
-        horizontal = 16.dp
+  LaunchedEffect(state) {
+    if (state.isSuccess) {
+      snackbarHostState.showSnackbar(
+        message = "Permintaan berhasil, silakan cek email Anda.",
+        actionLabel = "Tutup",
+        duration = SnackbarDuration.Long
       )
-  ) {
-    TopSection()
-    CenteredAuthImage()
-    BottomSection(isPasswordVisible = isPasswordVisible)
+      viewModel.onEvent(ForgotPasswordEvent.ClearState)
+    }
+
+    state.error?.let {
+      snackbarHostState.showSnackbar(
+        message = it,
+        actionLabel = "Tutup",
+        duration = SnackbarDuration.Long
+      )
+      viewModel.onEvent(ForgotPasswordEvent.ClearState)
+    }
+  }
 
 
+  Scaffold(
+    snackbarHost = { SnackbarHost(snackbarHostState) }
+  ) { paddingValues ->
+    Column(
+      verticalArrangement = Arrangement.spacedBy(32.dp, Alignment.Top),
+      modifier = modifier
+        .padding(horizontal = 16.dp)
+        .padding(paddingValues)
+    ) {
+      TopSection()
+      CenteredAuthImage()
+
+      BottomSection(
+        email = state.email,
+        onChange = { email -> viewModel.onEvent(ForgotPasswordEvent.EmailChanged(email)) },
+        emailError = state.emailError,
+        onSubmit = { viewModel.onEvent(ForgotPasswordEvent.Submit) }
+      )
+
+      AnimatedVisibility(state.isSuccess) {
+        SuccessMessage(
+          message = "Permintaan berhasil, silakan cek email Anda."
+        )
+      }
+
+      AnimatedVisibility(state.error != null) {
+        ErrorMessage(
+          message = state.error ?: ""
+        )
+      }
+    }
   }
 }
+
 
 @Composable
 fun TopSection() {
@@ -72,9 +116,11 @@ fun TopSection() {
 
 @Composable
 fun BottomSection(
-  isPasswordVisible : MutableState<Boolean>
+  email : String,
+  onChange : (String) -> Unit,
+  emailError : String?,
+  onSubmit : () -> Unit
 ) {
-  val email = remember { mutableStateOf("") }
 
   Column(
     horizontalAlignment = Alignment.CenterHorizontally,
@@ -83,12 +129,18 @@ fun BottomSection(
       .fillMaxWidth()
       .padding(horizontal = 16.dp)
   ) {
+
     CustomOutlinedTextField(
-      value = email.value,
-      onValueChange = { email.value = it },
+      value = email,
+      onValueChange = { onChange(it) },
       label = "Email Peserta",
-      placeholder = "contoh: @gmail.com"
+      placeholder = "contoh: @gmail.com",
+      leadingIcon = { Icon(imageVector = Icons.Filled.Email, contentDescription = "Email") },
+      keyboardType = KeyboardType.Email,
+      error = emailError,
+      modifier = Modifier.fillMaxWidth()
     )
+
   }
   Box(
     modifier = Modifier
@@ -98,19 +150,14 @@ fun BottomSection(
       ),
     contentAlignment = Alignment.Center,
   ) {
-    Button(
-      colors = ButtonDefaults.buttonColors(
-        containerColor = ColorPalette.PrimaryColor700,
-      ),
-      onClick = { /*TODO*/ },
-      modifier = Modifier
-        .fillMaxWidth()
-    ) {
-      Text(
-        text = "Masuk",
-        style = StyledText.MobileSmallMedium,
+
+    PrimaryButton(
+      text = "Masuk",
+      onClick = onSubmit,
+      modifier = Modifier.fillMaxWidth(),
+      style = StyledText.MobileSmallMedium,
+
       )
-    }
   }
   Box(
     modifier = Modifier.fillMaxWidth(),

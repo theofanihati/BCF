@@ -1,9 +1,9 @@
-package com.example.slicingbcf.implementation.auth.login
+package com.example.slicingbcf.implementation.peserta.data_peserta
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor() : ViewModel() {
+class DataPesertaViewModel @Inject constructor() : ViewModel() {
 }

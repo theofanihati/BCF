@@ -1,7 +1,6 @@
 package com.example.slicingbcf
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -13,7 +12,9 @@ import com.example.slicingbcf.ui.navigation.NavGraph
 import com.example.slicingbcf.ui.scaffold.MainScaffold
 import com.example.slicingbcf.ui.scaffold.scaffoldConfig
 import com.example.slicingbcf.ui.theme.SlicingBcfTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
   override fun onCreate(savedInstanceState : Bundle?) {
@@ -26,7 +27,6 @@ class MainActivity : ComponentActivity() {
       val currentRoute = currentBackStackEntry.value?.destination?.route
 
       fun isActiveRoute(route : String) : Boolean {
-        Log.d("MainActivity", "currentRoute: $currentRoute, route: $route")
         return currentRoute == route
       }
 
@@ -37,7 +37,8 @@ class MainActivity : ComponentActivity() {
           config = scaffoldConfig(currentRoute),
           isActiveRoute = ::isActiveRoute,
           navController = navController,
-        ) { paddingValues ->
+
+          ) { paddingValues ->
           NavGraph(
             navController = navController,
             modifier = Modifier.padding(paddingValues)

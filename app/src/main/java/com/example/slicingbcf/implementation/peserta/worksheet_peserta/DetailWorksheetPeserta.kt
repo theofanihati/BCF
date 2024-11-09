@@ -10,7 +10,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.slicingbcf.constant.ColorPalette
 import com.example.slicingbcf.constant.StyledText
-import com.example.slicingbcf.ui.shared.CustomOutlinedTextField
 
 // TODO: RAPIHIN LAYOUT + TAMBAHIN ITEMS ITEMS LAINNYA YANG ADA DI COLUMN JUDUL DLL
 @Composable
@@ -92,12 +91,12 @@ fun DetailWorksheetPesertaScreen(
         style = StyledText.MobileBaseSemibold,
         color = ColorPalette.PrimaryColor700
       )
-      CustomOutlinedTextField(
-        value = "",
-        onValueChange = {},
-        label = "Masukkan tautan lembar kerja",
-        placeholder = "Masukkan tautan lembar kerja",
-      )
+//      CustomOutlinedTextField(
+//        value = "",
+//        onValueChange = {},
+//        label = "Masukkan tautan lembar kerja",
+//        placeholder = "Masukkan tautan lembar kerja",
+//      )
     }
     HorizontalDivider()
     Row(

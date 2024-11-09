@@ -21,6 +21,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.slicingbcf.constant.ColorPalette
 import com.example.slicingbcf.constant.StyledText
 import com.example.slicingbcf.ui.shared.CenteredAuthImage
@@ -28,9 +29,9 @@ import com.example.slicingbcf.ui.shared.CenteredLogo
 import com.example.slicingbcf.ui.shared.CustomOutlinedTextField
 
 @Composable
-@Preview(showSystemUi = true)
 fun LoginScreen(
-  modifier : Modifier = Modifier
+  modifier : Modifier = Modifier,
+  navController: NavHostController
 ) {
   val isPasswordVisible = remember { mutableStateOf(false) }
 
@@ -97,21 +98,21 @@ fun BottomSection(
       .fillMaxWidth()
       .padding(horizontal = 16.dp)
   ) {
-    CustomOutlinedTextField(
-      value = email.value,
-      onValueChange = { email.value = it },
-      label = "Email Peserta",
-      placeholder = "contoh: @gmail.com"
-    )
-    CustomOutlinedTextField(
-      value = password.value,
-      onValueChange = { password.value = it },
-      label = "Kata Sandi",
-      placeholder = "Masukkan kata sandi anda",
-      isPassword = true,
-      isPasswordVisible = isPasswordVisible,
-      keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
-    )
+//    CustomOutlinedTextField(
+//      value = email.value,
+//      onValueChange = { email.value = it },
+//      label = "Email Peserta",
+//      placeholder = "contoh: @gmail.com"
+//    )
+//    CustomOutlinedTextField(
+//      value = password.value,
+//      onValueChange = { password.value = it },
+//      label = "Kata Sandi",
+//      placeholder = "Masukkan kata sandi anda",
+//      isPassword = true,
+//      isPasswordVisible = isPasswordVisible,
+//      keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
+//    )
     Box(
       modifier = Modifier.fillMaxWidth(),
       contentAlignment = Alignment.CenterEnd,

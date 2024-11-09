@@ -46,7 +46,6 @@ fun SideNav(
       .clip(
         RoundedCornerShape(
           topStart = 20.dp,
-          bottomStart = 20.dp
         )
       )
       .fillMaxHeight()
@@ -73,7 +72,8 @@ fun SideNav(
 @Composable
 fun SideNavContent(
   navController : NavHostController,
-  closeSideNavVisible : () -> Unit
+  closeSideNavVisible : () -> Unit,
+  isActiveRoute : (String) -> Boolean
 ) {
   val navigateAndCloseSideNav : (String) -> Unit = { route ->
     closeSideNavVisible()
@@ -96,7 +96,10 @@ fun SideNavContent(
   ) {
 
     TopSideNav()
-    BottomSideNav(navigateAndCloseSideNav)
+    BottomSideNav(
+      navigateAndCloseSideNav,
+      isActiveRoute
+    )
 
   }
 }
@@ -134,7 +137,8 @@ private fun TopSideNav() {
 
 @Composable
 private fun BottomSideNav(
-  navigateAndCloseSideNav : (String) -> Unit
+  navigateAndCloseSideNav : (String) -> Unit,
+  isActiveRoute : (String) -> Boolean
 ) {
   PrimaryButton(
     text = "Masuk",
@@ -146,7 +150,8 @@ private fun BottomSideNav(
     verticalArrangement = Arrangement.spacedBy(12.dp)
   ) {
     SideNavDropdownGuest(
-      navigateAndCloseSideNav
+      navigateAndCloseSideNav,
+      isActiveRoute
     )
   }
 }
@@ -155,7 +160,8 @@ private fun BottomSideNav(
 private fun SideNavDropdown(
   title : String,
   items : List<DropdownItem>? = null,
-  onClickDropdown : () -> Unit = {}
+  onClickDropdown : () -> Unit = {},
+  isActiveRoute : (String) -> Boolean
 ) {
   var expanded by remember { mutableStateOf(false) }
 
@@ -172,6 +178,9 @@ private fun SideNavDropdown(
       else          -> onClickDropdown()
     }
   }
+
+
+
   Column(
     verticalArrangement = Arrangement.spacedBy(16.dp)
   ) {
@@ -206,7 +215,9 @@ private fun SideNavDropdown(
           items.forEach { item ->
             SideNavDropdownItem(
               text = item.text,
-              onClick = item.onClick
+              route = item.route,
+              onClick = item.onClick,
+              isActiveRoute = isActiveRoute
             )
           }
         }
@@ -219,8 +230,20 @@ private fun SideNavDropdown(
 @Composable
 private fun SideNavDropdownItem(
   text : String,
-  onClick : () -> Unit = {}
+  route : String?,
+  onClick : () -> Unit = {},
+  isActiveRoute : (String) -> Boolean
 ) {
+  val colorIsActive = if (isActiveRoute(route ?: text)) {
+    ColorPalette.PrimaryColor700
+  } else {
+    ColorPalette.OnSurface
+  }
+  val textStyle = if (isActiveRoute(route ?: text)) {
+    StyledText.MobileBaseMedium
+  } else {
+    StyledText.MobileBaseRegular
+  }
   Row(
     modifier = Modifier
       .fillMaxWidth()
@@ -236,12 +259,12 @@ private fun SideNavDropdownItem(
     ) {
       Text(
         text = text,
-        style = StyledText.MobileBaseRegular,
+        style = textStyle,
         modifier = Modifier
           .padding(
             8.dp
           ),
-        color = ColorPalette.OnSurface
+        color = colorIsActive
       )
       HorizontalDivider()
     }
@@ -252,56 +275,65 @@ private fun SideNavDropdownItem(
 // TODO: nanti ganti sesuai dengan role user
 @Composable
 private fun SideNavDropdownGuest(
-  navigateAndCloseSideNav : (String) -> Unit
+  navigateAndCloseSideNav : (String) -> Unit,
+  isActiveRoute : (String) -> Boolean
 ) {
   SideNavDropdown(
     "Registrasi",
     items = dropdownItemsPendaftaran(
       navigateAndCloseSideNav
-    )
+    ),
+    isActiveRoute = isActiveRoute
   )
   SideNavDropdown(
     "Kegiatan",
     onClickDropdown = {
 //      navigateAndCloseSideNav(Screen.Kegiatan.route)
-    }
+    },
+    isActiveRoute = isActiveRoute
   )
   SideNavDropdown(
     "Mentor",
     items = dropdownItemsMentor(
       navigateAndCloseSideNav
-    )
+    ),
+    isActiveRoute = isActiveRoute
   )
   SideNavDropdown(
     "Tugas",
     items = dropdownItemsTugas(
       navigateAndCloseSideNav
-    )
+    ),
+    isActiveRoute = isActiveRoute
   )
 
   SideNavDropdown(
     "Peserta",
     items = dropdownItemsPeserta(
       navigateAndCloseSideNav
-    )
+    ),
+    isActiveRoute = isActiveRoute
   )
   SideNavDropdown(
     "Mentor",
     items = dropdownItemsMentor(
       navigateAndCloseSideNav
-    )
+    ),
+    isActiveRoute = isActiveRoute
   )
   SideNavDropdown(
     "Tugas",
     items = dropdownItemsTugas(
       navigateAndCloseSideNav
-    )
+    ),
+    isActiveRoute = isActiveRoute
   )
   SideNavDropdown(
     "Kegiatan",
     items = dropdownItemsKegiatan(
       navigateAndCloseSideNav
-    )
+    ),
+    isActiveRoute = isActiveRoute
   )
 }
 

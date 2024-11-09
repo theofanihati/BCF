@@ -37,11 +37,14 @@ import kotlin.math.ceil
 fun DataPesertaScreen(
   modifier : Modifier = Modifier
 ) {
+  val scrollState = rememberScrollState()
   Column(
     modifier = modifier
       .padding(
         horizontal = 16.dp
-      ),
+      )
+      .verticalScroll(scrollState),
+
     verticalArrangement = Arrangement.spacedBy(28.dp),
   ) {
     TopSection()

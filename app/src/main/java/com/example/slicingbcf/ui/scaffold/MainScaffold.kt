@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -22,6 +23,8 @@ import androidx.navigation.NavHostController
 import com.example.slicingbcf.R
 import com.example.slicingbcf.constant.ColorPalette
 import com.example.slicingbcf.constant.StyledText
+import com.example.slicingbcf.ui.navigation.Screen
+import com.example.slicingbcf.ui.navigation.navigateSingleTop
 import com.example.slicingbcf.ui.sidenav.OverlayNav
 import com.example.slicingbcf.ui.sidenav.SideNav
 import com.example.slicingbcf.ui.sidenav.SideNavContent
@@ -30,6 +33,7 @@ import com.example.slicingbcf.ui.sidenav.SideNavContent
 fun MainScaffold(
   config : ScaffoldConfig,
   navController : NavHostController,
+  isActiveRoute : (String) -> Boolean,
   content : @Composable (PaddingValues) -> Unit,
 ) {
 
@@ -42,6 +46,9 @@ fun MainScaffold(
   val closeSideNavVisible = {
     isSideNavVisible = false
   }
+  val onNavigateHome = {
+    navController.navigateSingleTop(Screen.Home.route)
+  }
   Box(
     modifier = Modifier.fillMaxSize()
   ) {
@@ -51,7 +58,8 @@ fun MainScaffold(
           config.showMainNav -> PrimaryNav(
             onMenuClick = {
               isSideNavVisible = ! isSideNavVisible
-            }
+            },
+            onNavigateHome = onNavigateHome
           )
 
           config.showBackNav -> BackNav()
@@ -76,7 +84,8 @@ fun MainScaffold(
     ) {
       SideNavContent(
         navController = navController,
-        closeSideNavVisible = closeSideNavVisible
+        closeSideNavVisible = closeSideNavVisible,
+        isActiveRoute = isActiveRoute
       )
     }
 
@@ -87,7 +96,10 @@ fun MainScaffold(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PrimaryNav(onMenuClick : () -> Unit) {
+fun PrimaryNav(
+  onMenuClick : () -> Unit,
+  onNavigateHome : () -> Unit
+) {
   TopAppBar(
     colors = TopAppBarDefaults.topAppBarColors(
       containerColor = ColorPalette.Monochrome100,
@@ -105,6 +117,10 @@ fun PrimaryNav(onMenuClick : () -> Unit) {
             width = 56.dp,
             height = 35.dp
           )
+          .clickable {
+            onNavigateHome()
+
+          }
       )
     },
     actions = {

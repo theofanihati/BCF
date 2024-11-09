@@ -1,6 +1,7 @@
 package com.example.slicingbcf
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -24,11 +25,17 @@ class MainActivity : ComponentActivity() {
       val currentBackStackEntry = navController.currentBackStackEntryAsState()
       val currentRoute = currentBackStackEntry.value?.destination?.route
 
+      fun isActiveRoute(route : String) : Boolean {
+        Log.d("MainActivity", "currentRoute: $currentRoute, route: $route")
+        return currentRoute == route
+      }
+
 
       SlicingBcfTheme {
 
         MainScaffold(
           config = scaffoldConfig(currentRoute),
+          isActiveRoute = ::isActiveRoute,
           navController = navController,
         ) { paddingValues ->
           NavGraph(

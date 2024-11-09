@@ -27,7 +27,7 @@ import java.util.Date
 
 @Composable
 @Preview(showSystemUi = true)
-fun PengumumanPeserta(
+fun PengumumanPesertaScreen(
   modifier : Modifier = Modifier
 ) {
   val currentTab by remember { mutableIntStateOf(0) }

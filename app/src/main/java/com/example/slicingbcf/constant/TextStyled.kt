@@ -137,6 +137,13 @@ object StyledText {
     fontFamily = Poppins,
     fontWeight = FontWeight.Medium,
   )
+
+  val MobileXlBold = TextStyle(
+    fontSize = 24.sp,
+    lineHeight = 28.8.sp,
+    fontFamily = Poppins,
+    fontWeight = FontWeight.Bold,
+  )
 }
 
 val Poppins = FontFamily(

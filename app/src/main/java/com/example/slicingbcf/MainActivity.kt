@@ -6,9 +6,11 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Modifier
-import com.example.slicingbcf.implementation.all.LandingPageScreen
-import com.example.slicingbcf.implementation.peserta.kelompok_mentoring.KelompokMentoringScreen
-import com.example.slicingbcf.ui.shared.MainScaffold
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import com.example.slicingbcf.ui.navigation.NavGraph
+import com.example.slicingbcf.ui.scaffold.MainScaffold
+import com.example.slicingbcf.ui.scaffold.scaffoldConfig
 import com.example.slicingbcf.ui.theme.SlicingBcfTheme
 
 class MainActivity : ComponentActivity() {
@@ -17,19 +19,23 @@ class MainActivity : ComponentActivity() {
     super.onCreate(savedInstanceState)
     enableEdgeToEdge()
     setContent {
+
+      val navController = rememberNavController()
+      val currentBackStackEntry = navController.currentBackStackEntryAsState()
+      val currentRoute = currentBackStackEntry.value?.destination?.route
+
+
       SlicingBcfTheme {
 
-        MainScaffold() { paddingValues ->
-          LandingPageScreen(
+        MainScaffold(
+          config = scaffoldConfig(currentRoute),
+          navController = navController,
+        ) { paddingValues ->
+          NavGraph(
+            navController = navController,
             modifier = Modifier.padding(paddingValues)
           )
         }
-//        CustomBackScaffold() {
-//          DetailPengumumanPeserta(
-//            modifier = Modifier.padding(it)
-//          )
-//        }
-
       }
     }
   }

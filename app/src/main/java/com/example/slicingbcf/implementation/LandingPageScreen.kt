@@ -1,4 +1,4 @@
-package com.example.slicingbcf.implementation.all
+package com.example.slicingbcf.implementation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -26,10 +26,13 @@ fun LandingPageScreen(
   modifier : Modifier = Modifier
 ) {
   val scrollState = rememberScrollState()
+
+
   Column(
     verticalArrangement = Arrangement.spacedBy(48.dp),
     horizontalAlignment = Alignment.CenterHorizontally,
-    modifier = modifier.verticalScroll(scrollState)
+    modifier = modifier
+      .verticalScroll(scrollState)
   ) {
     Image(
       painter = painterResource(R.drawable.banner),
@@ -40,6 +43,7 @@ fun LandingPageScreen(
     Column(
       verticalArrangement = Arrangement.spacedBy(32.dp),
       horizontalAlignment = Alignment.CenterHorizontally,
+      modifier = Modifier.padding(horizontal = 16.dp)
     ) {
       sections.forEach {
         Section(

@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.slicingbcf.constant.ColorPalette
 import com.example.slicingbcf.constant.StyledText
@@ -15,9 +14,9 @@ import com.example.slicingbcf.ui.shared.CustomOutlinedTextField
 
 // TODO: RAPIHIN LAYOUT + TAMBAHIN ITEMS ITEMS LAINNYA YANG ADA DI COLUMN JUDUL DLL
 @Composable
-@Preview(showSystemUi = true)
-fun DetailWorksheetPeserta(
-  modifier : Modifier = Modifier
+fun DetailWorksheetPesertaScreen(
+  modifier : Modifier = Modifier,
+  id : String
 ) {
   Column(
     modifier = modifier.padding(

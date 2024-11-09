@@ -23,7 +23,7 @@ import com.example.slicingbcf.data.local.worksheetsPeserta
 
 @Composable
 @Preview(showSystemUi = true)
-fun WorksheetPeserta(
+fun WorksheetPesertaScreen(
   modifier : Modifier = Modifier
 ) {
   Column(

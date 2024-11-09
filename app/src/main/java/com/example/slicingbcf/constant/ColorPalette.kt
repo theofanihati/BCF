@@ -45,6 +45,7 @@ object ColorPalette {
   val Yellow = Color(0xFFE89229) // #E89229
   val Blue = Color(0xFF3B82F6) // #3B82F60xFF000000
   val Muted = Color(0xFF6B6B6B) // #6B6B6B
+  val Shadow = Color(0x13000000)
 
   // keeping the original color from figma aswell
   val colors = mapOf(

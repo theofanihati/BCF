@@ -3,6 +3,7 @@
 package com.example.slicingbcf.implementation.auth.forgot_password
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
@@ -22,6 +23,7 @@ import androidx.navigation.NavHostController
 import com.example.slicingbcf.constant.StyledText
 import com.example.slicingbcf.implementation.auth.login.ForgotPasswordEvent
 import com.example.slicingbcf.implementation.auth.login.ForgotPasswordViewModel
+import com.example.slicingbcf.ui.navigation.Screen
 import com.example.slicingbcf.ui.shared.CenteredAuthImage
 import com.example.slicingbcf.ui.shared.CenteredLogo
 import com.example.slicingbcf.ui.shared.CustomOutlinedTextField
@@ -75,7 +77,8 @@ fun ForgotPasswordScreen(
         email = state.email,
         onChange = { email -> viewModel.onEvent(ForgotPasswordEvent.EmailChanged(email)) },
         emailError = state.emailError,
-        onSubmit = { viewModel.onEvent(ForgotPasswordEvent.Submit) }
+        onSubmit = { viewModel.onEvent(ForgotPasswordEvent.Submit) },
+        navigateToLogin = { navController.navigate(Screen.Auth.Login.route) }
       )
 
       AnimatedVisibility(state.isSuccess) {
@@ -119,7 +122,8 @@ fun BottomSection(
   email : String,
   onChange : (String) -> Unit,
   emailError : String?,
-  onSubmit : () -> Unit
+  onSubmit : () -> Unit,
+  navigateToLogin : () -> Unit = { }
 ) {
 
   Column(
@@ -127,8 +131,9 @@ fun BottomSection(
     verticalArrangement = Arrangement.spacedBy(8.dp),
     modifier = Modifier
       .fillMaxWidth()
-      .padding(horizontal = 16.dp)
-  ) {
+      .padding(horizontal = 16.dp),
+
+    ) {
 
     CustomOutlinedTextField(
       value = email,
@@ -142,43 +147,57 @@ fun BottomSection(
     )
 
   }
-  Box(
+  Column(
+    modifier = Modifier.padding(
+      horizontal = 16.dp
+    ),
+    verticalArrangement = Arrangement.spacedBy(32.dp),
+  ) {
+    Box(
+      modifier = Modifier
+        .fillMaxWidth(),
+      contentAlignment = Alignment.Center,
+    ) {
+
+      PrimaryButton(
+        text = "Masuk",
+        onClick = onSubmit,
+        modifier = Modifier.fillMaxWidth(),
+        style = StyledText.MobileSmallMedium,
+
+        )
+    }
+    GotoLogin(navigateToLogin)
+  }
+
+}
+
+@Composable
+fun GotoLogin(navigateToLogin : () -> Unit) {
+  Row(
+    verticalAlignment = Alignment.CenterVertically,
+    horizontalArrangement = Arrangement.Center,
     modifier = Modifier
       .fillMaxWidth()
-      .padding(
-        horizontal = 16.dp
-      ),
-    contentAlignment = Alignment.Center,
   ) {
+    Text(
+      text = "Ingat kata sandi? ",
+      style = StyledText.MobileSmallRegular
+    )
 
-    PrimaryButton(
-      text = "Masuk",
-      onClick = onSubmit,
-      modifier = Modifier.fillMaxWidth(),
-      style = StyledText.MobileSmallMedium,
-
-      )
-  }
-  Box(
-    modifier = Modifier.fillMaxWidth(),
-    contentAlignment = Alignment.Center,
-
-    ) {
     Text(
       text = buildAnnotatedString {
-        append("Ingat kata sandi? ")
         withStyle(
           style = SpanStyle(
             textDecoration = TextDecoration.Underline,
-            fontWeight = FontWeight.Medium,
-
-            )
+            fontWeight = FontWeight.Medium
+          )
         ) {
           append("Masuk")
         }
-
       },
-      style = StyledText.MobileSmallRegular,
+      modifier = Modifier.clickable { navigateToLogin() },
+      style = StyledText.MobileSmallRegular
     )
   }
 }

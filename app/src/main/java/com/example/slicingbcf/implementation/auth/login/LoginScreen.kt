@@ -2,8 +2,8 @@
 
 package com.example.slicingbcf.implementation.auth.login
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
@@ -15,25 +15,29 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.slicingbcf.constant.ColorPalette
 import com.example.slicingbcf.constant.StyledText
+import com.example.slicingbcf.ui.navigation.Screen
+import com.example.slicingbcf.ui.navigation.navigateSingleTop
 import com.example.slicingbcf.ui.shared.CenteredAuthImage
 import com.example.slicingbcf.ui.shared.CenteredLogo
-import com.example.slicingbcf.ui.shared.CustomOutlinedTextField
 
 @Composable
 fun LoginScreen(
   modifier : Modifier = Modifier,
-  navController: NavHostController
+  navController : NavHostController
 ) {
   val isPasswordVisible = remember { mutableStateOf(false) }
+
+  fun onNavigateToForgotPassword() {
+    navController.navigateSingleTop(Screen.Auth.ForgotPassword.route)
+  }
 
   Column(
     verticalArrangement = Arrangement.spacedBy(
@@ -48,7 +52,10 @@ fun LoginScreen(
   ) {
     TopSection()
     CenteredAuthImage()
-    BottomSection(isPasswordVisible = isPasswordVisible)
+    BottomSection(
+      isPasswordVisible = isPasswordVisible,
+      onNavigateToForgotPassword = { onNavigateToForgotPassword() }
+    )
   }
 }
 
@@ -86,7 +93,8 @@ fun TopSection() {
 
 @Composable
 fun BottomSection(
-  isPasswordVisible : MutableState<Boolean>
+  isPasswordVisible : MutableState<Boolean>,
+  onNavigateToForgotPassword : () -> Unit
 ) {
   val email = remember { mutableStateOf("") }
   val password = remember { mutableStateOf("") }
@@ -97,6 +105,7 @@ fun BottomSection(
     modifier = Modifier
       .fillMaxWidth()
       .padding(horizontal = 16.dp)
+//    TODO: Add text field
   ) {
 //    CustomOutlinedTextField(
 //      value = email.value,
@@ -113,17 +122,7 @@ fun BottomSection(
 //      isPasswordVisible = isPasswordVisible,
 //      keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
 //    )
-    Box(
-      modifier = Modifier.fillMaxWidth(),
-      contentAlignment = Alignment.CenterEnd,
-
-      ) {
-      Text(
-        text = "Lupa Kata Sandi?",
-        style = StyledText.Mobile2xsRegular,
-        textDecoration = TextDecoration.Underline,
-      )
-    }
+    GotoForgotPassword(navigateToForgotPassword = onNavigateToForgotPassword)
 
   }
   Box(
@@ -138,7 +137,8 @@ fun BottomSection(
       colors = ButtonDefaults.buttonColors(
         containerColor = ColorPalette.PrimaryColor700,
       ),
-      onClick = { /*TODO*/ },
+      onClick = {
+      },
       modifier = Modifier
         .fillMaxWidth()
     ) {
@@ -147,5 +147,36 @@ fun BottomSection(
         style = StyledText.MobileSmallMedium,
       )
     }
+  }
+}
+
+
+@Composable
+fun GotoForgotPassword(navigateToForgotPassword : () -> Unit) {
+  Row(
+    verticalAlignment = Alignment.CenterVertically,
+    horizontalArrangement = Arrangement.End,
+    modifier = Modifier
+      .fillMaxWidth()
+  ) {
+    Text(
+      text = "Lupa kata sandi? ",
+      style = StyledText.MobileSmallRegular
+    )
+
+    Text(
+      text = buildAnnotatedString {
+        withStyle(
+          style = SpanStyle(
+            textDecoration = TextDecoration.Underline,
+            fontWeight = FontWeight.Medium
+          )
+        ) {
+          append("Masuk")
+        }
+      },
+      modifier = Modifier.clickable { navigateToForgotPassword() },
+      style = StyledText.MobileSmallRegular
+    )
   }
 }

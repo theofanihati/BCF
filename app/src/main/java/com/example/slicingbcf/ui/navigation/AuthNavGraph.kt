@@ -12,7 +12,7 @@ fun NavGraphBuilder.authNavGraph(
   modifier : Modifier,
   navController : NavHostController
 ) {
-  navigation(startDestination = Screen.Auth.ForgotPassword.route, route = "auth") {
+  navigation(startDestination = Screen.Auth.Login.route, route = "auth") {
     composable(Screen.Auth.Login.route) {
       LoginScreen(
         modifier = modifier,

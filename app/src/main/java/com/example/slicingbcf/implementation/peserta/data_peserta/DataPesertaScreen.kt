@@ -19,45 +19,60 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.slicingbcf.R
 import com.example.slicingbcf.constant.ColorPalette
 import com.example.slicingbcf.constant.StyledText
 import com.example.slicingbcf.data.local.Participant
-import com.example.slicingbcf.data.local.participants
 import com.example.slicingbcf.data.local.toColor
 import com.example.slicingbcf.data.local.toDisplayText
-import kotlin.math.ceil
 
-
-// TODO: TAMBAHIN SORT DI SETIAP HEADER
 @Composable
-@Preview(showSystemUi = true)
 fun DataPesertaScreen(
+  viewModel : DataPesertaViewModel = hiltViewModel(),
   modifier : Modifier = Modifier
 ) {
-  val scrollState = rememberScrollState()
+  // Menggunakan collectAsState untuk mengamati perubahan uiState
+  val uiState by viewModel.uiState.collectAsState()
+
+  val currentPageItems = uiState.currentPageItems
+  val totalPages = uiState.totalPages
+  val currentPage = uiState.currentPage
+  val itemsPerPage = uiState.itemsPerPage
+
   Column(
     modifier = modifier
-      .padding(
-        horizontal = 16.dp
-      )
-      .verticalScroll(scrollState),
-
+      .padding(horizontal = 16.dp)
+      .verticalScroll(rememberScrollState()),
     verticalArrangement = Arrangement.spacedBy(28.dp),
   ) {
-    TopSection()
+    TopSection(
+      onSearch = { q ->
+        viewModel.onEvent(DataPesertaEvent.Search(q))
+      }
+
+    )
     BottomSection(
-      participants = participants,
-      headers = headers
+      participants = currentPageItems,
+      headers = headers,
+      onPreviousClick = { viewModel.onEvent(DataPesertaEvent.PageChange(currentPage - 1)) },
+      onNextClick = { viewModel.onEvent(DataPesertaEvent.PageChange(currentPage + 1)) },
+      onPageClick = { page -> viewModel.onEvent(DataPesertaEvent.PageChange(page)) },
+      onLimitChange = { limit -> viewModel.onEvent(DataPesertaEvent.ItemsPerPageChange(limit)) },
+      totalPage = totalPages,
+      currentPage = currentPage,
+      itemsPerPage = itemsPerPage,
+      totalData = uiState.totalItems
     )
   }
 }
 
 
 @Composable
-fun TopSection() {
+fun TopSection(
+  onSearch : (String) -> Unit
+) {
   Column(
     modifier = Modifier
       .fillMaxWidth(),
@@ -76,6 +91,7 @@ fun TopSection() {
       verticalAlignment = Alignment.CenterVertically
     ) {
       SearchBarCustom(
+        onSearch = onSearch
       )
 
       SmallFloatingActionButton(
@@ -106,14 +122,20 @@ fun TopSection() {
 }
 
 @Composable
-fun SearchBarCustom() {
+fun SearchBarCustom(
+  onSearch : (String) -> Unit
+) {
   var query by remember { mutableStateOf("") }
 
   TextField(
     textStyle = StyledText.MobileSmallRegular,
 
     value = query,
-    onValueChange = { query = it },
+    onValueChange = {
+      query = it
+      onSearch(it)
+      Log.d("query", it)
+    },
 
     placeholder = {
       Text(
@@ -138,65 +160,44 @@ fun SearchBarCustom() {
       errorIndicatorColor = Color.Transparent,
       unfocusedContainerColor = ColorPalette.PrimaryColor100,
       focusedContainerColor = ColorPalette.PrimaryColor100,
-
-
-      )
+    )
 
   )
 }
 
 @Composable
-fun BottomSection(participants : List<Participant>, headers : List<Header>) {
-  // Variabel untuk mengelola halaman saat ini dan item per halaman
-  var currentPage by remember { mutableIntStateOf(1) }
-  var itemsPerPage by remember { mutableIntStateOf(5) }
-  val totalItems = participants.size  // Jumlah total data peserta
-  val totalPages = ceil(totalItems.toFloat() / itemsPerPage).toInt()  // Menghitung total halaman
-
-  // Reset ke halaman 1 jika jumlah item per halaman berubah
-
-  LaunchedEffect(itemsPerPage) {
-    currentPage = 1
-  }
-
-  // Menghitung indeks awal dan akhir untuk item yang ditampilkan pada halaman saat ini
-  val startIndex = (currentPage - 1) * itemsPerPage
-  val endIndex = minOf(startIndex + itemsPerPage, totalItems)
-  // Mengambil item yang akan ditampilkan pada halaman saat ini
-  val currentPageItems = participants.subList(startIndex, endIndex)
-
+fun BottomSection(
+  participants : List<Participant>,
+  headers : List<Header>,
+  currentPage : Int,
+  totalPage : Int,
+  totalData : Int,
+  itemsPerPage : Int,
+  onPageClick : (Int) -> Unit,
+  onPreviousClick : () -> Unit,
+  onNextClick : () -> Unit,
+  onLimitChange : (Int) -> Unit
+) {
   Column(
     modifier = Modifier,
     verticalArrangement = Arrangement.spacedBy(16.dp),
   ) {
-    ScrollableTable(headers, currentPageItems)
+    ScrollableTable(headers, participants)
     CustomPagination(
       pagination = Pagination(
-        currentPage = currentPage,  // Halaman saat ini
-        totalPage = totalPages,     // Total halaman
-        totalData = totalItems,     // Total data peserta
-        limit = itemsPerPage        // Jumlah item per halaman
+        currentPage = currentPage,
+        totalPage = totalPage,
+        totalData = totalData,
+        limit = itemsPerPage
       ),
-      onPageClick = { newPage ->   // Ketika halaman baru dipilih
-        currentPage = newPage
-      },
-      onPreviousClick = {          // Ketika tombol sebelumnya diklik
-        if (currentPage > 1) {
-          currentPage --
-        }
-      },
-      onNextClick = {              // Ketika tombol berikutnya diklik
-        if (currentPage < totalPages) {
-          currentPage ++
-        }
-      },
-      onLimitChange = { newLimit -> // Ketika limit item per halaman berubah
-        itemsPerPage = newLimit
-      }
+      onPageClick = onPageClick,
+      onPreviousClick = onPreviousClick,
+      onNextClick = onNextClick,
+      onLimitChange = onLimitChange
     )
-
   }
 }
+
 
 @Composable
 fun CustomPagination(

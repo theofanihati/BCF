@@ -3,11 +3,15 @@ package com.example.slicingbcf.ui.navigation
 import androidx.navigation.NavController
 import androidx.navigation.NavOptionsBuilder
 
+
 fun NavController.navigateSingleTop(route : String) {
-  this.navigate(route) {
+  navigate(route) {
+    popUpTo(route) { inclusive = true }
     launchSingleTop = true
+    restoreState = true
   }
 }
+
 
 fun NavController.navigateAndClearStack(route : String) {
   this.navigate(route) {

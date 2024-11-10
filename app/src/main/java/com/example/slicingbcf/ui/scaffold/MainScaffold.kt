@@ -29,6 +29,7 @@ import com.example.slicingbcf.ui.sidenav.OverlayNav
 import com.example.slicingbcf.ui.sidenav.SideNav
 import com.example.slicingbcf.ui.sidenav.SideNavContent
 
+// TODO: benerin agar jika pertama kali klik menu, itu tidak lag
 @Composable
 fun MainScaffold(
   config : ScaffoldConfig,

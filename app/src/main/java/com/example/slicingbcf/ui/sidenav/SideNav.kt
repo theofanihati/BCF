@@ -40,7 +40,7 @@ fun SideNav(
   content : @Composable () -> Unit,
 ) {
   val width = 275
-  val x = (width * offSetX).dp
+  val x = width * offSetX
   Box(
     modifier = modifier
       .clip(
@@ -50,7 +50,7 @@ fun SideNav(
       )
       .fillMaxHeight()
       .width(width.dp)
-      .offset(x)
+      .offset(x.dp)
       .background(
         ColorPalette.OnPrimary
       )

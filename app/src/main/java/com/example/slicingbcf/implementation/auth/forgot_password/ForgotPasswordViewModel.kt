@@ -6,13 +6,14 @@ import com.example.slicingbcf.domain.validator.ValidationResult
 import com.example.slicingbcf.domain.validator.validateEmail
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
 class ForgotPasswordViewModel @Inject constructor() : ViewModel() {
 
   private val _state = MutableStateFlow(ForgotPasswordState())
-  val state get() = _state
+  val state get() = _state.asStateFlow()
 
   fun onEvent(event : ForgotPasswordEvent) {
     when (event) {

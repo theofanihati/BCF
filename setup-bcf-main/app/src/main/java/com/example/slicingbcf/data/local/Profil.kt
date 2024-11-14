@@ -45,6 +45,7 @@ val profilLembaga = listOf(
     )
 )
 
+<<<<<<< HEAD
 data class ProfilPeserta(
     val namaLengkap: String,
     val posisi: String,
@@ -92,3 +93,5 @@ val profilPeserta = listOf(
     )
 )
 
+=======
+>>>>>>> 099dacb2eadaac4b5dc26669aab90c7b388f8e96

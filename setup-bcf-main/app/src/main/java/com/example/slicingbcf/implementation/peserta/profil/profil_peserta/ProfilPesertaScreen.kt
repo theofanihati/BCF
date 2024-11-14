@@ -512,7 +512,7 @@ fun FileUploadSection(
                 containerColor = Color.Transparent,
                 contentColor = ColorPalette.PrimaryColor400
             ),
-            border = null // Remove default border to avoid conflict
+            border = null
         ) {
             Text(
                 text = buttonText,

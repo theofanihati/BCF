@@ -45,3 +45,50 @@ val profilLembaga = listOf(
     )
 )
 
+data class ProfilPeserta(
+    val namaLengkap: String,
+    val posisi: String,
+    val pendidikanTerakhir: String,
+    val nomorWhatsApp: String,
+    val email: String,
+    val ktpPesertaUrl: String,
+    val cvPesertaUrl: String,
+    val backgroundImageUrl: String,
+    val profileImageUrl: String,
+    var pertanyaanUmum: PertanyaanUmum
+)
+data class PertanyaanUmum(
+    var pernahMempelajari: String = "",
+    var mengetahuiLEAD: String = "",
+    var desainProgram: String = "",
+    var sustainability: String = "",
+    var socialReport: String = "",
+    var ekspektasi: String = "",
+    var pertanyaanLainnya: String = "",
+    var pengalamanRegistrasi: String = ""
+)
+
+val profilPeserta = listOf(
+    ProfilPeserta(
+        namaLengkap = "Aurelia Hawa",
+        posisi = "Ketua Lembaga",
+        pendidikanTerakhir = "S1 - Sistem Informasi",
+        nomorWhatsApp = "081234567890",
+        email = "aurel@gmail.com",
+        ktpPesertaUrl = "https://example.com/KTP_Peserta1.pdf",
+        cvPesertaUrl = "https://example.com/CV_Peserta1.pdf",
+        backgroundImageUrl = "https://via.placeholder.com/300x150",
+        profileImageUrl = "https://via.placeholder.com/100",
+        pertanyaanUmum = PertanyaanUmum(
+            pernahMempelajari = "Pernah mempelajari",
+            mengetahuiLEAD = "Instagram @bakriecenter, Alumni LEAD Indonesia",
+            desainProgram = "Program LEAD Indonesia 2023 bertujuan mengembangkan kepemimpinan.",
+            sustainability = "Keberlanjutan adalah penggunaan metode yang berdampak positif.",
+            socialReport = "Social report menggambarkan data performa media sosial.",
+            ekspektasi = "Menambah wawasan dan relasi.",
+            pertanyaanLainnya = "Apa saja keuntungan mengikuti program ini?",
+            pengalamanRegistrasi = "Pengisian data sederhana dan to the point."
+        )
+    )
+)
+

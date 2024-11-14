@@ -1,4 +1,4 @@
-package com.example.slicingbcf.implementation.peserta.profil
+package com.example.slicingbcf.implementation.peserta.profil.profil_lembaga
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -12,7 +12,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.ArrowForwardIos
 import androidx.compose.material.icons.filled.OpenInNew
-import androidx.compose.material3.Divider
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -24,20 +23,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
 import com.example.slicingbcf.constant.ColorPalette
 import com.example.slicingbcf.constant.StyledText
 import com.example.slicingbcf.data.local.ProfilLembaga
 import com.example.slicingbcf.data.local.WilayahJangkauan
 import com.example.slicingbcf.data.local.profilLembaga
 import com.example.slicingbcf.R.drawable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 
 @Composable

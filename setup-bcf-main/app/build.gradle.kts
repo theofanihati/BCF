@@ -103,4 +103,6 @@ dependencies {
   implementation("androidx.datastore:datastore-preferences:1.1.1")
   // scroll
 
+  // accompanist
+  implementation("io.coil-kt:coil-compose:2.3.0")
 }

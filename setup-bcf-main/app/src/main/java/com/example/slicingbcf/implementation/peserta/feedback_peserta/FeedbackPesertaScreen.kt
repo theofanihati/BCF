@@ -59,7 +59,6 @@ import java.util.Locale
 @Preview(showSystemUi = true)
 fun FeedbackPesertaScreen(
     modifier : Modifier = Modifier
-
 ){
     Column(
         modifier = modifier,

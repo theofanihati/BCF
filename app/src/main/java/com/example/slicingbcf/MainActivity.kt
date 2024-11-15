@@ -37,8 +37,7 @@ class MainActivity : ComponentActivity() {
           config = scaffoldConfig(currentRoute),
           isActiveRoute = ::isActiveRoute,
           navController = navController,
-
-          ) { paddingValues ->
+        ) { paddingValues ->
           NavGraph(
             navController = navController,
             modifier = Modifier.padding(paddingValues)

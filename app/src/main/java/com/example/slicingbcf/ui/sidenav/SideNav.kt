@@ -146,6 +146,7 @@ private fun BottomSideNav(
       navigateAndCloseSideNav(Screen.Auth.Login.route)
     }
   )
+ 
   Column(
     verticalArrangement = Arrangement.spacedBy(12.dp)
   ) {

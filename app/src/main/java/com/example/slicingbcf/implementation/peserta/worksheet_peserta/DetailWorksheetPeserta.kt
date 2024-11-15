@@ -1,15 +1,17 @@
 package com.example.slicingbcf.implementation.peserta.worksheet_peserta
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
-import androidx.compose.material3.ButtonDefaults.outlinedButtonBorder
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.slicingbcf.constant.ColorPalette
 import com.example.slicingbcf.constant.StyledText
+import com.example.slicingbcf.ui.shared.CustomOutlinedTextField
+import com.example.slicingbcf.ui.shared.PrimaryButton
+import com.example.slicingbcf.ui.shared.message.SecondaryButton
 
 // TODO: RAPIHIN LAYOUT + TAMBAHIN ITEMS ITEMS LAINNYA YANG ADA DI COLUMN JUDUL DLL
 @Composable
@@ -19,7 +21,7 @@ fun DetailWorksheetPesertaScreen(
 ) {
   Column(
     modifier = modifier.padding(
-      horizontal = 16.dp
+      horizontal = 16.dp,
     ),
     verticalArrangement = Arrangement.spacedBy(36.dp),
   ) {
@@ -91,47 +93,34 @@ fun DetailWorksheetPesertaScreen(
         style = StyledText.MobileBaseSemibold,
         color = ColorPalette.PrimaryColor700
       )
-//      CustomOutlinedTextField(
-//        value = "",
-//        onValueChange = {},
-//        label = "Masukkan tautan lembar kerja",
-//        placeholder = "Masukkan tautan lembar kerja",
-//      )
+      CustomOutlinedTextField(
+        value = "",
+        onValueChange = {},
+        label = "Masukkan tautan lembar kerja",
+        placeholder = "Masukkan tautan lembar kerja",
+        rounded = 40,
+        modifier = Modifier.fillMaxWidth(),
+
+        )
     }
     HorizontalDivider()
     Row(
       horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-      Button(
-        onClick = {},
-        colors = ButtonDefaults.buttonColors(
-          containerColor = ColorPalette.PrimaryColor700,
-        ),
 
-        ) {
-        Text(
-          text = "Simpan",
-          style = StyledText.MobileSmallMedium,
-        )
-      }
-      @Suppress("DEPRECATION")
-      OutlinedButton(
+      PrimaryButton(
         onClick = {},
-        colors = ButtonDefaults.outlinedButtonColors(
-          contentColor = ColorPalette.PrimaryColor700,
-        ),
-        border = outlinedButtonBorder.copy(
-          brush = SolidColor(ColorPalette.PrimaryColor700),
-          width = 1.dp
-        ),
+        text = "Simpan",
+        color = ColorPalette.PrimaryColor700,
+        style = StyledText.MobileSmallMedium,
+      )
+      SecondaryButton(
+        onClick = {},
+        text = "Batal",
+        color = ColorPalette.PrimaryColor700,
+        borderColor = ColorPalette.PrimaryColor700,
+      )
 
-        ) {
-        Text(
-          text = "Batal",
-          style = StyledText.MobileSmallRegular,
-          color = ColorPalette.PrimaryColor700
-        )
-      }
     }
   }
 }

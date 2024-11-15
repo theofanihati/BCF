@@ -44,7 +44,7 @@ fun dropdownItemsPeserta(
     DropdownItem(
       text = "Penilaian Peserta",
       onClick = {
-        Log.d("SideNav", "Penilaian Peserta clicked")
+        navigateAndCloseSideNav(Screen.Mentor.PenilaianPeserta.route)
       },
       route = null
     )

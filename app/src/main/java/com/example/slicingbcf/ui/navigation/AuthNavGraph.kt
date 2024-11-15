@@ -25,5 +25,6 @@ fun NavGraphBuilder.authNavGraph(
         navController = navController
       )
     }
+
   }
 }

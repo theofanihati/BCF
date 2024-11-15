@@ -1,6 +1,8 @@
 package com.example.slicingbcf.ui.navigation
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.*
 import androidx.navigation.compose.composable
 import com.example.slicingbcf.implementation.peserta.data_peserta.DataPesertaScreen
@@ -15,7 +17,9 @@ fun NavGraphBuilder.pesertaNavGraph(
   modifier : Modifier,
   navController : NavHostController
 ) {
-  navigation(startDestination = Screen.Peserta.DataPeserta.route, route = "peserta") {
+  navigation(
+    startDestination = Screen.Peserta.DataPeserta.route, route = "peserta"
+  ) {
     composable(Screen.Peserta.DataPeserta.route) {
       DataPesertaScreen(
         modifier = modifier,
@@ -37,7 +41,11 @@ fun NavGraphBuilder.pesertaNavGraph(
     ) { backStackEntry ->
       val id = backStackEntry.arguments?.getString("id") ?: ""
       if (id.isEmpty()) throw IllegalStateException("id must not be empty")
-      DetailPengumumanPesertaScreen(modifier = modifier, id = id)
+      DetailPengumumanPesertaScreen(
+        modifier = modifier.padding(
+          vertical = 16.dp
+        ), id = id
+      )
     }
     composable(Screen.Peserta.WorksheetPeserta.route) {
       WorksheetPesertaScreen(
@@ -50,9 +58,12 @@ fun NavGraphBuilder.pesertaNavGraph(
     ) { backStackEntry ->
       val id = backStackEntry.arguments?.getString("id") ?: ""
       if (id.isEmpty()) throw IllegalStateException("id must not be empty")
-      DetailWorksheetPesertaScreen(modifier = modifier, id = id)
+      DetailWorksheetPesertaScreen(
+        modifier = modifier.padding(
+          vertical = 16.dp
+        ), id = id
+      )
     }
-
-
   }
+
 }

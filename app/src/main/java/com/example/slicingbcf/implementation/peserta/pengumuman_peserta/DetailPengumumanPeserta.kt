@@ -28,13 +28,15 @@ fun DetailPengumumanPesertaScreen(
   Column(
     modifier = modifier
       .padding(
-        horizontal = 16.dp
-      ),
+        horizontal = 16.dp,
+
+        ),
     verticalArrangement = Arrangement.spacedBy(30.dp)
   ) {
     Text(
       text = "MISI 2: Share Momen Onboarding Nasional LEAD 8",
       style = StyledText.MobileLargeMedium,
+      textAlign = TextAlign.Center,
     )
     Column(
       verticalArrangement = Arrangement.spacedBy(20.dp)

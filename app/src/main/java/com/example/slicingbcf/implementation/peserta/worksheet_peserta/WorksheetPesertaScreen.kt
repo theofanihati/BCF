@@ -59,7 +59,7 @@ fun WorksheetItem(worksheet : WorksheetPeserta) {
     modifier = Modifier
       .border(
         width = 1.dp,
-        color = ColorPalette.OnSurfaceVariant,
+        color = ColorPalette.Monochrome200,
         shape = RoundedCornerShape(8.dp),
       )
       .padding(

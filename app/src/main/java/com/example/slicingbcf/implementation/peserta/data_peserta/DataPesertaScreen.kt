@@ -8,7 +8,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -27,6 +26,7 @@ import com.example.slicingbcf.constant.StyledText
 import com.example.slicingbcf.data.local.Participant
 import com.example.slicingbcf.data.local.toColor
 import com.example.slicingbcf.data.local.toDisplayText
+import com.example.slicingbcf.ui.shared.textfield.SearchBarCustom
 
 @Composable
 fun DataPesertaScreen(
@@ -119,50 +119,6 @@ fun TopSection(
       }
     }
   }
-}
-
-@Composable
-fun SearchBarCustom(
-  onSearch : (String) -> Unit
-) {
-  var query by remember { mutableStateOf("") }
-
-  TextField(
-    textStyle = StyledText.MobileSmallRegular,
-
-    value = query,
-    onValueChange = {
-      query = it
-      onSearch(it)
-      Log.d("query", it)
-    },
-
-    placeholder = {
-      Text(
-        "Cari Pertanyaan",
-        style = StyledText.MobileSmallRegular,
-      )
-    },
-    leadingIcon = {
-      Icon(
-        Icons.Default.Search,
-        contentDescription = "Search Icon",
-        modifier = Modifier.size(20.dp)
-      )
-    },
-    singleLine = true,
-    shape = MaterialTheme.shapes.medium,
-    colors = TextFieldDefaults.colors(
-      // ! biar ga ada default border bottom
-      focusedIndicatorColor = Color.Transparent,
-      unfocusedIndicatorColor = Color.Transparent,
-      disabledIndicatorColor = Color.Transparent,
-      errorIndicatorColor = Color.Transparent,
-      unfocusedContainerColor = ColorPalette.PrimaryColor100,
-      focusedContainerColor = ColorPalette.PrimaryColor100,
-    )
-
-  )
 }
 
 @Composable

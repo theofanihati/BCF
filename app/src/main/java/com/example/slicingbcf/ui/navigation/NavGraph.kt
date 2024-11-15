@@ -10,11 +10,20 @@ import com.example.slicingbcf.implementation.LandingPageScreen
 @Composable
 fun NavGraph(
   navController : NavHostController,
-  startDestination : String = "peserta",
+  startDestination : String = "mentor",
   modifier : Modifier,
 ) {
   NavHost(navController = navController, startDestination = startDestination) {
-    composable(Screen.Home.route) {
+    composable(
+      route = Screen.Home.route,
+//      ! Uncomment kalo dibutuhin
+//      enterTransition = {
+//        slideInHorizontally(
+//          initialOffsetX = { it },
+//          animationSpec = tween(700)
+//        )
+//      }
+    ) {
       LandingPageScreen(
         modifier = modifier,
       )
@@ -27,5 +36,10 @@ fun NavGraph(
       modifier = modifier,
       navController = navController
     )
+    mentorNavGraph(
+      modifier = modifier,
+      navController = navController
+    )
+
   }
 }

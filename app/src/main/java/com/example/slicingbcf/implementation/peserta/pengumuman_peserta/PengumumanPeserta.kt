@@ -1,6 +1,7 @@
 package com.example.slicingbcf.implementation.peserta.pengumuman_peserta
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
@@ -8,10 +9,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material3.*
 import androidx.compose.material3.TabRowDefaults.SecondaryIndicator
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.contentDescription
@@ -30,7 +29,7 @@ import java.util.Date
 fun PengumumanPesertaScreen(
   modifier : Modifier = Modifier
 ) {
-  val currentTab by remember { mutableIntStateOf(0) }
+  var currentTab by remember { mutableIntStateOf(0) }
   Column(
     modifier = modifier
       .fillMaxWidth()
@@ -39,7 +38,9 @@ fun PengumumanPesertaScreen(
       ),
     verticalArrangement = Arrangement.spacedBy(28.dp)
   ) {
-    TopSection(currentTab)
+    TopSection(currentTab) { selectedTab ->
+      currentTab = selectedTab
+    }
     BottomSection()
   }
 
@@ -152,14 +153,13 @@ val pengumumans = listOf(
 
 @Composable
 fun TopSection(
-  currentTab : Int
+  currentTab : Int,
+  onTabSelected : (Int) -> Unit
 ) {
   Row(
     horizontalArrangement = Arrangement.SpaceBetween,
-    modifier = Modifier
-      .fillMaxWidth(),
+    modifier = Modifier.fillMaxWidth(),
     verticalAlignment = Alignment.CenterVertically
-
   ) {
     Text(
       text = "Pengumuman",
@@ -172,47 +172,48 @@ fun TopSection(
       color = ColorPalette.PrimaryColor700
     )
   }
-  Tabs(currentTab)
-
+  Tabs(currentTab, onTabSelected)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Tabs(
-  currentTab : Int
+  currentTab : Int,
+  onTabSelected : (Int) -> Unit
 ) {
-  PrimaryTabRow(selectedTabIndex = currentTab, indicator = {
-    SecondaryIndicator(
-      height = 3.dp,
-      color = ColorPalette.PrimaryColor700,
-      modifier = Modifier
-        .padding(horizontal = 8.dp)
-    )
-  }) {
-    TabWithBadge(
-      selected = true,
-      onClick = { },
-      text = "Semua",
-      badgeNumber = "5",
-
+  TabRow(
+    selectedTabIndex = currentTab,
+    indicator = { tabPositions ->
+      SecondaryIndicator(
+        Modifier.tabIndicatorOffset(tabPositions[currentTab]),
+        height = 3.dp,
+        color = ColorPalette.PrimaryColor700
       )
+    }
+  ) {
     TabWithBadge(
-      selected = false,
-      onClick = { },
+      selected = currentTab == 0,
+      onClick = { onTabSelected(0) },
+      text = "Semua",
+      badgeNumber = "5"
+    )
+    TabWithBadge(
+      selected = currentTab == 1,
+      onClick = { onTabSelected(1) },
       text = "Berita",
-      badgeNumber = "10",
+      badgeNumber = "10"
     )
     TabWithBadge(
-      selected = false,
-      onClick = { },
+      selected = currentTab == 2,
+      onClick = { onTabSelected(2) },
       text = "LEAD",
-      badgeNumber = "10",
+      badgeNumber = "10"
     )
     TabWithBadge(
-      selected = false,
-      onClick = { },
+      selected = currentTab == 3,
+      onClick = { onTabSelected(3) },
       text = "BCF",
-      badgeNumber = "10",
+      badgeNumber = "10"
     )
   }
 
@@ -232,6 +233,7 @@ fun TabWithBadge(
       Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(4.dp),
+        modifier = Modifier.clickable { onClick() }
       ) {
         Text(
           text = text,
@@ -241,8 +243,7 @@ fun TabWithBadge(
         Badge(
           modifier = Modifier.size(20.dp),
           contentColor = ColorPalette.OnError,
-
-          ) {
+        ) {
           Text(
             badgeNumber,
             textAlign = TextAlign.Center,

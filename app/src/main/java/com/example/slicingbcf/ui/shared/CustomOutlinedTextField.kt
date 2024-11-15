@@ -2,19 +2,24 @@ package com.example.slicingbcf.ui.shared
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.unit.dp
 import com.example.slicingbcf.constant.ColorPalette
 import com.example.slicingbcf.constant.StyledText
 import com.example.slicingbcf.ui.shared.message.ErrorMessageTextField
@@ -28,21 +33,25 @@ fun CustomOutlinedTextField(
   placeholder : String,
   isPassword : Boolean = false,
   isPasswordVisible : MutableState<Boolean>? = null,
-  leadingIcon : @Composable (() -> Unit) = {
-    Icon(imageVector = Icons.Filled.Person, contentDescription = label)
-  },
+  leadingIcon : @Composable (() -> Unit)? = null,
   keyboardType : KeyboardType = KeyboardType.Text,
   error : String? = null,
   rounded : Int = 16,
-  multiLine : Boolean = false
-) {
+  multiLine : Boolean = false,
+  maxLines : Int = 1,
+  isEnabled : Boolean = true,
+
+  ) {
+  val isFocused = remember { mutableStateOf(false) }
+
   Column {
     OutlinedTextField(
       value = value,
       onValueChange = onValueChange,
-      modifier = modifier,
+      modifier = modifier
+        .onFocusChanged { isFocused.value = it.isFocused },
       singleLine = ! multiLine,
-      maxLines = if (multiLine) 5 else 1,
+      maxLines = if (multiLine) maxLines else 1,
       shape = RoundedCornerShape(rounded),
       leadingIcon = leadingIcon,
       trailingIcon = {
@@ -54,12 +63,18 @@ fun CustomOutlinedTextField(
       },
       visualTransformation = getVisualTransformation(isPassword, isPasswordVisible),
       keyboardOptions = getKeyboardOptions(isPassword, keyboardType),
-      label = { TextLabel(label, error) },
+      label = {
+        TextLabel(
+          label, error, isFocused.value
+        )
+      },
       placeholder = { PlaceholderText(placeholder) },
       textStyle = StyledText.MobileSmallRegular,
       isError = error != null,
-      colors = getTextFieldColors()
-    )
+      colors = getTextFieldColors(),
+      enabled = isEnabled,
+
+      )
 
     AnimatedVisibility(visible = error != null) {
       error?.let {
@@ -102,11 +117,22 @@ private fun getKeyboardOptions(
 }
 
 @Composable
-private fun TextLabel(label : String, error : String?) {
+private fun TextLabel(label : String, error : String?, isFocused : Boolean) {
+  val color = when {
+    error != null -> ColorPalette.Error
+    isFocused     -> ColorPalette.OnSurfaceVariant
+    else          -> ColorPalette.Monochrome300
+  }
+  val fontWeight = if (isFocused) FontWeight.Medium else FontWeight.Normal
   Text(
     text = label,
     style = StyledText.MobileSmallRegular,
-    color = if (error != null) ColorPalette.Error else ColorPalette.Monochrome300
+    color = color,
+    modifier = Modifier.padding(
+      horizontal = 4.dp,
+    ),
+    fontWeight = fontWeight
+
   )
 }
 
@@ -122,8 +148,8 @@ private fun PlaceholderText(placeholder : String) {
 @Composable
 private fun getTextFieldColors() : TextFieldColors {
   return OutlinedTextFieldDefaults.colors(
-    unfocusedBorderColor = ColorPalette.Monochrome300,
-    focusedBorderColor = ColorPalette.Monochrome300,
+    unfocusedBorderColor = ColorPalette.Outline,
+    focusedBorderColor = ColorPalette.Outline,
     errorBorderColor = ColorPalette.Error,
     errorLabelColor = ColorPalette.Error,
     errorLeadingIconColor = ColorPalette.Error,

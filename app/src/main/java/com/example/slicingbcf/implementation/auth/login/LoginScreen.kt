@@ -2,21 +2,17 @@
 
 package com.example.slicingbcf.implementation.auth.login
 
-import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Email
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
@@ -26,14 +22,23 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.slicingbcf.constant.ColorPalette
 import com.example.slicingbcf.constant.StyledText
+import com.example.slicingbcf.ui.animations.AnimatedMessage
+import com.example.slicingbcf.ui.animations.MessageType
 import com.example.slicingbcf.ui.navigation.Screen
 import com.example.slicingbcf.ui.navigation.navigateAndClearStack
 import com.example.slicingbcf.ui.navigation.navigateSingleTop
 import com.example.slicingbcf.ui.shared.CenteredAuthImage
 import com.example.slicingbcf.ui.shared.CenteredLogo
 import com.example.slicingbcf.ui.shared.CustomOutlinedTextField
-import com.example.slicingbcf.ui.shared.message.ErrorMessage
-import com.example.slicingbcf.ui.shared.message.SuccessMessage
+import kotlinx.coroutines.delay
+
+//@Preview(showSystemUi = true)
+//@Composable
+//fun LoginScreenPreview() {
+//  LoginScreen(
+//    navController = rememberNavController(),
+//    )
+//}
 
 @Composable
 fun LoginScreen(
@@ -49,51 +54,57 @@ fun LoginScreen(
   }
 
   LaunchedEffect(state.isSuccess) {
-
     if (state.isSuccess) {
+      delay(1500)
       navController.navigateAndClearStack(Screen.Home.route)
       viewModel.onEvent(LoginEvent.ClearState)
     }
   }
 
-  Column(
-    verticalArrangement = Arrangement.spacedBy(
-      32.dp,
-      Alignment.Top
-    ),
+  Box(
     modifier = modifier
+      .background(ColorPalette.OnPrimary)
       .statusBarsPadding()
-      .padding(
-        horizontal = 16.dp
-      )
+      .padding(horizontal = 16.dp)
   ) {
-    TopSection()
-    CenteredAuthImage()
 
+    Column(
+      verticalArrangement = Arrangement.spacedBy(32.dp, Alignment.Top),
+      modifier = Modifier.fillMaxSize()
+    ) {
+      TopSection()
+      CenteredAuthImage()
+      BottomSection(
+        onNavigateToForgotPassword = { onNavigateToForgotPassword() },
+        email = state.email,
+        password = state.password,
+        onEmailChange = { viewModel.onEvent(LoginEvent.EmailChanged(it)) },
+        onPasswordChange = { viewModel.onEvent(LoginEvent.PasswordChanged(it)) },
+        onLoginClick = { viewModel.onEvent(LoginEvent.Submit) },
+        emailError = state.emailError,
+        passwordError = state.passwordError,
+        isPasswordVisible = isPasswordVisible
+      )
+    }
 
-
-    BottomSection(
-      onNavigateToForgotPassword = { onNavigateToForgotPassword() },
-      email = state.email,
-      password = state.password,
-      onEmailChange = { viewModel.onEvent(LoginEvent.EmailChanged(it)) },
-      onPasswordChange = { viewModel.onEvent(LoginEvent.PasswordChanged(it)) },
-      onLoginClick = { viewModel.onEvent(LoginEvent.Submit) },
-      emailError = state.emailError,
-      passwordError = state.passwordError,
-      isPasswordVisible = isPasswordVisible
+    AnimatedMessage(
+      isVisible = state.isSuccess,
+      message = state.message ?: "Login Success.",
+      messageType = MessageType.Success,
+      modifier = Modifier
+        .padding(top = 16.dp)
+        .align(Alignment.TopCenter)
     )
-    AnimatedVisibility(state.isSuccess) {
-      SuccessMessage(
-        message = "Login Success."
-      )
-    }
 
-    AnimatedVisibility(state.error != null) {
-      ErrorMessage(
-        message = state.error ?: ""
-      )
-    }
+    AnimatedMessage(
+      isVisible = state.error != null,
+      message = state.error ?: "",
+      messageType = MessageType.Error,
+      modifier = Modifier
+        .padding(top = 16.dp)
+        .align(Alignment.TopCenter)
+    )
+
   }
 }
 
@@ -149,6 +160,7 @@ fun BottomSection(
     modifier = Modifier
       .fillMaxWidth()
       .padding(horizontal = 16.dp)
+
 //    TODO: Add text field
   ) {
     CustomOutlinedTextField(
@@ -156,10 +168,10 @@ fun BottomSection(
       onValueChange = { onEmailChange(it) },
       label = "Email Peserta",
       placeholder = "contoh: @gmail.com",
-      leadingIcon = { Icon(imageVector = Icons.Filled.Email, contentDescription = "Email") },
       keyboardType = KeyboardType.Email,
       error = emailError,
-      modifier = Modifier.fillMaxWidth()
+      modifier = Modifier.fillMaxWidth(),
+      rounded = 40
     )
     CustomOutlinedTextField(
       value = password,
@@ -170,7 +182,8 @@ fun BottomSection(
       keyboardType = KeyboardType.Password,
       error = passwordError,
       modifier = Modifier.fillMaxWidth(),
-      isPasswordVisible = isPasswordVisible
+      isPasswordVisible = isPasswordVisible,
+      rounded = 40
     )
     GotoForgotPassword(navigateToForgotPassword = onNavigateToForgotPassword)
 
@@ -211,23 +224,13 @@ fun GotoForgotPassword(navigateToForgotPassword : () -> Unit) {
       .fillMaxWidth()
   ) {
     Text(
-      text = "Lupa kata sandi? ",
-      style = StyledText.MobileSmallRegular
+      text = "Lupa kata sandi",
+      style = StyledText.MobileSmallRegular,
+      modifier = Modifier.clickable { navigateToForgotPassword() },
+      textDecoration = TextDecoration.Underline
+
     )
 
-    Text(
-      text = buildAnnotatedString {
-        withStyle(
-          style = SpanStyle(
-            textDecoration = TextDecoration.Underline,
-            fontWeight = FontWeight.Medium
-          )
-        ) {
-          append("Masuk")
-        }
-      },
-      modifier = Modifier.clickable { navigateToForgotPassword() },
-      style = StyledText.MobileSmallRegular
-    )
+
   }
 }

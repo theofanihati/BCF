@@ -39,15 +39,28 @@ class LoginViewModel @Inject constructor() : ViewModel() {
     _uiState.value = LoginState()
   }
 
+  private fun resetState() {
+    _uiState.update {
+      it.copy(
+        isSuccess = false,
+        error = null,
+        message = null,
+        email = _uiState.value.email,
+      )
+    }
+  }
+
+
   private fun onSubmit() {
-    _uiState.value = _uiState.value.copy(
-      isSuccess = false,
-      error = "Gagal: Permintaan gagal, silakan coba lagi."
-    )
+    resetState()
 //    _uiState.value = _uiState.value.copy(
-//      isSuccess = true,
-//      message = "Permintaan berhasil, silakan cek email Anda."
+//      isSuccess = false,
+//      error = "Login Gagal! Akun Tidak Dikenal!"
 //    )
+    _uiState.value = _uiState.value.copy(
+      isSuccess = true,
+      message = "Permintaan berhasil, silakan cek email Anda."
+    )
   }
 
 

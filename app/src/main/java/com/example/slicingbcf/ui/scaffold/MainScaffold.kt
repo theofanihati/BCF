@@ -1,6 +1,5 @@
 package com.example.slicingbcf.ui.scaffold
 
-import android.util.Log
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -50,8 +49,12 @@ fun MainScaffold(
   val onNavigateHome = {
     navController.navigateSingleTop(Screen.Home.route)
   }
+  val onNavigateBack = {
+    navController.popBackStack()
+  }
   Box(
     modifier = Modifier.fillMaxSize()
+
   ) {
     Scaffold(
       topBar = {
@@ -63,7 +66,12 @@ fun MainScaffold(
             onNavigateHome = onNavigateHome
           )
 
-          config.showBackNav -> BackNav()
+          config.showBackNav -> BackNav(
+            onBackClick = {
+              onNavigateBack()
+            }
+
+          )
         }
       }
     ) {
@@ -140,12 +148,14 @@ fun PrimaryNav(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BackNav() {
+fun BackNav(
+  onBackClick : () -> Unit
+) {
   TopAppBar(
     title = {
       Card(
         onClick = {
-          Log.d("MainScaffold", "Back clicked")
+          onBackClick()
         },
         colors = CardDefaults.cardColors(
           containerColor = Color.Transparent,
@@ -154,8 +164,9 @@ fun BackNav() {
       ) {
         Row(
           verticalAlignment = Alignment.CenterVertically,
-          horizontalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
+          horizontalArrangement = Arrangement.spacedBy(12.dp),
+
+          ) {
           Icon(
             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
             contentDescription = "Back"

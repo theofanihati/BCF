@@ -17,4 +17,11 @@ sealed class Screen(val route : String) {
     object WorksheetPeserta : Peserta("worksheet-peserta")
     data class DetailWorksheetPeserta(val id : String) : Peserta("worksheet-peserta/$id")
   }
+
+  sealed class Mentor(route : String) : Screen(route) {
+    object PenilaianPeserta : Mentor("penilaian-peserta")
+    data class DetailPenilaianPeserta(val id : String) : Mentor("penilaian-peserta/$id")
+  }
+
+
 }

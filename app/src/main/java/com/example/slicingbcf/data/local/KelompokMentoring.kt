@@ -81,11 +81,11 @@ val headerKelompokMentorings = listOf(
   ),
   HeaderKelompokMentoring(
     name = "Jumlah Peserta",
-    weight = 1f,
+    weight = 1.2f,
   ),
   HeaderKelompokMentoring(
     name = "Jumlah Mentor",
-    weight = 1f,
+    weight = 1.2f,
   ),
   HeaderKelompokMentoring(
     name = "Jumlah Sesi",

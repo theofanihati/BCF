@@ -5,8 +5,6 @@ package com.example.slicingbcf.implementation.auth.forgot_password
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Email
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -20,6 +18,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.example.slicingbcf.constant.ColorPalette
 import com.example.slicingbcf.constant.StyledText
 import com.example.slicingbcf.implementation.auth.login.ForgotPasswordEvent
 import com.example.slicingbcf.implementation.auth.login.ForgotPasswordViewModel
@@ -140,10 +139,10 @@ fun BottomSection(
       onValueChange = { onChange(it) },
       label = "Email Peserta",
       placeholder = "contoh: @gmail.com",
-      leadingIcon = { Icon(imageVector = Icons.Filled.Email, contentDescription = "Email") },
       keyboardType = KeyboardType.Email,
       error = emailError,
-      modifier = Modifier.fillMaxWidth()
+      modifier = Modifier.fillMaxWidth(),
+      rounded = 40
     )
 
   }
@@ -160,10 +159,11 @@ fun BottomSection(
     ) {
 
       PrimaryButton(
-        text = "Masuk",
+        text = "Kirim",
         onClick = onSubmit,
         modifier = Modifier.fillMaxWidth(),
         style = StyledText.MobileSmallMedium,
+
 
         )
     }
@@ -197,7 +197,8 @@ fun GotoLogin(navigateToLogin : () -> Unit) {
         }
       },
       modifier = Modifier.clickable { navigateToLogin() },
-      style = StyledText.MobileSmallRegular
+      style = StyledText.MobileSmallRegular,
+      color = ColorPalette.Black
     )
   }
 }

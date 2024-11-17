@@ -21,9 +21,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.slicingbcf.constant.ColorPalette
 import com.example.slicingbcf.constant.StyledText
-import com.example.slicingbcf.ui.shared.CustomOutlinedTextField
 import com.example.slicingbcf.ui.shared.PrimaryButton
 import com.example.slicingbcf.ui.shared.message.SecondaryButton
+import com.example.slicingbcf.ui.shared.textfield.CustomOutlinedTextField
 
 @Composable
 fun DetailPenilaianPesertaScreen(
@@ -182,7 +182,7 @@ fun TextFieldComp(
         color = ColorPalette.PrimaryColor700,
       )
       Spacer(
-        modifier = Modifier.height(16.dp)
+        modifier = Modifier.height(20.dp)
       )
     }
 

@@ -21,6 +21,8 @@ sealed class Screen(val route : String) {
   sealed class Mentor(route : String) : Screen(route) {
     object PenilaianPeserta : Mentor("penilaian-peserta")
     data class DetailPenilaianPeserta(val id : String) : Mentor("penilaian-peserta/$id")
+    object FeedbackPeserta : Mentor("feedback-peserta")
+    
   }
 
 

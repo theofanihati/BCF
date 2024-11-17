@@ -3,6 +3,7 @@ package com.example.slicingbcf.ui.navigation
 import androidx.compose.ui.Modifier
 import androidx.navigation.*
 import androidx.navigation.compose.composable
+import com.example.slicingbcf.implementation.mentor.feedback_peserta.FeedbackPesertaScreen
 import com.example.slicingbcf.implementation.mentor.penilaian_peserta.DetailPenilaianPesertaScreen
 import com.example.slicingbcf.implementation.mentor.penilaian_peserta.PenilaianPesertaScreen
 
@@ -11,7 +12,7 @@ fun NavGraphBuilder.mentorNavGraph(
   navController : NavHostController
 ) {
   navigation(
-    startDestination = Screen.Mentor.DetailPenilaianPeserta("1").route, route = "mentor"
+    startDestination = Screen.Mentor.FeedbackPeserta.route, route = "mentor"
   ) {
     composable(
       route = Screen.Mentor.PenilaianPeserta.route
@@ -35,6 +36,13 @@ fun NavGraphBuilder.mentorNavGraph(
       DetailPenilaianPesertaScreen(
         modifier = modifier,
         id = it.arguments?.getString("id") ?: "1"
+      )
+    }
+    composable(
+      route = Screen.Mentor.FeedbackPeserta.route
+    ) {
+      FeedbackPesertaScreen(
+        modifier = modifier
       )
     }
   }

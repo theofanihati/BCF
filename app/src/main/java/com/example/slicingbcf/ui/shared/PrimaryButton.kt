@@ -18,7 +18,8 @@ fun PrimaryButton(
   onClick : () -> Unit = {},
   text : String = "Default",
   style : TextStyle = StyledText.MobileSmallRegular,
-  color: Color = ColorPalette.PrimaryColor700
+  color : Color = ColorPalette.PrimaryColor700,
+  textColor : Color = Color.White
 
 ) {
   Button(
@@ -31,6 +32,7 @@ fun PrimaryButton(
     Text(
       text,
       style = style,
+      color = textColor
     )
   }
 }

@@ -46,8 +46,15 @@ fun dropdownItemsPeserta(
       onClick = {
         navigateAndCloseSideNav(Screen.Mentor.PenilaianPeserta.route)
       },
-      route = null
-    )
+      route = Screen.Mentor.PenilaianPeserta.route
+    ),
+    DropdownItem(
+      text = "Feedback Peserta",
+      onClick = {
+        navigateAndCloseSideNav(Screen.Mentor.FeedbackPeserta.route)
+      },
+      route = Screen.Mentor.FeedbackPeserta.route
+    ),
   )
 }
 

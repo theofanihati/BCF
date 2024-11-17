@@ -29,7 +29,7 @@ import com.example.slicingbcf.ui.navigation.navigateAndClearStack
 import com.example.slicingbcf.ui.navigation.navigateSingleTop
 import com.example.slicingbcf.ui.shared.CenteredAuthImage
 import com.example.slicingbcf.ui.shared.CenteredLogo
-import com.example.slicingbcf.ui.shared.CustomOutlinedTextField
+import com.example.slicingbcf.ui.shared.textfield.CustomOutlinedTextField
 import kotlinx.coroutines.delay
 
 //@Preview(showSystemUi = true)

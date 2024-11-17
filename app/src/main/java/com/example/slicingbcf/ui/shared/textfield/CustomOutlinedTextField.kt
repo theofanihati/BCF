@@ -1,9 +1,12 @@
-package com.example.slicingbcf.ui.shared
+package com.example.slicingbcf.ui.shared.textfield
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
@@ -13,13 +16,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.slicingbcf.constant.ColorPalette
 import com.example.slicingbcf.constant.StyledText
 import com.example.slicingbcf.ui.shared.message.ErrorMessageTextField
@@ -40,9 +48,14 @@ fun CustomOutlinedTextField(
   multiLine : Boolean = false,
   maxLines : Int = 1,
   isEnabled : Boolean = true,
-
-  ) {
+  labelFocusedColor : Color = ColorPalette.OnSurfaceVariant,
+  labelFocusedStyle : TextStyle = StyledText.MobileSmallRegular,
+  labelDefaultColor : Color = ColorPalette.Monochrome300,
+  trailingIcon : @Composable (() -> Unit)? = null,
+  readOnly : Boolean = false,
+) {
   val isFocused = remember { mutableStateOf(false) }
+
 
   Column {
     OutlinedTextField(
@@ -55,17 +68,23 @@ fun CustomOutlinedTextField(
       shape = RoundedCornerShape(rounded),
       leadingIcon = leadingIcon,
       trailingIcon = {
-        if (isPasswordVisible != null) {
-          PasswordVisibilityIcon(
-            isPasswordVisible
-          )
+        when {
+          isPasswordVisible != null -> PasswordVisibilityIcon(isPasswordVisible)
+          trailingIcon != null      -> trailingIcon()
         }
       },
       visualTransformation = getVisualTransformation(isPassword, isPasswordVisible),
       keyboardOptions = getKeyboardOptions(isPassword, keyboardType),
       label = {
         TextLabel(
-          label, error, isFocused.value
+          label = label,
+          error = error,
+          isFocused = isFocused.value,
+          focusedColor = labelFocusedColor,
+          styleFocused = labelFocusedStyle,
+          defaultColor = labelDefaultColor,
+          valueNotEmpty = value.isNotEmpty()
+
         )
       },
       placeholder = { PlaceholderText(placeholder) },
@@ -73,8 +92,8 @@ fun CustomOutlinedTextField(
       isError = error != null,
       colors = getTextFieldColors(),
       enabled = isEnabled,
-
-      )
+      readOnly = readOnly
+    )
 
     AnimatedVisibility(visible = error != null) {
       error?.let {
@@ -83,6 +102,7 @@ fun CustomOutlinedTextField(
     }
   }
 }
+
 
 @Composable
 private fun PasswordVisibilityIcon(isPasswordVisible : MutableState<Boolean>) {
@@ -117,16 +137,24 @@ private fun getKeyboardOptions(
 }
 
 @Composable
-private fun TextLabel(label : String, error : String?, isFocused : Boolean) {
+private fun TextLabel(
+  label : String,
+  error : String?,
+  isFocused : Boolean,
+  focusedColor : Color = ColorPalette.OnSurfaceVariant,
+  styleFocused : TextStyle = StyledText.MobileSmallRegular,
+  defaultColor : Color = ColorPalette.Monochrome300,
+  valueNotEmpty : Boolean
+) {
   val color = when {
     error != null -> ColorPalette.Error
-    isFocused     -> ColorPalette.OnSurfaceVariant
-    else          -> ColorPalette.Monochrome300
+    isFocused     -> focusedColor
+    else          -> defaultColor
   }
-  val fontWeight = if (isFocused) FontWeight.Medium else FontWeight.Normal
+  val fontWeight = if (isFocused || valueNotEmpty) FontWeight.Medium else FontWeight.Normal
   Text(
     text = label,
-    style = StyledText.MobileSmallRegular,
+    style = styleFocused,
     color = color,
     modifier = Modifier.padding(
       horizontal = 4.dp,
@@ -155,4 +183,68 @@ private fun getTextFieldColors() : TextFieldColors {
     errorLeadingIconColor = ColorPalette.Error,
     errorTrailingIconColor = ColorPalette.Error
   )
+}
+
+
+@Composable
+fun CustomClickableTextField(
+  value : String,
+  onValueChange : (String) -> Unit,
+  label : String,
+  placeholder : String,
+  trailingIcon : @Composable (() -> Unit)? = null,
+  modifier : Modifier = Modifier,
+  readOnly : Boolean = false,
+  expanded : Boolean,
+  onClick : () -> Unit
+) {
+  Box(
+    modifier = modifier
+      .padding(16.dp)
+      .clickable(onClick = onClick)
+      .border(1.dp, Color.Gray, shape = RoundedCornerShape(8.dp)) // Menambahkan border
+      .background(Color.White, shape = RoundedCornerShape(8.dp)) // Background putih
+      .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 16.dp) // Padding di dalam Box
+  ) {
+    Column {
+      // Label di atas input
+      Text(
+        text = label,
+        style = TextStyle(
+          color = if (expanded) Color.Blue else Color.Gray,
+          fontSize = 12.sp,
+          fontWeight = FontWeight.Bold
+        ),
+        modifier = Modifier.align(Alignment.Start)
+      )
+
+      Spacer(modifier = Modifier.height(4.dp))
+
+      // Input text di bawah label
+      BasicTextField(
+        value = value,
+        onValueChange = onValueChange,
+        enabled = ! readOnly,
+        textStyle = TextStyle(fontSize = 16.sp),
+        cursorBrush = SolidColor(Color.Black),
+        modifier = Modifier.fillMaxWidth()
+      )
+
+      // Placeholder jika value kosong
+      if (value.isEmpty()) {
+        Text(
+          text = placeholder,
+          style = TextStyle(color = Color.Gray, fontSize = 16.sp),
+          modifier = Modifier.align(Alignment.Start)
+        )
+      }
+
+      // Trailing icon di sebelah kanan
+      if (trailingIcon != null) {
+        Box(modifier = Modifier.align(Alignment.End)) {
+          trailingIcon()
+        }
+      }
+    }
+  }
 }

@@ -25,10 +25,10 @@ import com.example.slicingbcf.implementation.auth.login.ForgotPasswordViewModel
 import com.example.slicingbcf.ui.navigation.Screen
 import com.example.slicingbcf.ui.shared.CenteredAuthImage
 import com.example.slicingbcf.ui.shared.CenteredLogo
-import com.example.slicingbcf.ui.shared.CustomOutlinedTextField
 import com.example.slicingbcf.ui.shared.PrimaryButton
 import com.example.slicingbcf.ui.shared.message.ErrorMessage
 import com.example.slicingbcf.ui.shared.message.SuccessMessage
+import com.example.slicingbcf.ui.shared.textfield.CustomOutlinedTextField
 
 @Composable
 fun ForgotPasswordScreen(

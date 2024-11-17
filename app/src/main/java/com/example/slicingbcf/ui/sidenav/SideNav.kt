@@ -146,7 +146,7 @@ private fun BottomSideNav(
       navigateAndCloseSideNav(Screen.Auth.Login.route)
     }
   )
- 
+
   Column(
     verticalArrangement = Arrangement.spacedBy(12.dp)
   ) {
@@ -315,20 +315,8 @@ private fun SideNavDropdownGuest(
     ),
     isActiveRoute = isActiveRoute
   )
-  SideNavDropdown(
-    "Mentor",
-    items = dropdownItemsMentor(
-      navigateAndCloseSideNav
-    ),
-    isActiveRoute = isActiveRoute
-  )
-  SideNavDropdown(
-    "Tugas",
-    items = dropdownItemsTugas(
-      navigateAndCloseSideNav
-    ),
-    isActiveRoute = isActiveRoute
-  )
+
+ 
   SideNavDropdown(
     "Kegiatan",
     items = dropdownItemsKegiatan(

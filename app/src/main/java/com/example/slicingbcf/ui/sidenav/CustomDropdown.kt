@@ -69,6 +69,13 @@ fun dropdownItemsPeserta(
       },
       route = Screen.Mentor.FeedbackPeserta.route
     ),
+    DropdownItem(
+      text = "Pengaturan",
+      onClick = {
+        navigateAndCloseSideNav(Screen.Peserta.Pengaturan.route)
+      },
+      route = Screen.Peserta.Pengaturan.route
+    ),
   )
 }
 

@@ -507,7 +507,7 @@ fun FileUploadSection(
                         style = Stroke(width = strokeWidth, pathEffect = pathEffect)
                     )
                 },
-            shape = RoundedCornerShape(12.dp), // Rounded corner shape matching border
+            shape = RoundedCornerShape(12.dp),
             colors = ButtonDefaults.outlinedButtonColors(
                 containerColor = Color.Transparent,
                 contentColor = ColorPalette.PrimaryColor400

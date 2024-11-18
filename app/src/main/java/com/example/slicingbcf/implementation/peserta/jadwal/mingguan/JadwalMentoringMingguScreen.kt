@@ -266,24 +266,24 @@ fun WeeklyCalendarView(
                     ) {
                         val events = schedule[date]?.filter { event ->
                             val (start, end) = event.first
-                            start.hour <= hour && end.hour > hour
+                            hour in start.hour until end.hour
                         }
 
                         events?.forEach { event ->
-                            val eventType = detailJadwal.firstOrNull()?.type ?: "type"
-                            val eventColor = Color(detailJadwal.first().color)
-                            val eventTime = "${detailJadwal.first().beginTime.formatTime()} - ${detailJadwal.first().endTime.formatTime()} WIB"
+                            val (timeRange, title) = event
+                            val (beginTime, endTime) = timeRange
+                            val eventColor = detailJadwal.find { it.title == title && it.beginTime == beginTime && it.endTime == endTime }?.color?.let { Color(it) } ?: ColorPalette.Monochrome100
+                            val eventTime = "${beginTime.formatTime()} - ${endTime.formatTime()} WIB"
 
                             Box(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .height(48.dp)
                                     .padding(2.dp)
-//                                    .clip(RoundedCornerShape(8.dp))
                                     .background(eventColor)
                             ) {
                                 Text(
-                                    text = "$eventTime $eventType",
+                                    text = "$eventTime $title",
                                     style = StyledText.Mobile3xsRegular,
                                     color = Color.White,
                                     modifier = Modifier.padding(4.dp),

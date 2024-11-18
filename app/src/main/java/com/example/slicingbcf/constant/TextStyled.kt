@@ -104,6 +104,12 @@ object StyledText {
     fontFamily = Poppins,
     fontWeight = FontWeight.Medium,
   )
+  val MobileMediumSemibold = TextStyle(
+    fontSize = 18.sp,
+    lineHeight = 25.2.sp,
+    fontFamily = Poppins,
+    fontWeight = FontWeight.SemiBold,
+  )
   val MobileMediumRegular = TextStyle(
     fontSize = 18.sp,
     lineHeight = 25.2.sp,

@@ -9,6 +9,7 @@ object ColorPalette {
   val OnSurfaceVariant = Color(0xFF49454F) // #49454F
   val Outline = Color(0xFF79747E) // #79747E
   val OutlineVariant = Color(0xFFCAC4D0) // #CAC4D0
+
   val Surface = Color(0xFFFEF7FF) // #FEF7FF
   val SurfaceContainerLowest = Color(0xFFFFFFFF) // #FFFFFF
   val PrimaryColor700 = Color(0xFF0D4690) // #0D4690
@@ -32,18 +33,29 @@ object ColorPalette {
   val OnError = Color(0xFFFFFFFF) // #FFFFFF
   val SecondaryColor400 = Color(0xFFFFA73C) // #FFA73C
   val Blue300 = Color(0xFF6EA8FE) // #6EA8FE
+  val StatusSuccess = Color(0xFF28A745) // #28A745
   val Success100 = Color(0xFFF2F8F5) // #F2F8F5
   val Success200 = Color(0xFFA3CFBB) // #A3CFBB
   val Success600 = Color(0xFF146C43) // #146C43
+  val Success = Color(0xCCB3F0D5)
+  val SuccessText = Color(0xFF28A745)
+  val StatusSuccessBg = Color(0xFFB3F0D5)
   val Warning100 = Color(0xFFFFFAEB) // #FFFAEB
   val Warning200 = Color(0xFFFFE69C) // #FFE69C
   val Warning700 = Color(0xFF997404) // #997404
   val PrimaryColor600 = Color(0xFF115DC0) // #115DC0
+  val Danger100 = Color(0xFFFBE9EB) // #FBE9EB
   val Danger500 = Color(0xFFDC3545) // #DC3545
   val Shade1 = Color(0xFFFCFCFC) // #FCFCFC
   val Shade2 = Color(0xFFD1D1D1) // #D1D1D1
   val Yellow = Color(0xFFE89229) // #E89229
   val Blue = Color(0xFF3B82F6) // #3B82F60xFF000000
+<<<<<<< HEAD
+=======
+  val Muted = Color(0xFF6B6B6B) // #6B6B6B
+  val Shadow = Color(0x13000000)
+  val PrimaryBorder = Color(0xFF333333) // #333333
+>>>>>>> source-repo/main
 
   // keeping the original color from figma aswell
   val colors = mapOf(
@@ -84,6 +96,11 @@ object ColorPalette {
     "Primary Color 600" to "#115DC0",
     "Danger 500" to "#DC3545",
     "Shade 1" to "#FCFCFC",
-    "Shade 2" to "#D1D1D1"
+    "Shade 2" to "#D1D1D1",
+    "Status Color" to "#DC3545",
+    "Danger 100" to "#FBE9EB",
+    "Status Success" to "#28A745",
+    "Bg Status Success" to "#B3F0D5C",
+    "Primary Border" to "#333333"
   )
 }

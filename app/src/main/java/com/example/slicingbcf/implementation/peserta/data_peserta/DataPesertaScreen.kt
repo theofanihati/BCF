@@ -7,7 +7,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -26,9 +25,13 @@ import com.example.slicingbcf.data.local.Participant
 import com.example.slicingbcf.data.local.participants
 import com.example.slicingbcf.data.local.toColor
 import com.example.slicingbcf.data.local.toDisplayText
+<<<<<<< HEAD
 import kotlin.math.ceil
 
 // TODO: WILL BE REFACTORED
+=======
+import com.example.slicingbcf.ui.shared.textfield.SearchBarCustom
+>>>>>>> source-repo/main
 
 @Composable
 @Preview(showSystemUi = true)
@@ -101,6 +104,7 @@ fun TopSection() {
 }
 
 @Composable
+<<<<<<< HEAD
 fun SearchBarCustom() {
   var query by remember { mutableStateOf("") }
 
@@ -154,6 +158,20 @@ fun BottomSection(participants : List<Participant>, headers : List<Header>) {
   val endIndex = minOf(startIndex + itemsPerPage, totalItems)
   val currentPageItems = participants.subList(startIndex, endIndex)
 
+=======
+fun BottomSection(
+  participants : List<Participant>,
+  headers : List<Header>,
+  currentPage : Int,
+  totalPage : Int,
+  totalData : Int,
+  itemsPerPage : Int,
+  onPageClick : (Int) -> Unit,
+  onPreviousClick : () -> Unit,
+  onNextClick : () -> Unit,
+  onLimitChange : (Int) -> Unit
+) {
+>>>>>>> source-repo/main
   Column(
     modifier = Modifier
       .fillMaxWidth()

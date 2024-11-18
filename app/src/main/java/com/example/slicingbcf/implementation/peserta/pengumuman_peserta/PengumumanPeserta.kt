@@ -1,16 +1,24 @@
 package com.example.slicingbcf.implementation.peserta.pengumuman_peserta
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material3.*
+<<<<<<< HEAD
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+=======
+import androidx.compose.material3.TabRowDefaults.SecondaryIndicator
+import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+>>>>>>> source-repo/main
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -23,13 +31,22 @@ import java.util.Date
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @Preview(showSystemUi = true)
+<<<<<<< HEAD
 fun PengumumanPeserta() {
   val currentTab by remember { mutableIntStateOf(0) }
+=======
+fun PengumumanPesertaScreen(
+  modifier : Modifier = Modifier
+) {
+  var currentTab by remember { mutableIntStateOf(0) }
+>>>>>>> source-repo/main
   Column(
     modifier = Modifier
       .fillMaxWidth()
   ) {
-    TopSection(currentTab)
+    TopSection(currentTab) { selectedTab ->
+      currentTab = selectedTab
+    }
     BottomSection()
   }
 
@@ -124,10 +141,17 @@ val pengumumans = listOf(
 
 @Composable
 fun TopSection(
-  currentTab : Int
+  currentTab : Int,
+  onTabSelected : (Int) -> Unit
 ) {
   Row(
+<<<<<<< HEAD
     horizontalArrangement = Arrangement.SpaceBetween
+=======
+    horizontalArrangement = Arrangement.SpaceBetween,
+    modifier = Modifier.fillMaxWidth(),
+    verticalAlignment = Alignment.CenterVertically
+>>>>>>> source-repo/main
   ) {
     Text(
       text = "Pengumuman",
@@ -143,15 +167,16 @@ fun TopSection(
       color = ColorPalette.PrimaryColor700
     )
   }
-  Tabs(currentTab)
-
+  Tabs(currentTab, onTabSelected)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Tabs(
-  currentTab : Int
+  currentTab : Int,
+  onTabSelected : (Int) -> Unit
 ) {
+<<<<<<< HEAD
   PrimaryTabRow(selectedTabIndex = currentTab) {
     Tab(
       selected = true,
@@ -176,3 +201,79 @@ fun Tabs(
   }
 
 }
+=======
+  TabRow(
+    selectedTabIndex = currentTab,
+    indicator = { tabPositions ->
+      SecondaryIndicator(
+        Modifier.tabIndicatorOffset(tabPositions[currentTab]),
+        height = 3.dp,
+        color = ColorPalette.PrimaryColor700
+      )
+    }
+  ) {
+    TabWithBadge(
+      selected = currentTab == 0,
+      onClick = { onTabSelected(0) },
+      text = "Semua",
+      badgeNumber = "5"
+    )
+    TabWithBadge(
+      selected = currentTab == 1,
+      onClick = { onTabSelected(1) },
+      text = "Berita",
+      badgeNumber = "10"
+    )
+    TabWithBadge(
+      selected = currentTab == 2,
+      onClick = { onTabSelected(2) },
+      text = "LEAD",
+      badgeNumber = "10"
+    )
+    TabWithBadge(
+      selected = currentTab == 3,
+      onClick = { onTabSelected(3) },
+      text = "BCF",
+      badgeNumber = "10"
+    )
+  }
+
+}
+
+@Composable
+fun TabWithBadge(
+  selected : Boolean = false,
+  onClick : () -> Unit = { },
+  text : String,
+  badgeNumber : String,
+) {
+  Tab(
+    selected = selected,
+    onClick = onClick,
+    text = {
+      Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(4.dp),
+        modifier = Modifier.clickable { onClick() }
+      ) {
+        Text(
+          text = text,
+          style = StyledText.MobileXsMedium,
+          color = if (selected) ColorPalette.PrimaryColor700 else ColorPalette.Monochrome400
+        )
+        Badge(
+          modifier = Modifier.size(20.dp),
+          contentColor = ColorPalette.OnError,
+        ) {
+          Text(
+            badgeNumber,
+            textAlign = TextAlign.Center,
+            style = StyledText.Mobile2xsRegular,
+            color = ColorPalette.OnError
+          )
+        }
+      }
+    }
+  )
+}
+>>>>>>> source-repo/main

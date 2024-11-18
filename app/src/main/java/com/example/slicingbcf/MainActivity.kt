@@ -15,8 +15,20 @@ class MainActivity : ComponentActivity() {
     enableEdgeToEdge()
     setContent {
       SlicingBcfTheme {
+<<<<<<< HEAD
         MainScaffold() { paddingValues ->
           DetailWorksheetPeserta(
+=======
+
+        MainScaffold(
+          config = scaffoldConfig(currentRoute),
+          isActiveRoute = ::isActiveRoute,
+          navController = navController,
+        ) { paddingValues ->
+          NavGraph(
+            navController = navController,
+            modifier = Modifier.padding(paddingValues)
+>>>>>>> source-repo/main
           )
         }
       }

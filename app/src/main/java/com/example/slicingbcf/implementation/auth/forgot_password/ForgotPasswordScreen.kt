@@ -3,6 +3,7 @@
 package com.example.slicingbcf.implementation.auth.forgot_password
 
 import androidx.compose.foundation.layout.*
+<<<<<<< HEAD
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
@@ -10,6 +11,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+=======
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+>>>>>>> source-repo/main
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.SpanStyle
@@ -19,11 +24,23 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+<<<<<<< HEAD
+=======
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
+>>>>>>> source-repo/main
 import com.example.slicingbcf.constant.ColorPalette
 import com.example.slicingbcf.constant.StyledText
 import com.example.slicingbcf.ui.shared.CenteredAuthImage
 import com.example.slicingbcf.ui.shared.CenteredLogo
+<<<<<<< HEAD
 import com.example.slicingbcf.ui.shared.CustomOutlinedTextField
+=======
+import com.example.slicingbcf.ui.shared.PrimaryButton
+import com.example.slicingbcf.ui.shared.message.ErrorMessage
+import com.example.slicingbcf.ui.shared.message.SuccessMessage
+import com.example.slicingbcf.ui.shared.textfield.CustomOutlinedTextField
+>>>>>>> source-repo/main
 
 @Composable
 @Preview(showSystemUi = true)
@@ -80,6 +97,7 @@ fun BottomSection(
     verticalArrangement = Arrangement.spacedBy(8.dp),
     modifier = Modifier
       .fillMaxWidth()
+<<<<<<< HEAD
       .padding(horizontal = 16.dp)
   ) {
     CustomOutlinedTextField(
@@ -88,6 +106,46 @@ fun BottomSection(
       label = "Email Peserta",
       placeholder = "contoh: @gmail.com"
     )
+=======
+      .padding(horizontal = 16.dp),
+
+    ) {
+
+    CustomOutlinedTextField(
+      value = email,
+      onValueChange = { onChange(it) },
+      label = "Email Peserta",
+      placeholder = "contoh: @gmail.com",
+      keyboardType = KeyboardType.Email,
+      error = emailError,
+      modifier = Modifier.fillMaxWidth(),
+      rounded = 40
+    )
+
+  }
+  Column(
+    modifier = Modifier.padding(
+      horizontal = 16.dp
+    ),
+    verticalArrangement = Arrangement.spacedBy(32.dp),
+  ) {
+    Box(
+      modifier = Modifier
+        .fillMaxWidth(),
+      contentAlignment = Alignment.Center,
+    ) {
+
+      PrimaryButton(
+        text = "Kirim",
+        onClick = onSubmit,
+        modifier = Modifier.fillMaxWidth(),
+        style = StyledText.MobileSmallMedium,
+
+
+        )
+    }
+    GotoLogin(navigateToLogin)
+>>>>>>> source-repo/main
   }
   Box(
     modifier = Modifier
@@ -130,7 +188,13 @@ fun BottomSection(
         }
 
       },
+<<<<<<< HEAD
       style = StyledText.MobileSmallRegular,
+=======
+      modifier = Modifier.clickable { navigateToLogin() },
+      style = StyledText.MobileSmallRegular,
+      color = ColorPalette.Black
+>>>>>>> source-repo/main
     )
   }
 }

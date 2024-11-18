@@ -18,14 +18,30 @@ import com.example.slicingbcf.constant.ColorPalette
 import com.example.slicingbcf.constant.StyledText
 
 @Composable
+<<<<<<< HEAD
 @Preview(showSystemUi = true)
 fun DetailPengumumanPeserta() {
   Column {
+=======
+fun DetailPengumumanPesertaScreen(
+  modifier : Modifier = Modifier,
+  id : String
+) {
+  Column(
+    modifier = modifier
+      .padding(
+        horizontal = 16.dp,
+
+        ),
+    verticalArrangement = Arrangement.spacedBy(30.dp)
+  ) {
+>>>>>>> source-repo/main
     Text(
       text = "MISI 2: Share Momen Onboarding Nasional LEAD 8",
 
       // Mobile/large/Medium
       style = StyledText.MobileLargeMedium,
+      textAlign = TextAlign.Center,
     )
     Column {
       Image(

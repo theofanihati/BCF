@@ -6,7 +6,9 @@ import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.*
+import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -33,7 +35,8 @@ fun KelompokMentoringScreen(
 ) {
   Column(
     modifier = modifier.padding(
-      horizontal = 16.dp
+      horizontal = 16.dp,
+      vertical = 44.dp
     ),
     verticalArrangement = Arrangement.spacedBy(40.dp),
 
@@ -47,6 +50,7 @@ fun KelompokMentoringScreen(
 @Composable
 fun TopSection() {
   var currentTabIndex by remember { mutableIntStateOf(0) }
+  val tabTitles = listOf("Cluster", "Desain Program")
   Column(
     verticalArrangement = Arrangement.spacedBy(8.dp)
   ) {
@@ -64,24 +68,50 @@ fun TopSection() {
       style = StyledText.MobileSmallRegular
     )
   }
-  PrimaryTabRow(selectedTabIndex = currentTabIndex) {
-    Tab(
-      selected = true,
-      onClick = {
-        if (currentTabIndex != 0) currentTabIndex = 0
 
-      },
-      text = { Text(text = "Cluster", maxLines = 2, overflow = TextOverflow.Ellipsis) }
-    )
-    Tab(
-      selected = false,
-      onClick = {
-        if (currentTabIndex != 1) currentTabIndex = 1
+  TabRow(
+    selectedTabIndex = currentTabIndex,
+    containerColor = ColorPalette.Monochrome100,
+    contentColor = ColorPalette.PrimaryColor700,
+    indicator = { tabPositions ->
+      TabRowDefaults.PrimaryIndicator(
+        color = ColorPalette.PrimaryColor700,
+        width = 46.dp,
+        shape = RoundedCornerShape(
+          topStart = 16.dp,
+          topEnd = 16.dp
+        ),
+        modifier = Modifier.tabIndicatorOffset(tabPositions[currentTabIndex])
 
-      },
-      text = { Text(text = "Desain Program", maxLines = 2, overflow = TextOverflow.Ellipsis) }
-    )
+      )
+    }
+
+
+  ) {
+    tabTitles.forEachIndexed { index, title ->
+      Tab(
+        selected = currentTabIndex == index,
+        onClick = { currentTabIndex = index },
+        text = { Text(text = title, maxLines = 2, overflow = TextOverflow.Ellipsis) },
+
+        )
+    }
   }
+  TabContent(currentTabIndex)
+
+}
+
+@Composable
+fun TabContent(
+  currentTabIndex : Int
+) {
+
+  val textMentor = if (currentTabIndex == 0) {
+    "Mentor Cluster • Kesehatan"
+  } else {
+    "Mentor Desain Program • Pendidikan"
+  }
+
   Row(
     horizontalArrangement = Arrangement.spacedBy(20.dp)
   ) {
@@ -101,7 +131,7 @@ fun TopSection() {
         verticalArrangement = Arrangement.spacedBy(4.dp)
       ) {
         Text(
-          text = "Mentor Cluster • Kesehatan",
+          text = textMentor,
 
           style = StyledText.MobileSmallRegular
         )
@@ -115,7 +145,6 @@ fun TopSection() {
   }
 }
 
-// TODO: Implement BottomSection isinya table kelompok mentoring
 @Composable
 fun BottomSection() {
   ScrollableTable(kelompoksMentoring)
@@ -123,15 +152,13 @@ fun BottomSection() {
 }
 
 @Composable
-fun ScrollableTable(
-  kelompoksMentoring : List<KelompokMentoring>
-) {
+fun ScrollableTable(kelompoksMentoring : List<KelompokMentoring>) {
   val scrollState = rememberScrollState()
 
   Column(
-    modifier = Modifier
-      .fillMaxWidth()
+    modifier = Modifier.fillMaxWidth()
   ) {
+<<<<<<< HEAD
     Box(
       modifier = Modifier
         .padding()
@@ -148,6 +175,9 @@ fun ScrollableTable(
           .padding(8.dp)
       )
     }
+=======
+    HeaderTable()
+>>>>>>> source-repo/main
 
     Box(
       modifier = Modifier
@@ -157,12 +187,43 @@ fun ScrollableTable(
       Column {
         HeaderRow()
         kelompoksMentoring.forEachIndexed { i, kelompokMentoring ->
-          KelompokMentoringRow(kelompokMentoring, i)
+          KelompokMentoringRow(
+            kelompokMentoring = kelompokMentoring,
+            i = i,
+            isLastRow = i == kelompoksMentoring.size - 1
+          )
         }
       }
     }
   }
+}
 
+
+@Composable
+private fun HeaderTable() {
+  Box(
+    modifier = Modifier
+      .fillMaxWidth()
+      .background(ColorPalette.F5F9FE)
+      .border(
+        width = 1.dp,
+        color = ColorPalette.Monochrome300,
+        shape = RoundedCornerShape(
+          topStart = 8.dp,
+          topEnd = 8.dp
+        )
+      ),
+  ) {
+    Text(
+      text = "Kelompok Mentoring",
+      style = StyledText.MobileXsBold,
+      color = ColorPalette.Monochrome900,
+      textAlign = TextAlign.Center,
+      modifier = Modifier
+        .fillMaxWidth()
+        .padding(12.dp)
+    )
+  }
 }
 
 @Composable
@@ -172,11 +233,14 @@ fun HeaderRow(
     modifier = Modifier.background(ColorPalette.F5F9FE)
   ) {
     headerKelompokMentorings.forEach { header ->
+
       TableCell(
         text = header.name,
         isHeader = true,
         weight = header.weight,
+        onClickSort = { }
       )
+
     }
   }
 }
@@ -186,29 +250,69 @@ fun TableCell(
   text : String,
   isHeader : Boolean = false,
   weight : Float,
-  color : Color = ColorPalette.Monochrome900
+  color : Color = ColorPalette.Monochrome900,
+  onClickSort : () -> Unit
 ) {
-  Text(
-    text = text,
-    style = if (isHeader) StyledText.MobileXsBold else StyledText.MobileXsRegular,
-    color = color,
+  Row(
+    verticalAlignment = Alignment.CenterVertically,
     modifier = Modifier
       .width(120.dp * weight)
-      .padding(8.dp)
-  )
+      .padding(12.dp),
+    horizontalArrangement = Arrangement.spacedBy(6.dp)
+  ) {
+    Text(
+      text = text,
+      style = if (isHeader) StyledText.MobileXsBold else StyledText.MobileXsRegular,
+      color = color,
+
+      )
+    when {
+      (isHeader && text != "No") -> {
+        IconButton(
+          onClick = onClickSort,
+          modifier = Modifier.size(9.dp)
+        ) {
+          Icon(
+            painter = painterResource(id = R.drawable.sort),
+            contentDescription = "Sort",
+            tint = ColorPalette.Monochrome900,
+            modifier = Modifier.fillMaxSize()
+          )
+        }
+      }
+    }
+  }
 }
 
 @Composable
-fun KelompokMentoringRow(kelompokMentoring : KelompokMentoring, i : Int) {
+fun KelompokMentoringRow(
+  kelompokMentoring : KelompokMentoring,
+  i : Int,
+  isLastRow : Boolean
+) {
   val backgroundColor = if (i % 2 == 0) {
     MaterialTheme.colorScheme.surface
   } else {
     MaterialTheme.colorScheme.surfaceVariant
   }
 
-  // TODO
   Row(
+<<<<<<< HEAD
     modifier = Modifier.background(backgroundColor)
+=======
+    modifier = Modifier
+      .background(backgroundColor)
+      .then(
+        if (! isLastRow) {
+          Modifier.border(
+            width = 1.dp,
+            color = ColorPalette.Monochrome300,
+          )
+        } else {
+          Modifier
+        }
+      )
+>>>>>>> source-repo/main
   ) {
     headerKelompokMentorings.forEach { header ->
       TableCell(
@@ -223,12 +327,11 @@ fun KelompokMentoringRow(kelompokMentoring : KelompokMentoring, i : Int) {
         },
         isHeader = false,
         weight = header.weight,
-        color = ColorPalette.Monochrome900
+        color = ColorPalette.Monochrome900,
+        onClickSort = { }
       )
     }
   }
-
-
 }
 
 

@@ -23,7 +23,7 @@ import com.example.slicingbcf.constant.ColorPalette
 import com.example.slicingbcf.constant.StyledText
 import com.example.slicingbcf.ui.shared.PrimaryButton
 import com.example.slicingbcf.ui.shared.message.SecondaryButton
-import com.example.slicingbcf.ui.shared.textfield.CustomOutlinedTextField
+import com.example.slicingbcf.ui.shared.textfield.TextFieldWithTitle
 
 @Composable
 fun DetailPenilaianPesertaScreen(
@@ -98,7 +98,7 @@ fun FormSection(
       ),
       verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
-      TextFieldComp(
+      TextFieldWithTitle(
         heading = "Hal-Hal Yang Perlu Ditingkatkan",
         title = "Masukan Mentor Cluster",
         onChange = {},
@@ -107,7 +107,7 @@ fun FormSection(
         label = "Kegiatan",
         isEdit = isEdit
       )
-      TextFieldComp(
+      TextFieldWithTitle(
         title = "Umpan Balik Mentor Desain Program",
         onChange = {},
         value = "",
@@ -115,7 +115,7 @@ fun FormSection(
         label = "Umpan",
         isEdit = isEdit
       )
-      TextFieldComp(
+      TextFieldWithTitle(
         heading = "Hal-hal Yang Dibahas Selama Kegiatan Mentoring",
         title = "Masukan Mentor Desain Program",
         onChange = {},
@@ -124,7 +124,7 @@ fun FormSection(
         label = "Kegiatan",
         isEdit = isEdit
       )
-      TextFieldComp(
+      TextFieldWithTitle(
         title = "Umpan Balik Mentor Desain Program",
         onChange = {},
         value = "",
@@ -163,52 +163,6 @@ fun FormSection(
   }
 }
 
-
-@Composable
-fun TextFieldComp(
-  heading : String? = null,
-  title : String,
-  onChange : (String) -> Unit,
-  value : String,
-  placeholder : String,
-  label : String,
-  isEdit : Boolean
-) {
-  Column {
-    heading?.let {
-      Text(
-        text = heading,
-        style = StyledText.MobileBaseSemibold,
-        color = ColorPalette.PrimaryColor700,
-      )
-      Spacer(
-        modifier = Modifier.height(20.dp)
-      )
-    }
-
-    Text(
-      text = title,
-      style = StyledText.MobileBaseMedium,
-      color = ColorPalette.Black,
-    )
-    Spacer(
-      modifier = Modifier.height(8.dp)
-    )
-
-    CustomOutlinedTextField(
-      value = value,
-      onValueChange = onChange,
-      modifier = Modifier
-        .fillMaxWidth(),
-      multiLine = true,
-      maxLines = 5,
-
-      placeholder = placeholder,
-      label = label,
-      isEnabled = isEdit
-    )
-  }
-}
 
 @Composable
 fun TopSection(

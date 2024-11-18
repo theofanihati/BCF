@@ -1,7 +1,10 @@
 package com.example.slicingbcf.implementation.mentor.feedback_peserta
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
@@ -9,14 +12,17 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.example.slicingbcf.R
 import com.example.slicingbcf.constant.ColorPalette
 import com.example.slicingbcf.constant.StyledText
 import com.example.slicingbcf.ui.animations.AnimatedContentSlide
 import com.example.slicingbcf.ui.shared.PrimaryButton
 import com.example.slicingbcf.ui.shared.rating.RatingField
 import com.example.slicingbcf.ui.shared.textfield.CustomOutlinedTextFieldDropdown
+import com.example.slicingbcf.ui.shared.textfield.TextFieldWithTitle
 
 // TODO: jadiin best practice tentang animasi dan suruh jelasin tentang animasi nya
 @Composable
@@ -100,19 +106,11 @@ fun SecondScreen(
     verticalArrangement = Arrangement.spacedBy(24.dp)
   ) {
     SecondScreenTopSection()
-    SecondBottomSection()
+    SecondBottomSection(
+      onBackClick = onBackClick
+    )
 
-    Box(
-      modifier = Modifier.fillMaxWidth(),
-      contentAlignment = Alignment.CenterStart
-    ) {
-      PrimaryButton(
-        text = "Kembali",
-        onClick = onBackClick,
-        style = StyledText.MobileBaseMedium,
-        textColor = ColorPalette.Monochrome10,
-      )
-    }
+
   }
 }
 
@@ -224,5 +222,103 @@ fun SecondScreenTopSection() {
 }
 
 @Composable
-fun SecondBottomSection() {
+fun SecondBottomSection(
+  onBackClick : () -> Unit
+) {
+  Column(
+    verticalArrangement = Arrangement.spacedBy(24.dp)
+  ) {
+    FormSection()
+    Row(
+      modifier = Modifier.fillMaxWidth(),
+      horizontalArrangement = Arrangement.End
+    ) {
+      PrimaryButton(
+        text = "Kembali",
+        onClick = onBackClick,
+        style = StyledText.MobileBaseMedium,
+        textColor = ColorPalette.PrimaryColor700,
+        color = ColorPalette.SurfaceContainerLowest,
+      )
+      PrimaryButton(
+        text = "Kirim",
+        onClick = onBackClick,
+        style = StyledText.MobileBaseMedium,
+        textColor = ColorPalette.Monochrome10,
+      )
+    }
+  }
+}
+
+
+@Composable
+fun FormSection(
+) {
+  Column(
+    verticalArrangement = Arrangement.spacedBy(20.dp)
+  ) {
+    TextFieldWithTitle(
+      heading = "Hal-hal yang dibahas selama kegiatan mentoring",
+      title = "Hal-hal yang Dibahas Selama Kegiatan Mentoring*",
+      onChange = {},
+      value = "",
+      placeholder = "Dibahas",
+      label = "Kegiatan",
+      styleTitle = StyledText.MobileSmallMedium
+    )
+    TextFieldWithTitle(
+      title = "Silakan sampaikan tantangan utama yang dihadapi dari setiap lembaga*",
+      onChange = {},
+      value = "",
+      placeholder = "Umpan Balik",
+      label = "Umpan",
+      styleTitle = StyledText.MobileSmallMedium
+    )
+    Column(
+      verticalArrangement = Arrangement.spacedBy(12.dp),
+
+      ) {
+      Text(
+        text = "Dokumentasi Sesi Mentoring Cluster*",
+        style = StyledText.MobileSmallMedium,
+        color = ColorPalette.Black,
+      )
+      Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+          .fillMaxWidth()
+          .border(
+            width = 1.dp,
+            color = ColorPalette.Monochrome500,
+            shape = RoundedCornerShape(16.dp)
+          )
+          .padding(
+            16.dp
+          )
+      ) {
+        Image(
+          painter = painterResource(
+            R.drawable.icon_wrapper
+          ),
+          contentDescription = "",
+          modifier = Modifier.size(48.dp)
+        )
+        Text(
+          text = "Klik atau tarik file ke area ini untuk mengunggahnya",
+
+          style = StyledText.MobileXsMedium,
+        )
+        Text(
+          text = "Format file yang dapat diunggah hanya PDF, dengan ukuran maksimal 5 MB",
+          style = StyledText.Mobile2xsRegular,
+          color = ColorPalette.Monochrome300,
+          textAlign = TextAlign.Center
+        )
+
+      }
+    }
+
+  }
+
 }

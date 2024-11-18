@@ -43,7 +43,6 @@ fun PreviewWeeklyCalendarScreen() {
     )
 }
 
-
 @Composable
 fun WeeklyCalendarScreen(
     userName: String,

@@ -9,10 +9,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,6 +29,7 @@ import com.example.slicingbcf.constant.StyledText
 import com.example.slicingbcf.ui.navigation.Screen
 import com.example.slicingbcf.ui.navigation.navigateSingleTop
 import com.example.slicingbcf.ui.shared.PrimaryButton
+import com.example.slicingbcf.ui.shared.dialog.CustomAlertDialog
 
 @Composable
 fun SideNav(
@@ -57,7 +55,6 @@ fun SideNav(
       )
       .animateContentSize()
       .pointerInput(Unit) {
-        // intercept touch event
         if (isSideNavVisible) {
           detectTapGestures(
             onTap = {}
@@ -80,7 +77,6 @@ fun SideNavContent(
     closeSideNavVisible()
     navController.navigateSingleTop(route)
   }
-  val scroll = rememberScrollState()
   Column(
     modifier = Modifier
       .fillMaxHeight()
@@ -89,10 +85,8 @@ fun SideNavContent(
         bottom = 60.dp,
         start = 40.dp,
         end = 26.dp
-      )
-      .verticalScroll(
-        scroll
       ),
+
     verticalArrangement = Arrangement.spacedBy(36.dp)
   ) {
 
@@ -144,15 +138,23 @@ private fun TopSideNav() {
 
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun BottomSideNav(
   navigateAndCloseSideNav : (String) -> Unit,
   isActiveRoute : (String) -> Boolean
 ) {
+
+  val scroll = rememberScrollState()
+
+  var showLogoutDialog by remember { mutableStateOf(false) }
   Column(
     modifier = Modifier
-      .fillMaxHeight(),
-    verticalArrangement = Arrangement.SpaceBetween
+      .fillMaxHeight()
+      .verticalScroll(
+        scroll
+      ),
+    verticalArrangement = Arrangement.SpaceBetween,
   ) {
     Column(
       verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -174,6 +176,7 @@ private fun BottomSideNav(
       verticalArrangement = Arrangement.spacedBy(16.dp),
       modifier = Modifier
         .clickable {
+          showLogoutDialog = true
         }
     ) {
       Text(
@@ -191,6 +194,21 @@ private fun BottomSideNav(
       )
     }
   }
+
+  if (showLogoutDialog) {
+    CustomAlertDialog(
+      title = "Apakah anda yakin ingin keluar?",
+      confirmButtonText = "Keluar",
+      dismissButtonText = "Batal",
+      onConfirm = {
+        showLogoutDialog = false
+      },
+      onDismiss = {
+        showLogoutDialog = false
+      }
+    )
+  }
+
 }
 
 

@@ -17,6 +17,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -96,10 +97,18 @@ fun SideNavContent(
   ) {
 
     TopSideNav()
-    BottomSideNav(
-      navigateAndCloseSideNav,
-      isActiveRoute
-    )
+
+    Box(
+      modifier = Modifier
+        .fillMaxHeight()
+        .weight(1f)
+    ) {
+      BottomSideNav(
+        navigateAndCloseSideNav = navigateAndCloseSideNav,
+        isActiveRoute = isActiveRoute
+      )
+    }
+
 
   }
 }
@@ -140,22 +149,50 @@ private fun BottomSideNav(
   navigateAndCloseSideNav : (String) -> Unit,
   isActiveRoute : (String) -> Boolean
 ) {
-  PrimaryButton(
-    text = "Masuk",
-    onClick = {
-      navigateAndCloseSideNav(Screen.Auth.Login.route)
-    }
-  )
-
   Column(
-    verticalArrangement = Arrangement.spacedBy(12.dp)
+    modifier = Modifier
+      .fillMaxHeight(),
+    verticalArrangement = Arrangement.SpaceBetween
   ) {
-    SideNavDropdownGuest(
-      navigateAndCloseSideNav,
-      isActiveRoute
-    )
+    Column(
+      verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+      PrimaryButton(
+        text = "Masuk",
+        onClick = {
+          navigateAndCloseSideNav(Screen.Auth.Login.route)
+        }
+      )
+      SideNavDropdownGuest(
+        navigateAndCloseSideNav,
+        isActiveRoute
+      )
+    }
+
+
+    Column(
+      verticalArrangement = Arrangement.spacedBy(16.dp),
+      modifier = Modifier
+        .clickable {
+        }
+    ) {
+      Text(
+        text = "Logout",
+        style = StyledText.MobileBaseMedium,
+        color = Color(0xFFB02A37),
+        modifier = Modifier
+          .padding(
+            horizontal = 16.dp,
+          )
+          .padding(top = 16.dp)
+      )
+      HorizontalDivider(
+        modifier = Modifier.fillMaxWidth()
+      )
+    }
   }
 }
+
 
 @Composable
 private fun SideNavDropdown(
@@ -316,7 +353,7 @@ private fun SideNavDropdownGuest(
     isActiveRoute = isActiveRoute
   )
 
- 
+
   SideNavDropdown(
     "Kegiatan",
     items = dropdownItemsKegiatan(

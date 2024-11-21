@@ -69,6 +69,13 @@ fun scaffoldConfig(currentRoute : String?)
       )
     }
 
+    "detail-pitchdeck/{id}"            -> {
+      ScaffoldConfig(
+        showMainNav = false,
+        showBackNav = true,
+      )
+    }
+
     else                             -> ScaffoldConfig()
 
   }

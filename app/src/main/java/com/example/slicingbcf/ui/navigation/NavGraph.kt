@@ -40,6 +40,13 @@ fun NavGraph(
       modifier = modifier,
       navController = navController
     )
-
+    tugasNavGraph(
+      modifier = modifier,
+      navController = navController
+    )
+    kegiatanNavGraph(
+      modifier = modifier,
+      navController = navController
+    )
   }
 }

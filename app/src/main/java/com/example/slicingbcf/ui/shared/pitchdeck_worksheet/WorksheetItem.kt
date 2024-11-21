@@ -61,6 +61,7 @@ fun WorksheetItem(
         contentDescription = ""
       )
     }
+
     Column(
       modifier = Modifier.weight(1f),
 
@@ -77,6 +78,7 @@ fun WorksheetItem(
         color = ColorPalette.OnSurface
       )
     }
+
     IconButton(
       onClick = { /*todo*/ }
     ) {

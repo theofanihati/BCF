@@ -22,14 +22,15 @@ import java.util.*
 @Composable
 @Preview(showSystemUi = true)
 fun ListPitchDeckScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onPitchDeckClick: (String) -> Unit = {}
 ) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(40.dp),
     ) {
         TopSection { title ->
-            println("Navigating to details of: $title")
+            onPitchDeckClick(title)
         }
     }
 }

@@ -18,10 +18,11 @@ import androidx.compose.ui.unit.dp
 import com.example.slicingbcf.R
 import com.example.slicingbcf.constant.ColorPalette
 import com.example.slicingbcf.constant.StyledText
+import com.example.slicingbcf.data.local.PitchDeck
+import com.example.slicingbcf.data.local.pitchDeck
 import com.example.slicingbcf.data.local.worksheetsPeserta
 import com.example.slicingbcf.ui.shared.message.SecondaryButton
 import com.example.slicingbcf.ui.shared.pitchdeck_worksheet.WorksheetItem
-
 
 @Composable
 fun DetailPitchdeckScreen(
@@ -38,7 +39,6 @@ fun DetailPitchdeckScreen(
         top = 24.dp
       ),
     verticalArrangement = Arrangement.spacedBy(24.dp),
-
 
     ) {
     Text(
@@ -81,7 +81,7 @@ fun DetailPitchdeckScreen(
             contentDescription = "",
           )
           Text(
-            text = "bit.ly/pitchdeckcapaiantpt",
+            text = pitchDeck[0].link,
             style = StyledText.MobileSmallRegular,
             color = ColorPalette.PrimaryColor400
           )

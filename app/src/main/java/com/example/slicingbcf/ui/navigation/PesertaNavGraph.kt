@@ -9,6 +9,8 @@ import com.example.slicingbcf.implementation.peserta.kelompok_mentoring.Kelompok
 import com.example.slicingbcf.implementation.peserta.pengaturan.PengaturanScreen
 import com.example.slicingbcf.implementation.peserta.pengumuman_peserta.DetailPengumumanPesertaScreen
 import com.example.slicingbcf.implementation.peserta.pengumuman_peserta.PengumumanPesertaScreen
+import com.example.slicingbcf.implementation.peserta.pitch_deck.ListPitchDeckScreen
+import com.example.slicingbcf.implementation.peserta.pitch_deck.PitchDeckDetailScreen
 import com.example.slicingbcf.implementation.peserta.pusat_informasi.DetailPusatInformasiScreen
 import com.example.slicingbcf.implementation.peserta.pusat_informasi.PusatInformasiScreen
 import com.example.slicingbcf.implementation.peserta.worksheet_peserta.DetailWorksheetPesertaScreen
@@ -48,6 +50,7 @@ fun NavGraphBuilder.pesertaNavGraph(
         ), id = id
       )
     }
+
     composable(Screen.Peserta.WorksheetPeserta.route) {
       val onNavigateDetailWorksheetPeserta = { id : String ->
         navController.navigateSingleTop("worksheet-peserta/$id")
@@ -98,6 +101,4 @@ fun NavGraphBuilder.pesertaNavGraph(
       )
     }
   }
-
-
 }

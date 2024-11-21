@@ -29,7 +29,8 @@ import java.util.*
 @Composable
 @Preview(showSystemUi = true)
 fun PitchDeckDetailScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    id: String = "1"
 ) {
     var tautanPeserta by remember { mutableStateOf(TextFieldValue("")) }
 

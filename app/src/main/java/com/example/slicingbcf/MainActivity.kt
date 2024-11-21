@@ -30,7 +30,6 @@ class MainActivity : ComponentActivity() {
         return currentRoute == route
       }
 
-
       SlicingBcfTheme {
 
         MainScaffold(

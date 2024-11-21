@@ -112,13 +112,6 @@ fun dropdownItemsMentor(
       route = null
     ),
     DropdownItem(
-      text = "Pitchdeck",
-      onClick = {
-        navigateAndCloseSideNav(Screen.Mentor.Pitchdeck.route)
-      },
-      route = Screen.Mentor.Pitchdeck.route
-    ),
-    DropdownItem(
       text = "Forum Diskusi",
       onClick = {
         navigateAndCloseSideNav(Screen.Mentor.ForumDiskusi.route)
@@ -161,18 +154,11 @@ fun dropdownItemsTugas(
       route = null
     ),
     DropdownItem(
-      text = "Lembar Kerja",
-      onClick = {
-        Log.d("SideNav", "Lembar Kerja clicked")
-      },
-      route = null
-    ),
-    DropdownItem(
       text = "Pitch Deck",
       onClick = {
-        Log.d("SideNav", "Pitch Deck clicked")
+        navigateAndCloseSideNav(Screen.Tugas.PitchDeck.route)
       },
-      route = null
+      route = Screen.Tugas.PitchDeck.route
     ),
   )
 }

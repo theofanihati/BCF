@@ -4,6 +4,8 @@ import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 //import androidx.compose.foundation.layout.FlowColumnScopeInstance.weight
 import androidx.compose.material3.*
 import androidx.compose.material3.ButtonDefaults.shape
@@ -34,14 +36,19 @@ fun PitchDeckDetailScreen(
     Column(
         modifier = modifier
             .padding(16.dp)
-            .fillMaxSize(),
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         val currentPitchDeck = pitchDeck.first()
+
+        Spacer(modifier = Modifier.height(56.dp))
         TopSection(
             pitchDeck = currentPitchDeck,
             tautanPeserta = tautanPeserta,
             onTautanChange = { tautanPeserta = it },)
+
+        Spacer(modifier = Modifier.height(56.dp))
     }
 }
 
@@ -160,13 +167,14 @@ fun InfoRow(
         Text(
             text = label,
             style = StyledText.MobileBaseSemibold,
-            textAlign = TextAlign.Left,
+            textAlign = TextAlign.Justify,
             color = ColorPalette.PrimaryColor700,
         )
         Text(
             text = value,
             style = MaterialTheme.typography.bodyMedium,
-            color = valueColor
+            color = valueColor,
+            textAlign = TextAlign.Justify
         )
     }
 }

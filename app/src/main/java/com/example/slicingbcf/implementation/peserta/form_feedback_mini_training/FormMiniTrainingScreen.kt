@@ -3,7 +3,9 @@ package com.example.slicingbcf.implementation.peserta.form_feedback_mini_trainin
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.*
@@ -34,9 +36,11 @@ fun FormMiniTrainingScreen(
     Column(
         modifier = modifier
             .padding(16.dp)
-            .fillMaxSize(),
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
+        Spacer(modifier = Modifier.height(56.dp))
         Text(
             text = "Submisi Pitch Deck",
             style = StyledText.MobileLargeSemibold,
@@ -95,7 +99,7 @@ fun FormMiniTrainingScreen(
             textAlign = TextAlign.Justify,
         )
 
-        (1..3).forEach { speakerNumber ->
+        (1..2).forEach { speakerNumber ->
             FeedbackEvaluationSection(
                 speakerLabel = "Pemateri $speakerNumber",
             )
@@ -108,7 +112,7 @@ fun FormMiniTrainingScreen(
             textAlign = TextAlign.Justify,
         )
 
-        (1..3).forEach { speakerNumber ->
+        (1..2).forEach { speakerNumber ->
             FeedbackEvaluationSection(
                 speakerLabel = "Pemateri $speakerNumber",
             )
@@ -121,7 +125,7 @@ fun FormMiniTrainingScreen(
             textAlign = TextAlign.Justify,
         )
 
-        (1..3).forEach { speakerNumber ->
+        (1..2).forEach { speakerNumber ->
             FeedbackEvaluationSection(
                 speakerLabel = "Pemateri $speakerNumber",
             )
@@ -157,6 +161,7 @@ fun FormMiniTrainingScreen(
         ) {
             Text("Simpan", style = StyledText.MobileBaseSemibold)
         }
+        Spacer(modifier = Modifier.height(56.dp))
     }
 }
 
@@ -245,7 +250,7 @@ fun StyledDropdownField(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = if (value.isEmpty()) "Masukkan nama" else value,
+                    text = if (value.isEmpty()) "Pilih Hari" else value,
                     style = StyledText.MobileSmallRegular,
                     color = if (value.isEmpty()) ColorPalette.Monochrome400 else ColorPalette.Monochrome900
                 )

@@ -35,6 +35,13 @@ fun dropdownItemsPeserta(
 ) : List<DropdownItem> {
   return listOf(
     DropdownItem(
+      text = "Pusat Informasi",
+      onClick = {
+        navigateAndCloseSideNav(Screen.Peserta.PusatInformasi.route)
+      },
+      route = Screen.Peserta.PusatInformasi.route
+    ),
+    DropdownItem(
       text = "Data Peserta",
       onClick = {
         navigateAndCloseSideNav(Screen.Peserta.DataPeserta.route)
@@ -76,6 +83,13 @@ fun dropdownItemsPeserta(
       },
       route = Screen.Peserta.Pengaturan.route
     ),
+    DropdownItem(
+      text = "Worksheet Peserta",
+      onClick = {
+        navigateAndCloseSideNav(Screen.Peserta.WorksheetPeserta.route)
+      },
+      route = Screen.Peserta.WorksheetPeserta.route
+    ),
   )
 }
 
@@ -96,7 +110,28 @@ fun dropdownItemsMentor(
         Log.d("SideNav", "Umpan Balik Mentor clicked")
       },
       route = null
-    )
+    ),
+    DropdownItem(
+      text = "Pitchdeck",
+      onClick = {
+        navigateAndCloseSideNav(Screen.Mentor.Pitchdeck.route)
+      },
+      route = Screen.Mentor.Pitchdeck.route
+    ),
+    DropdownItem(
+      text = "Forum Diskusi",
+      onClick = {
+        navigateAndCloseSideNav(Screen.Mentor.ForumDiskusi.route)
+      },
+      route = Screen.Mentor.ForumDiskusi.route
+    ),
+    DropdownItem(
+      text = "Data Peserta",
+      onClick = {
+        navigateAndCloseSideNav(Screen.Mentor.DataPeserta.route)
+      },
+      route = Screen.Mentor.DataPeserta.route
+    ),
   )
 }
 

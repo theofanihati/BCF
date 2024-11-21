@@ -6,8 +6,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.ArrowForwardIos
@@ -36,17 +38,26 @@ import com.example.slicingbcf.data.local.profilLembaga
 import com.example.slicingbcf.R.drawable
 import androidx.compose.runtime.setValue
 
+@Preview(showSystemUi = true)
+@Composable
+fun PreviewProfilLembagaScreen() {
+    ProfilLembagaScreen(profile = profilLembaga[0])
+}
+
 @Composable
 fun ProfilLembagaScreen(
     profile: ProfilLembaga,
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = modifier.padding(16.dp),
+        modifier = modifier.padding(16.dp)
+            .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(40.dp)
     ) {
+        Spacer(modifier = Modifier.height(56.dp))
         TopSection(profile = profile)
         BottomSection(profile = profile)
+        Spacer(modifier = Modifier.height(56.dp))
     }
 }
 
@@ -352,8 +363,3 @@ val wilayah_headers = listOf(
     Header("Rincian", 0.5f)
 )
 
-@Preview(showSystemUi = true)
-@Composable
-fun PreviewProfilLembagaScreen() {
-    ProfilLembagaScreen(profile = profilLembaga[0])
-}

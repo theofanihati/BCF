@@ -1,28 +1,26 @@
 package com.example.slicingbcf.implementation.peserta.pengumuman_peserta
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.example.slicingbcf.R
 import com.example.slicingbcf.constant.ColorPalette
 import com.example.slicingbcf.constant.StyledText
 
+
 @Composable
-<<<<<<< HEAD
-@Preview(showSystemUi = true)
-fun DetailPengumumanPeserta() {
-  Column {
-=======
 fun DetailPengumumanPesertaScreen(
   modifier : Modifier = Modifier,
   id : String
@@ -35,15 +33,14 @@ fun DetailPengumumanPesertaScreen(
         ),
     verticalArrangement = Arrangement.spacedBy(30.dp)
   ) {
->>>>>>> source-repo/main
     Text(
       text = "MISI 2: Share Momen Onboarding Nasional LEAD 8",
-
-      // Mobile/large/Medium
       style = StyledText.MobileLargeMedium,
       textAlign = TextAlign.Center,
     )
-    Column {
+    Column(
+      verticalArrangement = Arrangement.spacedBy(20.dp)
+    ) {
       Image(
         painter = painterResource(id = R.drawable.ex_pengumuman),
         contentDescription = "Pengumuman",
@@ -53,33 +50,45 @@ fun DetailPengumumanPesertaScreen(
             height = 147.dp
           )
       )
-      Row {
-        Icon(
-          Icons.Outlined.Favorite,
-          contentDescription = "" // Add a valid content description
-        )
-        Text(
-          text = "55",
-
-          // Mobile/small/Regular
-          style = StyledText.MobileSmallRegular,
-        )
+      Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(12.dp)
+      ) {
+        Row(
+          verticalAlignment = Alignment.CenterVertically,
+          horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+          Icon(
+            Icons.Outlined.Favorite,
+            contentDescription = ""
+          )
+          Text(
+            text = "55",
+            style = StyledText.MobileSmallRegular,
+            color = ColorPalette.Monochrome400
+          )
+        }
         Text(
           text = "31 Maret 2023, 10.00 WIB",
-
-          // Mobile/small/Regular
           style = StyledText.MobileSmallRegular,
+          color = ColorPalette.Monochrome400
         )
 
       }
     }
     Text(
-      text = "31 Maret 2023, 10.00 WIB",
+      text = "Teman-teman jangan lupa untuk share momen onboarding nasional di media sosial IG/TikTok/LinkedIn dengan ketentuan di atas. Setiap misi harus disubmit pada link formulir misi untuk nantinya akhir semester diakumulasikan menjadi nilai tambahan bagi nilai akhir mahasiswa 🥰🙏",
 
-      // Mobile/small/Regular
-      style = StyledText.MobileSmallRegular,
+      // Mobile/base/Regular
+      style = StyledText.MobileBaseRegular,
+      color = ColorPalette.Black,
+      textAlign = TextAlign.Center
     )
-    Column {
+    Column(
+      horizontalAlignment = Alignment.CenterHorizontally,
+      verticalArrangement = Arrangement.spacedBy(2.dp),
+      modifier = Modifier.fillMaxWidth()
+    ) {
       Text(
         text = "Link Submit MISI:",
         style = StyledText.MobileBaseMedium
@@ -91,8 +100,17 @@ fun DetailPengumumanPesertaScreen(
       )
     }
     Text(
-      text = "Batas waktu submit MISI 2 adalah Minggu, 7 April 2023 pukul 23.30 WIB. Setelah itu link formulir submit akan ditutup dan dibuka kembali di misi selanjutnya.",
-      style = StyledText.MobileBaseRegular
+      text = buildAnnotatedString {
+        append("Batas waktu submit MISI 2 adalah ")
+        withStyle(
+          style = SpanStyle(color = ColorPalette.SecondaryColor400)
+        ) {
+          append("Minggu, 7 April 2023 pukul 23.30 WIB.")
+        }
+        append("Setelah itu link formulir submit akan ditutup dan dibuka kembali di misi selanjutnya.")
+      },
+      style = StyledText.MobileBaseRegular,
+      textAlign = TextAlign.Center,
     )
 
   }

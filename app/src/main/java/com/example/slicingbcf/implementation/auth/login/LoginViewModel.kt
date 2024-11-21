@@ -1,8 +1,5 @@
 package com.example.slicingbcf.implementation.auth.login
 
-<<<<<<< HEAD
-class LoginViewModel {
-=======
 import androidx.lifecycle.ViewModel
 import com.example.slicingbcf.domain.validator.ValidationResult
 import com.example.slicingbcf.domain.validator.validateEmail
@@ -89,5 +86,4 @@ class LoginViewModel @Inject constructor() : ViewModel() {
   }
 
 
->>>>>>> source-repo/main
 }

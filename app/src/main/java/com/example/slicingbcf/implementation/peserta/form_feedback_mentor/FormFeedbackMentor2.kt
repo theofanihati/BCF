@@ -2,7 +2,9 @@ package com.example.slicingbcf.implementation.peserta.form_feedback_mentor
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -26,9 +28,11 @@ fun FeedbackMentorScreen2(
     var fundingStrategyRating by remember { mutableStateOf(0) }
 
     Column(
-        modifier = modifier.padding(16.dp),
+        modifier = modifier.padding(16.dp).verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(40.dp)
     ) {
+
+        Spacer(modifier = Modifier.height(56.dp))
         TopSection(
             issueSharingRating = issueSharingRating,
             onIssueSharingRatingChange = { issueSharingRating = it },
@@ -51,6 +55,7 @@ fun FeedbackMentorScreen2(
                 onSaveFeedback(feedback)
             }
         )
+        Spacer(modifier = Modifier.height(56.dp))
     }
 }
 

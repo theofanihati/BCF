@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
@@ -12,53 +13,69 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.slicingbcf.R
 import com.example.slicingbcf.constant.ColorPalette
 import com.example.slicingbcf.constant.StyledText
 import com.example.slicingbcf.data.local.Participant
-import com.example.slicingbcf.data.local.participants
 import com.example.slicingbcf.data.local.toColor
 import com.example.slicingbcf.data.local.toDisplayText
-<<<<<<< HEAD
-import kotlin.math.ceil
-
-// TODO: WILL BE REFACTORED
-=======
 import com.example.slicingbcf.ui.shared.textfield.SearchBarCustom
->>>>>>> source-repo/main
 
 @Composable
-@Preview(showSystemUi = true)
 fun DataPesertaScreen(
+  viewModel : DataPesertaViewModel = hiltViewModel(),
   modifier : Modifier = Modifier
 ) {
+  // Menggunakan collectAsState untuk mengamati perubahan uiState
+  val uiState by viewModel.uiState.collectAsState()
+
+  val currentPageItems = uiState.currentPageItems
+  val totalPages = uiState.totalPages
+  val currentPage = uiState.currentPage
+  val itemsPerPage = uiState.itemsPerPage
+
   Column(
-    modifier = modifier,
+    modifier = modifier
+      .padding(horizontal = 16.dp)
+      .verticalScroll(rememberScrollState()),
     verticalArrangement = Arrangement.spacedBy(28.dp),
   ) {
-    TopSection()
+    TopSection(
+      onSearch = { q ->
+        viewModel.onEvent(DataPesertaEvent.Search(q))
+      }
+
+    )
     BottomSection(
-      participants = participants,
-      headers = headers
+      participants = currentPageItems,
+      headers = headers,
+      onPreviousClick = { viewModel.onEvent(DataPesertaEvent.PageChange(currentPage - 1)) },
+      onNextClick = { viewModel.onEvent(DataPesertaEvent.PageChange(currentPage + 1)) },
+      onPageClick = { page -> viewModel.onEvent(DataPesertaEvent.PageChange(page)) },
+      onLimitChange = { limit -> viewModel.onEvent(DataPesertaEvent.ItemsPerPageChange(limit)) },
+      totalPage = totalPages,
+      currentPage = currentPage,
+      itemsPerPage = itemsPerPage,
+      totalData = uiState.totalItems
     )
   }
 }
 
 
 @Composable
-fun TopSection() {
+fun TopSection(
+  onSearch : (String) -> Unit
+) {
   Column(
     modifier = Modifier
-      .fillMaxWidth()
-      .padding(
-        horizontal = 16.dp
-      ),
+      .fillMaxWidth(),
     verticalArrangement = Arrangement.spacedBy(16.dp)
   ) {
     Text(
@@ -74,6 +91,8 @@ fun TopSection() {
       verticalAlignment = Alignment.CenterVertically
     ) {
       SearchBarCustom(
+        onSearch = onSearch,
+        title = "Cari Peserta",
       )
 
       SmallFloatingActionButton(
@@ -104,61 +123,6 @@ fun TopSection() {
 }
 
 @Composable
-<<<<<<< HEAD
-fun SearchBarCustom() {
-  var query by remember { mutableStateOf("") }
-
-  TextField(
-    textStyle = StyledText.MobileSmallRegular,
-
-    value = query,
-    onValueChange = { query = it },
-
-    placeholder = {
-      Text(
-        "Cari Pertanyaan",
-        style = StyledText.MobileSmallRegular,
-      )
-    },
-    leadingIcon = {
-      Icon(
-        Icons.Default.Search,
-        contentDescription = "Search Icon",
-        modifier = Modifier.size(20.dp)
-      )
-    },
-    singleLine = true,
-    shape = MaterialTheme.shapes.medium,
-    colors = TextFieldDefaults.colors(
-      // ! biar ga ada default border bottom
-      focusedIndicatorColor = Color.Transparent,
-      unfocusedIndicatorColor = Color.Transparent,
-      disabledIndicatorColor = Color.Transparent,
-      errorIndicatorColor = Color.Transparent,
-      unfocusedContainerColor = ColorPalette.PrimaryColor100,
-      focusedContainerColor = ColorPalette.PrimaryColor100,
-      )
-
-  )
-}
-
-@Composable
-fun BottomSection(participants : List<Participant>, headers : List<Header>) {
-  var currentPage by remember { mutableIntStateOf(1) }
-  var itemsPerPage by remember { mutableIntStateOf(5) }
-  val totalItems = participants.size
-  val totalPages = ceil(totalItems.toFloat() / itemsPerPage).toInt()
-
-  LaunchedEffect(itemsPerPage) {
-    currentPage = 1
-  }
-
-  // Hitung data yang ditampilkan di halaman saat ini
-  val startIndex = (currentPage - 1) * itemsPerPage
-  val endIndex = minOf(startIndex + itemsPerPage, totalItems)
-  val currentPageItems = participants.subList(startIndex, endIndex)
-
-=======
 fun BottomSection(
   participants : List<Participant>,
   headers : List<Header>,
@@ -171,40 +135,26 @@ fun BottomSection(
   onNextClick : () -> Unit,
   onLimitChange : (Int) -> Unit
 ) {
->>>>>>> source-repo/main
   Column(
-    modifier = Modifier
-      .fillMaxWidth()
-      .padding(horizontal = 16.dp),
+    modifier = Modifier,
     verticalArrangement = Arrangement.spacedBy(16.dp),
   ) {
-    ScrollableTable(headers, currentPageItems)
+    ScrollableTable(headers, participants)
     CustomPagination(
       pagination = Pagination(
         currentPage = currentPage,
-        totalPage = totalPages,
-        totalData = totalItems,
+        totalPage = totalPage,
+        totalData = totalData,
         limit = itemsPerPage
       ),
-      onPageClick = { newPage ->
-        currentPage = newPage
-      },
-      onPreviousClick = {
-        if (currentPage > 1) {
-          currentPage --
-        }
-      },
-      onNextClick = {
-        if (currentPage < totalPages) {
-          currentPage ++
-        }
-      },
-      onLimitChange = { newLimit ->
-        itemsPerPage = newLimit
-      }
+      onPageClick = onPageClick,
+      onPreviousClick = onPreviousClick,
+      onNextClick = onNextClick,
+      onLimitChange = onLimitChange
     )
   }
 }
+
 
 @Composable
 fun CustomPagination(
@@ -404,8 +354,14 @@ fun ScrollableTable(headers : List<Header>, participants : List<Participant>) {
 
   Box(
     modifier = Modifier
-      .fillMaxWidth()
       .horizontalScroll(scrollState)
+      .clip(RoundedCornerShape(8.dp))
+      .background(Color.White)
+      .border(
+        width = 1.dp,
+        color = ColorPalette.Monochrome300,
+        shape = RoundedCornerShape(8.dp)
+      )
   ) {
     Column {
       HeaderRow(headers)
@@ -421,6 +377,10 @@ fun HeaderRow(headers : List<Header>) {
   Row(
     modifier = Modifier
       .background(ColorPalette.PrimaryColor100)
+      .border(
+        width = 1.dp,
+        color = ColorPalette.Monochrome300,
+      )
   ) {
     headers.forEach { header ->
       TableCell(
@@ -443,6 +403,10 @@ fun ParticipantRow(participant : Participant, index : Int) {
   Row(
     modifier = Modifier
       .background(backgroundColor)
+      .border(
+        width = 1.dp,
+        color = ColorPalette.Monochrome300,
+      )
   ) {
     TableCell(text = participant.namaLembaga, weight = 1.5f)
     TableCell(text = participant.batch.toString(), weight = 0.7f)
@@ -468,7 +432,9 @@ fun TableCell(
     color = color,
     modifier = Modifier
       .width(120.dp * weight)
-      .padding(8.dp)
+      .padding(
+        12.dp
+      )
   )
 }
 

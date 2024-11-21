@@ -4,8 +4,10 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.ArrowForwardIos
@@ -33,18 +35,18 @@ import java.util.*
 @Composable
 fun PreviewWeeklyCalendarScreen() {
     val userName = profilLembaga.firstOrNull()?.name ?: "Pengguna"
-    val dummySchedule = detailJadwal.groupBy { it.date }.mapValues { entry ->
+    val schedule = detailJadwal.groupBy { it.date }.mapValues { entry ->
         entry.value.map { (it.beginTime to it.endTime) to it.title }
     }
 
-    WeeklyCalendarScreen(
-        userName = userName,
-        schedule = dummySchedule
+    JadwalMentoringMingguScreen(
+        userName = profilLembaga.firstOrNull()?.name ?: "Pengguna",
+        schedule = schedule
     )
 }
 
 @Composable
-fun WeeklyCalendarScreen(
+fun JadwalMentoringMingguScreen(
     userName: String,
     schedule: Map<LocalDate, List<Pair<Pair<LocalTime, LocalTime>, String>>>
 ) {
@@ -57,7 +59,12 @@ fun WeeklyCalendarScreen(
     val currentMonth = YearMonth.of(selectedDate.year, selectedDate.month)
     var expanded by remember { mutableStateOf(false) }
 
-    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .padding(16.dp)
+        .verticalScroll(rememberScrollState())
+    ){
+        Spacer(modifier = Modifier.height(80.dp))
         Text(
             text = "Halo, $userName",
             style = StyledText.MobileLargeSemibold,
@@ -192,6 +199,7 @@ fun WeeklyCalendarScreen(
             weekDates = weekDates,
             schedule = schedule
         )
+        Spacer(modifier = Modifier.height(56.dp))
     }
 }
 

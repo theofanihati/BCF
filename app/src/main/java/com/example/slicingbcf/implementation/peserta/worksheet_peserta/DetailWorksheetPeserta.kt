@@ -1,12 +1,5 @@
 package com.example.slicingbcf.implementation.peserta.worksheet_peserta
 
-<<<<<<< HEAD
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
-=======
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
@@ -14,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
->>>>>>> source-repo/main
 import com.example.slicingbcf.constant.ColorPalette
 import com.example.slicingbcf.constant.StyledText
 import com.example.slicingbcf.ui.shared.PrimaryButton
@@ -23,11 +15,6 @@ import com.example.slicingbcf.ui.shared.textfield.CustomOutlinedTextField
 
 // TODO: RAPIHIN LAYOUT + TAMBAHIN ITEMS ITEMS LAINNYA YANG ADA DI COLUMN JUDUL DLL
 @Composable
-<<<<<<< HEAD
-@Preview(showSystemUi = true)
-fun DetailWorksheetPeserta() {
-  Column {
-=======
 fun DetailWorksheetPesertaScreen(
   modifier : Modifier = Modifier,
   id : String
@@ -38,59 +25,39 @@ fun DetailWorksheetPesertaScreen(
     ),
     verticalArrangement = Arrangement.spacedBy(36.dp),
   ) {
->>>>>>> source-repo/main
     Text(
       text = "Submisi Lembar Kerja",
       style = StyledText.MobileLargeMedium,
+      color = ColorPalette.Black,
+      modifier = Modifier.fillMaxWidth(),
+      textAlign = TextAlign.Center,
     )
-    Column {
+    Column(
+      verticalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
       Text(
         text = "Judul Lembar Kerja",
         style = StyledText.MobileBaseSemibold,
+        color = ColorPalette.PrimaryColor700
       )
       Text(
         text = "[Capacity Building] Hari Ke-4 Lembar Kerja - Topik: Sustainability and Sustainable Development Kerja",
         style = StyledText.MobileBaseRegular,
       )
     }
-    Column {
+    Column(
+      verticalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
       Text(
         text = "Judul Lembar Kerja",
         style = StyledText.MobileBaseSemibold,
+        color = ColorPalette.PrimaryColor700
       )
       Text(
         text = "[Capacity Building] Hari Ke-4 Lembar Kerja - Topik: Sustainability and Sustainable Development Kerja",
         style = StyledText.MobileBaseRegular,
       )
     }
-<<<<<<< HEAD
-    HorizontalDivider()
-    Row {
-      Button(
-        onClick = {},
-        colors = ButtonDefaults.buttonColors(
-          containerColor = ColorPalette.PrimaryColor700,
-        ),
-
-        ) {
-        Text(
-          text = "Simpan",
-          style = StyledText.MobileSmallMedium,
-        )
-      }
-      OutlinedButton(
-        onClick = {},
-        colors = ButtonDefaults.outlinedButtonColors(
-          contentColor = ColorPalette.PrimaryColor700,
-        ),
-      ) {
-        Text(
-          text = "Batal",
-          style = StyledText.MobileSmallRegular,
-          color = ColorPalette.PrimaryColor700
-        )
-      }
-=======
     Column(
       verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
@@ -154,7 +121,6 @@ fun DetailWorksheetPesertaScreen(
         borderColor = ColorPalette.PrimaryColor700,
       )
 
->>>>>>> source-repo/main
     }
   }
 }

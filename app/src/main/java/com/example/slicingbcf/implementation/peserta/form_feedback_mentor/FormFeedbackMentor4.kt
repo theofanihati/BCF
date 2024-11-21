@@ -5,7 +5,9 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -19,7 +21,7 @@ import com.example.slicingbcf.constant.StyledText
 
 @Composable
 @Preview(showSystemUi = true)
-fun FormFeedbackMentor4(
+fun FeedbackMentorScreen4(
     modifier: Modifier = Modifier,
     onSaveFeedback: (String, String, Uri?) -> Unit = { _, _, _ -> }
 ) {
@@ -31,13 +33,14 @@ fun FormFeedbackMentor4(
         contract = ActivityResultContracts.OpenDocument(),
         onResult = { uri -> selectedFileUri = uri }
     )
-
     Column(
         modifier = modifier
             .padding(16.dp)
-            .fillMaxSize(),
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
+        Spacer(modifier = Modifier.height(56.dp))
         Text(
             text = "Umpan Balik Mentor",
             style = StyledText.MobileLargeSemibold,
@@ -88,6 +91,7 @@ fun FormFeedbackMentor4(
                 Text("Simpan", style = StyledText.MobileBaseSemibold)
             }
         }
+        Spacer(modifier = Modifier.height(56.dp))
     }
 }
 

@@ -17,12 +17,21 @@ sealed class Screen(val route : String) {
     object WorksheetPeserta : Peserta("worksheet-peserta")
     data class DetailWorksheetPeserta(val id : String) : Peserta("worksheet-peserta/$id")
     object Pengaturan : Peserta("pengaturan")
+    object PusatInformasi : Mentor("pusat-informasi")
+    data class DetailPusatInformasi(val id : String) : Mentor("pusat-informasi/$id")
+
   }
 
   sealed class Mentor(route : String) : Screen(route) {
     object PenilaianPeserta : Mentor("penilaian-peserta")
     data class DetailPenilaianPeserta(val id : String) : Mentor("penilaian-peserta/$id")
     object FeedbackPeserta : Mentor("feedback-peserta")
+    object Pitchdeck : Mentor("pitchdeck")
+    data class DetailPitchdeck(val id : String) : Mentor("pitchdeck/$id")
+    data class MoreDetailPitchdeck(val id : String) : Mentor("pitchdeck/$id/more")
+    object ForumDiskusi : Mentor("forum-diskusi")
+    data class DetailForumDiskusi(val id : String) : Mentor("forum-diskusi/$id")
+    object DataPeserta : Mentor("data-peserta")
 
   }
 

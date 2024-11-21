@@ -49,6 +49,7 @@ fun TopSection(
             .padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
+        Spacer(modifier = Modifier.height(56.dp))
         Text(
             text = "Pitch Deck",
             style = StyledText.MobileLargeSemibold,
@@ -62,6 +63,7 @@ fun TopSection(
                 onClick = { onPitchDeckClick(title) }
             )
         }
+        Spacer(modifier = Modifier.height(56.dp))
     }
 }
 

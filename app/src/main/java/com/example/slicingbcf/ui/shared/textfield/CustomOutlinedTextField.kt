@@ -14,8 +14,6 @@ import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
@@ -48,21 +46,25 @@ fun CustomOutlinedTextField(
   multiLine : Boolean = false,
   maxLines : Int = 1,
   isEnabled : Boolean = true,
-  labelFocusedColor : Color = ColorPalette.OnSurfaceVariant,
+  labelFocusedColor : Color = ColorPalette.Black,
   labelFocusedStyle : TextStyle = StyledText.MobileSmallRegular,
   labelDefaultColor : Color = ColorPalette.Monochrome300,
   trailingIcon : @Composable (() -> Unit)? = null,
   readOnly : Boolean = false,
+  borderColor : Color = ColorPalette.Outline,
+  bgColor : Color = Color.White,
+  isFocused : Boolean? = null,
+  onFocusChange : (Boolean) -> Unit = {},
+  borderFocusedColor : Color = ColorPalette.Black
 ) {
-  val isFocused = remember { mutableStateOf(false) }
-
 
   Column {
     OutlinedTextField(
       value = value,
       onValueChange = onValueChange,
-      modifier = modifier
-        .onFocusChanged { isFocused.value = it.isFocused },
+      modifier = modifier.then(
+        if (isFocused != null) modifier.onFocusChanged { onFocusChange(it.isFocused) } else modifier
+      ),
       singleLine = ! multiLine,
       maxLines = if (multiLine) maxLines else 1,
       shape = RoundedCornerShape(rounded),
@@ -79,7 +81,7 @@ fun CustomOutlinedTextField(
         TextLabel(
           label = label,
           error = error,
-          isFocused = isFocused.value,
+          isFocused = isFocused ?: false,
           focusedColor = labelFocusedColor,
           styleFocused = labelFocusedStyle,
           defaultColor = labelDefaultColor,
@@ -87,10 +89,26 @@ fun CustomOutlinedTextField(
 
         )
       },
-      placeholder = { PlaceholderText(placeholder) },
+      placeholder = {
+        TextLabel(
+          label = placeholder,
+          error = error,
+          isFocused = isFocused ?: false,
+          focusedColor = labelFocusedColor,
+          styleFocused = labelFocusedStyle,
+          defaultColor = labelDefaultColor,
+          valueNotEmpty = value.isNotEmpty()
+        )
+      },
       textStyle = StyledText.MobileSmallRegular,
       isError = error != null,
-      colors = getTextFieldColors(),
+      colors = getTextFieldColors(
+        borderColor = borderColor,
+        borderFocusedColor = borderFocusedColor,
+        bgColor = bgColor,
+        labelFocusedColor = labelFocusedColor,
+
+        ),
       enabled = isEnabled,
       readOnly = readOnly
     )
@@ -141,7 +159,7 @@ private fun TextLabel(
   label : String,
   error : String?,
   isFocused : Boolean,
-  focusedColor : Color = ColorPalette.OnSurfaceVariant,
+  focusedColor : Color = ColorPalette.Black,
   styleFocused : TextStyle = StyledText.MobileSmallRegular,
   defaultColor : Color = ColorPalette.Monochrome300,
   valueNotEmpty : Boolean
@@ -165,19 +183,23 @@ private fun TextLabel(
 }
 
 @Composable
-private fun PlaceholderText(placeholder : String) {
-  Text(
-    text = placeholder,
-    style = StyledText.MobileSmallRegular,
-    color = ColorPalette.Monochrome300
-  )
-}
+private fun getTextFieldColors(
+  borderColor : Color,
+  borderFocusedColor : Color,
+  bgColor : Color,
+  labelFocusedColor : Color
+) : TextFieldColors {
 
-@Composable
-private fun getTextFieldColors() : TextFieldColors {
   return OutlinedTextFieldDefaults.colors(
-    unfocusedBorderColor = ColorPalette.Outline,
-    focusedBorderColor = ColorPalette.Outline,
+    unfocusedBorderColor = borderColor,
+    focusedBorderColor = borderFocusedColor,
+    disabledBorderColor = borderColor,
+    unfocusedContainerColor = bgColor,
+    focusedContainerColor = bgColor,
+    disabledContainerColor = bgColor,
+    focusedTextColor = labelFocusedColor,
+
+
     errorBorderColor = ColorPalette.Error,
     errorLabelColor = ColorPalette.Error,
     errorLeadingIconColor = ColorPalette.Error,
@@ -202,12 +224,11 @@ fun CustomClickableTextField(
     modifier = modifier
       .padding(16.dp)
       .clickable(onClick = onClick)
-      .border(1.dp, Color.Gray, shape = RoundedCornerShape(8.dp)) // Menambahkan border
-      .background(Color.White, shape = RoundedCornerShape(8.dp)) // Background putih
-      .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 16.dp) // Padding di dalam Box
+      .border(1.dp, Color.Gray, shape = RoundedCornerShape(8.dp))
+      .background(Color.White, shape = RoundedCornerShape(8.dp))
+      .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 16.dp)
   ) {
     Column {
-      // Label di atas input
       Text(
         text = label,
         style = TextStyle(
@@ -220,7 +241,6 @@ fun CustomClickableTextField(
 
       Spacer(modifier = Modifier.height(4.dp))
 
-      // Input text di bawah label
       BasicTextField(
         value = value,
         onValueChange = onValueChange,
@@ -230,7 +250,6 @@ fun CustomClickableTextField(
         modifier = Modifier.fillMaxWidth()
       )
 
-      // Placeholder jika value kosong
       if (value.isEmpty()) {
         Text(
           text = placeholder,
@@ -239,7 +258,6 @@ fun CustomClickableTextField(
         )
       }
 
-      // Trailing icon di sebelah kanan
       if (trailingIcon != null) {
         Box(modifier = Modifier.align(Alignment.End)) {
           trailingIcon()

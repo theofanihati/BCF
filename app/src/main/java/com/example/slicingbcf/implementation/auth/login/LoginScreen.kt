@@ -2,21 +2,13 @@
 
 package com.example.slicingbcf.implementation.auth.login
 
-<<<<<<< HEAD
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.text.KeyboardOptions
-=======
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
->>>>>>> source-repo/main
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.SpanStyle
@@ -25,15 +17,11 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import com.example.slicingbcf.constant.ColorPalette
 import com.example.slicingbcf.constant.StyledText
-<<<<<<< HEAD
-import com.example.slicingbcf.ui.shared.CenteredAuthImage
-import com.example.slicingbcf.ui.shared.CenteredLogo
-import com.example.slicingbcf.ui.shared.CustomOutlinedTextField
-=======
 import com.example.slicingbcf.ui.animations.AnimatedMessage
 import com.example.slicingbcf.ui.animations.MessageType
 import com.example.slicingbcf.ui.navigation.Screen
@@ -51,29 +39,16 @@ import kotlinx.coroutines.delay
 //    navController = rememberNavController(),
 //    )
 //}
->>>>>>> source-repo/main
 
 @Composable
-@Preview(showSystemUi = true)
-fun LoginScreen() {
-  val isPasswordVisible = remember { mutableStateOf(false) }
-<<<<<<< HEAD
+fun LoginScreen(
+  modifier : Modifier = Modifier,
+  navController : NavHostController,
+  viewModel : LoginViewModel = hiltViewModel()
+) {
+  val state by viewModel.uiState.collectAsState()
 
-  Column(
-    verticalArrangement = Arrangement.spacedBy(
-      32.dp,
-      Alignment.Top
-    ),
-    modifier = Modifier
-      // TODO: DELETE LATER
-      .padding(
-        top = 20.dp,
-      )
-  ) {
-    TopSection()
-    CenteredAuthImage()
-    BottomSection(isPasswordVisible = isPasswordVisible)
-=======
+  val isPasswordVisible = remember { mutableStateOf(false) }
   fun onNavigateToForgotPassword() {
     navController.navigateSingleTop(Screen.Auth.ForgotPassword.route)
   }
@@ -130,7 +105,6 @@ fun LoginScreen() {
         .align(Alignment.TopCenter)
     )
 
->>>>>>> source-repo/main
   }
 }
 
@@ -141,7 +115,12 @@ fun TopSection() {
     modifier = Modifier.fillMaxWidth(),
     verticalArrangement = Arrangement.spacedBy(8.dp)
   ) {
-    CenteredLogo()
+    CenteredLogo(
+      modifier = Modifier.size(
+        width = 72.dp,
+        height = 45.dp
+      )
+    )
     Text(
       text = buildAnnotatedString {
         append("Selamat datang di \n")
@@ -163,10 +142,17 @@ fun TopSection() {
 
 @Composable
 fun BottomSection(
+  onNavigateToForgotPassword : () -> Unit,
+  email : String,
+  password : String,
+  onEmailChange : (String) -> Unit,
+  onPasswordChange : (String) -> Unit,
+  onLoginClick : () -> Unit,
+  emailError : String?,
+  passwordError : String?,
   isPasswordVisible : MutableState<Boolean>
+
 ) {
-  val email = remember { mutableStateOf("") }
-  val password = remember { mutableStateOf("") }
 
   Column(
     horizontalAlignment = Alignment.CenterHorizontally,
@@ -174,54 +160,32 @@ fun BottomSection(
     modifier = Modifier
       .fillMaxWidth()
       .padding(horizontal = 16.dp)
-<<<<<<< HEAD
-=======
 
 //    TODO: Add text field
->>>>>>> source-repo/main
   ) {
     CustomOutlinedTextField(
-      value = email.value,
-      onValueChange = { email.value = it },
+      value = email,
+      onValueChange = { onEmailChange(it) },
       label = "Email Peserta",
-<<<<<<< HEAD
-      placeholder = "contoh: @gmail.com"
-=======
       placeholder = "contoh: @gmail.com",
       keyboardType = KeyboardType.Email,
       error = emailError,
       modifier = Modifier.fillMaxWidth(),
       rounded = 40
->>>>>>> source-repo/main
     )
     CustomOutlinedTextField(
-      value = password.value,
-      onValueChange = { password.value = it },
+      value = password,
+      onValueChange = { onPasswordChange(it) },
       label = "Kata Sandi",
       placeholder = "Masukkan kata sandi anda",
       isPassword = true,
-<<<<<<< HEAD
-      isPasswordVisible = isPasswordVisible,
-      keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
-=======
       keyboardType = KeyboardType.Password,
       error = passwordError,
       modifier = Modifier.fillMaxWidth(),
       isPasswordVisible = isPasswordVisible,
       rounded = 40
->>>>>>> source-repo/main
     )
-    Box(
-      modifier = Modifier.fillMaxWidth(),
-      contentAlignment = Alignment.CenterEnd,
-
-      ) {
-      Text(
-        text = "Lupa Kata Sandi?",
-        style = StyledText.Mobile2xsRegular,
-        textDecoration = TextDecoration.Underline,
-      )
-    }
+    GotoForgotPassword(navigateToForgotPassword = onNavigateToForgotPassword)
 
   }
   Box(
@@ -236,7 +200,9 @@ fun BottomSection(
       colors = ButtonDefaults.buttonColors(
         containerColor = ColorPalette.PrimaryColor700,
       ),
-      onClick = { /*TODO*/ },
+      onClick = {
+        onLoginClick()
+      },
       modifier = Modifier
         .fillMaxWidth()
     ) {
@@ -247,8 +213,6 @@ fun BottomSection(
     }
   }
 }
-<<<<<<< HEAD
-=======
 
 
 @Composable
@@ -270,4 +234,3 @@ fun GotoForgotPassword(navigateToForgotPassword : () -> Unit) {
 
   }
 }
->>>>>>> source-repo/main

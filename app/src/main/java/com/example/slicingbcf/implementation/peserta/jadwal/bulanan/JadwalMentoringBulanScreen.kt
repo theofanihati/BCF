@@ -40,7 +40,7 @@ fun PreviewMonthlyCalendarScreen() {
     }
 
     JadwalMentoringBulanScreen(
-        userName = userName,
+        userName = profilLembaga.firstOrNull()?.name ?: "Pengguna",
         schedule = schedule
     )
 }
@@ -52,6 +52,7 @@ fun JadwalMentoringBulanScreen(userName: String, schedule: Map<LocalDate, List<P
     val currentMonth = YearMonth.of(selectedDate.year, selectedDate.month)
 
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+        Spacer(modifier = Modifier.height(80.dp))
         Text(
             text = "Halo, $userName",
             style = StyledText.MobileLargeSemibold,
@@ -178,6 +179,7 @@ fun JadwalMentoringBulanScreen(userName: String, schedule: Map<LocalDate, List<P
             schedule = schedule,
             onDateSelected = { selectedDate = it }
         )
+        Spacer(modifier = Modifier.height(56.dp))
     }
 }
 @Composable
@@ -198,6 +200,7 @@ fun MonthlyCalendarView(
             .clip(RoundedCornerShape(16.dp))
             .background(Color.White)
             .border(1.dp, ColorPalette.Monochrome200)
+            .background(ColorPalette.Monochrome100)
     ) {
         Row(
             modifier = Modifier

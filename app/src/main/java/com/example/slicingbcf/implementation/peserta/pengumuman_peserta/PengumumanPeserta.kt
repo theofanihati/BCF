@@ -8,41 +8,35 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material3.*
-<<<<<<< HEAD
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-=======
 import androidx.compose.material3.TabRowDefaults.SecondaryIndicator
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
->>>>>>> source-repo/main
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.slicingbcf.constant.ColorPalette
 import com.example.slicingbcf.constant.StyledText
 import java.util.Date
 
-@OptIn(ExperimentalMaterial3Api::class)
+// TODO: LIAT LIAT DAN RAPIHIN
+
 @Composable
 @Preview(showSystemUi = true)
-<<<<<<< HEAD
-fun PengumumanPeserta() {
-  val currentTab by remember { mutableIntStateOf(0) }
-=======
 fun PengumumanPesertaScreen(
   modifier : Modifier = Modifier
 ) {
   var currentTab by remember { mutableIntStateOf(0) }
->>>>>>> source-repo/main
   Column(
-    modifier = Modifier
+    modifier = modifier
       .fillMaxWidth()
+      .padding(
+        horizontal = 16.dp,
+      ),
+    verticalArrangement = Arrangement.spacedBy(28.dp)
   ) {
     TopSection(currentTab) { selectedTab ->
       currentTab = selectedTab
@@ -54,7 +48,12 @@ fun PengumumanPesertaScreen(
 
 @Composable
 fun BottomSection() {
-  LazyColumn {
+  LazyColumn(
+    verticalArrangement = Arrangement.spacedBy(16.dp),
+    modifier = Modifier
+      .fillMaxWidth()
+      .padding(horizontal = 16.dp)
+  ) {
     items(pengumumans.size) { index ->
       PengumumanItem(
         pengumuman = pengumumans[index]
@@ -67,17 +66,28 @@ fun BottomSection() {
 fun PengumumanItem(
   pengumuman : Pengumuman
 ) {
-  Row {
+  Row(
+    horizontalArrangement = Arrangement.spacedBy(28.dp),
+    verticalAlignment = Alignment.CenterVertically
+  ) {
     Box(
-      Modifier
-        .size(InputChipDefaults.AvatarSize)
-        .background(MaterialTheme.colorScheme.primaryContainer, CircleShape),
+      modifier = Modifier
+        .size(40.dp)
+        .background(ColorPalette.PrimaryColor100, CircleShape),
+      contentAlignment = Alignment.Center
     ) {
       Icon(
         Icons.Outlined.Notifications,
-        contentDescription = ""
+        contentDescription = "",
+        modifier = Modifier.size(20.dp),
+        tint = ColorPalette.PrimaryColor400
       )
-      Badge {
+      Badge(
+        modifier = Modifier
+          .size(16.dp)
+          .align(Alignment.TopEnd),
+        contentColor = ColorPalette.OnError,
+      ) {
         val badgeNumber = ""
         Text(
           badgeNumber,
@@ -87,7 +97,9 @@ fun PengumumanItem(
         )
       }
     }
-    Column {
+    Column(
+      verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
       Text(
         text = pengumuman.title,
         color = ColorPalette.Black,
@@ -113,7 +125,7 @@ data class Pengumuman(
 
 val pengumumans = listOf(
   Pengumuman(
-    title = "Pengumuman 1",
+    title = "Jangan lupa untuk mengumpulkan MISI 2 terkait Momen Onboarding sebelum Sabtu, 2 Mei 2023 pukul 19.00 WIB. Tetap semangat, ya!",
     date = Date(),
     content = "Content 1"
   ),
@@ -145,24 +157,17 @@ fun TopSection(
   onTabSelected : (Int) -> Unit
 ) {
   Row(
-<<<<<<< HEAD
-    horizontalArrangement = Arrangement.SpaceBetween
-=======
     horizontalArrangement = Arrangement.SpaceBetween,
     modifier = Modifier.fillMaxWidth(),
     verticalAlignment = Alignment.CenterVertically
->>>>>>> source-repo/main
   ) {
     Text(
       text = "Pengumuman",
-
-      // Mobile/large/Medium
       style = StyledText.MobileLargeMedium,
+      color = ColorPalette.Black
     )
     Text(
       text = "Tandai telah dibaca",
-
-      // Mobile/small/Medium
       style = StyledText.MobileSmallMedium,
       color = ColorPalette.PrimaryColor700
     )
@@ -176,32 +181,6 @@ fun Tabs(
   currentTab : Int,
   onTabSelected : (Int) -> Unit
 ) {
-<<<<<<< HEAD
-  PrimaryTabRow(selectedTabIndex = currentTab) {
-    Tab(
-      selected = true,
-      onClick = { },
-      text = { Text(text = "Semua", maxLines = 2, overflow = TextOverflow.Ellipsis) }
-    )
-    Tab(
-      selected = false,
-      onClick = { },
-      text = { Text(text = "Berita", maxLines = 2, overflow = TextOverflow.Ellipsis) }
-    )
-    Tab(
-      selected = false,
-      onClick = { },
-      text = { Text(text = "LEAD", maxLines = 2, overflow = TextOverflow.Ellipsis) }
-    )
-    Tab(
-      selected = false,
-      onClick = { },
-      text = { Text(text = "BCF", maxLines = 2, overflow = TextOverflow.Ellipsis) }
-    )
-  }
-
-}
-=======
   TabRow(
     selectedTabIndex = currentTab,
     indicator = { tabPositions ->
@@ -276,4 +255,3 @@ fun TabWithBadge(
     }
   )
 }
->>>>>>> source-repo/main

@@ -11,6 +11,12 @@ android {
   namespace = "com.example.slicingbcf"
   compileSdk = 34
 
+  // ! check dagger hilt deprecation
+  tasks.withType(JavaCompile::class.java).configureEach {
+    options.compilerArgs.add("-Xlint:deprecation")
+  }
+
+
   defaultConfig {
     applicationId = "com.example.slicingbcf"
     minSdk = 30
@@ -72,6 +78,13 @@ dependencies {
 
   // TODO: TURN INTO VERSION CATALOG
 
+  // test
+  testImplementation("io.mockk:mockk:1.13.5")
+
+  // image
+  implementation("io.coil-kt.coil3:coil-compose:3.0.0")
+  implementation("io.coil-kt.coil3:coil-network-okhttp:3.0.0")
+
   // navigation
   val nav_version = "2.8.3"
   implementation("androidx.navigation:navigation-compose:$nav_version")
@@ -81,16 +94,13 @@ dependencies {
   implementation("com.google.dagger:hilt-android:$hilt_version")
   kapt("com.google.dagger:hilt-compiler:$hilt_version")
 
-<<<<<<< HEAD
-
-=======
   implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
->>>>>>> source-repo/main
   // room
   val room_version = "2.6.1"
   implementation("androidx.room:room-runtime:$room_version")
   implementation("androidx.room:room-ktx:$room_version")
   kapt("androidx.room:room-compiler:$room_version")
+
 
   // icons
   implementation("androidx.compose.material:material-icons-core")
@@ -105,8 +115,5 @@ dependencies {
   implementation("com.squareup.retrofit2:converter-gson:2.11.0")
   implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
   implementation("androidx.datastore:datastore-preferences:1.1.1")
-  // scroll
 
-  // accompanist
-  implementation("io.coil-kt:coil-compose:2.3.0")
 }

@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -40,10 +41,12 @@ fun FeedbackMentorScreen1(
     var namaMentor by remember { mutableStateOf(TextFieldValue("")) }
     var selectedPeriode by remember { mutableStateOf("Pilih periode capaian mentoring") }
 
+
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(40.dp),
     ) {
+        Spacer(modifier = Modifier.height(56.dp))
         TopSection(
             selectedEvaluasi = selectedEvaluasi,
             onEvaluasiChange = { selectedEvaluasi = it },
@@ -53,6 +56,7 @@ fun FeedbackMentorScreen1(
             onPeriodeChange = { selectedPeriode = it }
         )
         BottomSection()
+        Spacer(modifier = Modifier.height(56.dp))
     }
 }
 

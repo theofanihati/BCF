@@ -36,6 +36,7 @@ object ColorPalette {
   val StatusSuccess = Color(0xFF28A745) // #28A745
   val Success100 = Color(0xFFF2F8F5) // #F2F8F5
   val Success200 = Color(0xFFA3CFBB) // #A3CFBB
+  val Success500 = Color(0xFF198754) // #198754
   val Success600 = Color(0xFF146C43) // #146C43
   val Success = Color(0xCCB3F0D5)
   val SuccessText = Color(0xFF28A745)
@@ -50,12 +51,10 @@ object ColorPalette {
   val Shade2 = Color(0xFFD1D1D1) // #D1D1D1
   val Yellow = Color(0xFFE89229) // #E89229
   val Blue = Color(0xFF3B82F6) // #3B82F60xFF000000
-<<<<<<< HEAD
-=======
   val Muted = Color(0xFF6B6B6B) // #6B6B6B
   val Shadow = Color(0x13000000)
   val PrimaryBorder = Color(0xFF333333) // #333333
->>>>>>> source-repo/main
+  val PrimaryContainer = Color(0xFFEADDFF) // #EADDFF
 
   // keeping the original color from figma aswell
   val colors = mapOf(
@@ -101,6 +100,8 @@ object ColorPalette {
     "Danger 100" to "#FBE9EB",
     "Status Success" to "#28A745",
     "Bg Status Success" to "#B3F0D5C",
-    "Primary Border" to "#333333"
+    "Primary Border" to "#333333",
+    "Success 500" to "#198754",
+    "Primary Container" to "#EADDFF"
   )
 }

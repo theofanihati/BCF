@@ -1,10 +1,8 @@
 package com.example.slicingbcf.implementation.peserta.kelompok_mentoring
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.runtime.*
@@ -158,26 +156,7 @@ fun ScrollableTable(kelompoksMentoring : List<KelompokMentoring>) {
   Column(
     modifier = Modifier.fillMaxWidth()
   ) {
-<<<<<<< HEAD
-    Box(
-      modifier = Modifier
-        .padding()
-        .fillMaxWidth()
-        .background(ColorPalette.F5F9FE),
-    ) {
-      Text(
-        text = "Kelompok Mentoring",
-        style = StyledText.MobileXsBold,
-        color = ColorPalette.Monochrome900,
-        textAlign = TextAlign.Center,
-        modifier = Modifier
-          .fillMaxWidth()
-          .padding(8.dp)
-      )
-    }
-=======
     HeaderTable()
->>>>>>> source-repo/main
 
     Box(
       modifier = Modifier
@@ -230,7 +209,12 @@ private fun HeaderTable() {
 fun HeaderRow(
 ) {
   Row(
-    modifier = Modifier.background(ColorPalette.F5F9FE)
+    modifier = Modifier
+      .background(ColorPalette.F5F9FE)
+      .border(
+        width = 1.dp,
+        color = ColorPalette.Monochrome300,
+      )
   ) {
     headerKelompokMentorings.forEach { header ->
 
@@ -297,9 +281,6 @@ fun KelompokMentoringRow(
   }
 
   Row(
-<<<<<<< HEAD
-    modifier = Modifier.background(backgroundColor)
-=======
     modifier = Modifier
       .background(backgroundColor)
       .then(
@@ -312,7 +293,6 @@ fun KelompokMentoringRow(
           Modifier
         }
       )
->>>>>>> source-repo/main
   ) {
     headerKelompokMentorings.forEach { header ->
       TableCell(

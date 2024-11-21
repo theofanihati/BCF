@@ -52,6 +52,7 @@ fun DetailJadwalScreen(detailJadwal: DetailJadwal) {
             .padding(16.dp)
             .verticalScroll(rememberScrollState())
     ) {
+        Spacer(modifier = Modifier.height(56.dp))
         Text(
             text = "Detail Jadwal Kegiatan",
             style = StyledText.MobileLargeSemibold,
@@ -92,6 +93,7 @@ fun DetailJadwalScreen(detailJadwal: DetailJadwal) {
                 .padding(vertical = 4.dp),
             textDecoration = TextDecoration.Underline
         )
+        Spacer(modifier = Modifier.height(56.dp))
     }
 }
 

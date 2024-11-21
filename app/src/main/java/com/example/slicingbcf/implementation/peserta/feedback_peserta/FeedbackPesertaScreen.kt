@@ -7,12 +7,15 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowRight
 import androidx.compose.material3.ButtonColors
@@ -61,7 +64,7 @@ fun FeedbackPesertaScreen(
     modifier : Modifier = Modifier
 ){
     Column(
-        modifier = modifier,
+        modifier = modifier.verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(40.dp),
 
         ) {
@@ -83,6 +86,7 @@ fun TopSection() {
             ),
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
+        Spacer(modifier = Modifier.height(56.dp))
         Text(
             text = "Umpan Balik Peserta",
             style = StyledText.MobileLargeSemibold,
@@ -310,6 +314,7 @@ fun TopSection() {
 
             DokumentasiMentoringSection()
         }
+        Spacer(modifier = Modifier.height(56.dp))
     }
 }
 
@@ -486,6 +491,7 @@ fun TableCell(
         text = text,
         style = if (isHeader) StyledText.MobileXsBold else StyledText.MobileXsRegular,
         color = color,
+//        textAlign = TextAlign.Center,
         modifier = Modifier
             .width(120.dp * weight)
             .padding(8.dp)
@@ -525,7 +531,8 @@ fun JawabanPertanyaanRow(pertanyaan: JawabanPertanyaan) {
 @Composable
 fun DokumentasiMentoringSection() {
     Column(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth()
+            .padding(bottom = 56.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Text(

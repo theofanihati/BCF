@@ -38,15 +38,15 @@ import com.example.slicingbcf.data.local.profilLembaga
 import com.example.slicingbcf.R.drawable
 import androidx.compose.runtime.setValue
 
+//@Preview(showSystemUi = true)
+//@Composable
+//fun PreviewProfilLembagaScreen() {
+//    ProfilLembagaScreen(profile = profilLembaga[0])
+//}
 @Preview(showSystemUi = true)
 @Composable
-fun PreviewProfilLembagaScreen() {
-    ProfilLembagaScreen(profile = profilLembaga[0])
-}
-
-@Composable
 fun ProfilLembagaScreen(
-    profile: ProfilLembaga,
+//    profile: ProfilLembaga,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -54,10 +54,8 @@ fun ProfilLembagaScreen(
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(40.dp)
     ) {
-        Spacer(modifier = Modifier.height(56.dp))
-        TopSection(profile = profile)
-        BottomSection(profile = profile)
-        Spacer(modifier = Modifier.height(56.dp))
+        TopSection(profile = profilLembaga[0])
+        BottomSection(profile = profilLembaga[0])
     }
 }
 

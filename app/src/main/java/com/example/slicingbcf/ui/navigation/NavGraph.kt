@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.slicingbcf.implementation.LandingPageScreen
+import com.example.slicingbcf.implementation.peserta.profil.profil_lembaga.ProfilLembagaScreen
 
 @Composable
 fun NavGraph(
@@ -28,6 +29,16 @@ fun NavGraph(
         modifier = modifier,
       )
     }
+
+    composable(
+      route = Screen.ProfilPeserta.route
+    ) {
+      ProfilLembagaScreen(
+        modifier = modifier,
+      )
+    }
+
+
     authNavGraph(
       modifier = modifier,
       navController = navController

@@ -82,10 +82,8 @@ fun ProfilPesertaScreen(
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(40.dp)
     ) {
-        Spacer(modifier = Modifier.height(56.dp))
         TopSection(profile = profile)
         BottomSection(profile = profile)
-        Spacer(modifier = Modifier.height(56.dp))
     }
 }
 

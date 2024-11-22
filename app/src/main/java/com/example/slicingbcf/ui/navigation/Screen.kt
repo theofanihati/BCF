@@ -59,4 +59,5 @@ sealed class Screen(val route : String) {
 
   }
 
+  object ProfilPeserta : Screen("profil-peserta")
 }

@@ -90,6 +90,13 @@ fun dropdownItemsPeserta(
       },
       route = Screen.Peserta.WorksheetPeserta.route
     ),
+    DropdownItem(
+      text = "Form Umpan Balik Mentor",
+      onClick = {
+        navigateAndCloseSideNav(Screen.Peserta.FormFeedbackMentor.route)
+      },
+      route = Screen.Peserta.FormFeedbackMentor.route
+    ),
   )
 }
 
@@ -177,9 +184,11 @@ fun dropdownItemsKegiatan(
     DropdownItem(
       text = "Jadwal Kegiatan",
       onClick = {
-        navigateAndCloseSideNav(Screen.Kegiatan.JadwalMentoringBulan.route)
+        Log.d("SideNav", "Jadwal clicked")
+//        navigateAndCloseSideNav(Screen.Kegiatan.JadwalMentoringBulan.route)
       },
-      route = Screen.Kegiatan.JadwalMentoringBulan.route
+      route = null
+//      Screen.Kegiatan.JadwalMentoringBulan.route
     ),
     DropdownItem(
       text = "Umpan Balik Kegiatan",

@@ -33,20 +33,20 @@ import com.example.slicingbcf.constant.ColorPalette
 import com.example.slicingbcf.constant.StyledText
 
 @Composable
-@Preview(showSystemUi = true)
+//@Preview(showSystemUi = true)
 fun FeedbackMentorScreen1(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onNavigateNextForm: (Int) -> Unit,
+//    onNavigateBackForm: (Int) -> Unit,
 ) {
     var selectedEvaluasi by remember { mutableStateOf("Pilih evaluasi capaian mentoring") }
     var namaMentor by remember { mutableStateOf(TextFieldValue("")) }
     var selectedPeriode by remember { mutableStateOf("Pilih periode capaian mentoring") }
 
-
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(40.dp),
     ) {
-        Spacer(modifier = Modifier.height(56.dp))
         TopSection(
             selectedEvaluasi = selectedEvaluasi,
             onEvaluasiChange = { selectedEvaluasi = it },
@@ -55,8 +55,10 @@ fun FeedbackMentorScreen1(
             selectedPeriode = selectedPeriode,
             onPeriodeChange = { selectedPeriode = it }
         )
-        BottomSection()
-        Spacer(modifier = Modifier.height(56.dp))
+        BottomSection(
+            onNavigateNextForm = onNavigateNextForm,
+//            onNavigateBackForm = onNavigateBackForm
+        )
     }
 }
 
@@ -139,7 +141,10 @@ fun TopSection(
 }
 
 @Composable
-fun BottomSection() {
+fun BottomSection(
+    onNavigateNextForm : (Int) -> Unit,
+//    onNavigateBackForm: (Int) -> Unit,
+) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -148,31 +153,31 @@ fun BottomSection() {
     ) {
         Row(
             modifier = Modifier
-                .width(300.dp)
+                .width(150.dp)
                 .height(40.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            OutlinedButton(
-                onClick = {
-                    /* TODO: logic "Kembali" kemana */
-                },
-                modifier = Modifier
-                    .weight(1f)
-                    .height(40.dp),
-                shape = MaterialTheme.shapes.extraLarge,
-                border = BorderStroke(1.dp, ColorPalette.PrimaryColor700),
-                colors = ButtonDefaults.outlinedButtonColors(
-                    containerColor = Color.Transparent,
-                    contentColor = ColorPalette.PrimaryColor700
-                )
-            ) {
-                Text(text = "Kembali", style = StyledText.MobileBaseSemibold)
-            }
+//            OutlinedButton(
+//                onClick = {
+//                    onNavigateBackForm(1)
+//                },
+//                modifier = Modifier
+//                    .weight(1f)
+//                    .height(40.dp),
+//                shape = MaterialTheme.shapes.extraLarge,
+//                border = BorderStroke(1.dp, ColorPalette.PrimaryColor700),
+//                colors = ButtonDefaults.outlinedButtonColors(
+//                    containerColor = Color.Transparent,
+//                    contentColor = ColorPalette.PrimaryColor700
+//                )
+//            ) {
+//                Text(text = "Kembali", style = StyledText.MobileBaseSemibold)
+//            }
 
             Button(
                 onClick = {
-                    // TODO: logic "Berikutnya" kemana
+                    onNavigateNextForm(1)
                 },
                 modifier = Modifier
                     .weight(1f)

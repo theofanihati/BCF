@@ -18,20 +18,22 @@ import com.example.slicingbcf.constant.StyledText
 import com.example.slicingbcf.data.local.FeedbackMentor
 
 @Composable
-@Preview(showSystemUi = true)
+//@Preview(showSystemUi = true)
 fun FeedbackMentorScreen3(
     modifier: Modifier = Modifier,
-    onSaveFeedback: (FeedbackMentor) -> Unit = {}
+    onSaveFeedback: (FeedbackMentor) -> Unit = {},
+    onNavigateNextForm: (Int) -> Unit,
+    onNavigateBackForm: (Int) -> Unit,
+    id: String,
 ) {
     var comprehensiveExplanation by remember { mutableStateOf(0) }
     var sessionSuitability by remember { mutableStateOf(0) }
     var clearInstructions by remember { mutableStateOf(0) }
 
     Column(
-        modifier = modifier.padding(16.dp).verticalScroll(rememberScrollState()),
+        modifier = modifier.verticalScroll(rememberScrollState()).padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
-        Spacer(modifier = Modifier.height(56.dp))
         Text(
             text = "Umpan Balik Mentor",
             style = StyledText.MobileLargeSemibold,
@@ -64,9 +66,10 @@ fun FeedbackMentorScreen3(
             onRatingSelected = { clearInstructions = it }
         )
 
-        BottomSection(
-            onBackClick = { /* TODO: Back Navigation */ },
-            onNextClick = {
+        BottomSection2(
+            onNavigateBackForm = { onNavigateBackForm(1) },
+            onNavigateNextForm = {
+                onNavigateNextForm(1)
                 val feedback = FeedbackMentor(
                     comprehensiveExplanation,
                     sessionSuitability,

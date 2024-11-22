@@ -46,32 +46,32 @@ fun NavGraphBuilder.kegiatanNavGraph(
 //        )
 //    }
 
-    composable(
-        route = Screen.Kegiatan.JadwalMentoringBulan.route,
-    ) {
-        val onNavigateWeeklyCalendar = { id : String ->
-            navController.navigateSingleTop("jadwal-minggu/$id")
-        }
-
-        JadwalMentoringBulanScreen(
-            modifier = modifier,
-            onNavigateWeeklyCalendar = onNavigateWeeklyCalendar
-        )
-    }
-    composable(
-        route = "jadwal-minggu/$id",
-        arguments = listOf(navArgument("id") { type = NavType.StringType })
-    ) { backStackEntry ->
-        val id = backStackEntry.arguments?.getString("id") ?: ""
-        if (id.isEmpty()) throw IllegalStateException("id must not be empty")
-
-        val onNavigateMonthlyCalendar = { id : String ->
-            navController.navigateSingleTop("jadwal-bulan")
-        }
-
-        JadwalMentoringMingguScreen(
-            modifier = modifier,
-            onNavigateMonthlyCalendar = onNavigateMonthlyCalendar
-        )
-    }
+//    composable(
+//        route = Screen.Kegiatan.JadwalMentoringBulan.route,
+//    ) {
+//        val onNavigateWeeklyCalendar = { id : String ->
+//            navController.navigateSingleTop("jadwal-minggu/$id")
+//        }
+//
+//        JadwalMentoringBulanScreen(
+//            modifier = modifier,
+//            onNavigateWeeklyCalendar = onNavigateWeeklyCalendar
+//        )
+//    }
+//    composable(
+//        route = "jadwal-minggu/$id",
+//        arguments = listOf(navArgument("id") { type = NavType.StringType })
+//    ) { backStackEntry ->
+//        val id = backStackEntry.arguments?.getString("id") ?: ""
+//        if (id.isEmpty()) throw IllegalStateException("id must not be empty")
+//
+//        val onNavigateMonthlyCalendar = { id : String ->
+//            navController.navigateSingleTop("jadwal-bulan")
+//        }
+//
+//        JadwalMentoringMingguScreen(
+//            modifier = modifier,
+//            onNavigateMonthlyCalendar = onNavigateMonthlyCalendar
+//        )
+//    }
 }

@@ -19,6 +19,11 @@ sealed class Screen(val route : String) {
     object Pengaturan : Peserta("pengaturan")
     object PusatInformasi : Mentor("pusat-informasi")
     data class DetailPusatInformasi(val id : String) : Mentor("pusat-informasi/$id")
+    // form feedback mentor
+    object FormFeedbackMentor : Peserta("form-mentor")
+    data class FormFeedbackMentor2(val id : String) : Mentor("form-mentor2/$id")
+    data class FormFeedbackMentor3(val id : String) : Mentor("form-mentor3/$id")
+    data class FormFeedbackMentor4(val id : String) : Mentor("form-mentor4/$id")
   }
 
   sealed class Mentor(route : String) : Screen(route) {
@@ -36,6 +41,7 @@ sealed class Screen(val route : String) {
     data class DetailForumDiskusi(val id : String) : Mentor("forum-diskusi/$id")
     // Data Peserta
     object DataPeserta : Mentor("data-peserta")
+
   }
 
   sealed class Kegiatan(route: String) : Screen(route){

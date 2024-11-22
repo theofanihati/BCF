@@ -20,10 +20,11 @@ import com.example.slicingbcf.constant.ColorPalette
 import com.example.slicingbcf.constant.StyledText
 
 @Composable
-@Preview(showSystemUi = true)
+//@Preview(showSystemUi = true)
 fun FeedbackMentorScreen4(
     modifier: Modifier = Modifier,
-    onSaveFeedback: (String, String, Uri?) -> Unit = { _, _, _ -> }
+    onSaveFeedback: (String, String, Uri?) -> Unit = { _, _, _ -> },
+    id: String,
 ) {
     var discussionText by remember { mutableStateOf("") }
     var suggestionsText by remember { mutableStateOf("") }
@@ -35,12 +36,11 @@ fun FeedbackMentorScreen4(
     )
     Column(
         modifier = modifier
-            .padding(16.dp)
+            .padding(horizontal = 16.dp)
             .fillMaxSize()
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
-        Spacer(modifier = Modifier.height(56.dp))
         Text(
             text = "Umpan Balik Mentor",
             style = StyledText.MobileLargeSemibold,
@@ -91,7 +91,6 @@ fun FeedbackMentorScreen4(
                 Text("Simpan", style = StyledText.MobileBaseSemibold)
             }
         }
-        Spacer(modifier = Modifier.height(56.dp))
     }
 }
 

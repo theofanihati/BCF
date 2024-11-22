@@ -18,21 +18,22 @@ import com.example.slicingbcf.constant.StyledText
 import com.example.slicingbcf.data.local.FeedbackMentor
 
 @Composable
-@Preview(showSystemUi = true)
+//@Preview(showSystemUi = true)
 fun FeedbackMentorScreen2(
     modifier: Modifier = Modifier,
-    onSaveFeedback: (FeedbackMentor) -> Unit = {}
+    onSaveFeedback: (FeedbackMentor) -> Unit = {},
+    onNavigateNextForm: (Int) -> Unit,
+    onNavigateBackForm: (Int) -> Unit,
+    id: String,
 ) {
     var issueSharingRating by remember { mutableStateOf(0) }
     var stakeholderMappingRating by remember { mutableStateOf(0) }
     var fundingStrategyRating by remember { mutableStateOf(0) }
 
     Column(
-        modifier = modifier.padding(16.dp).verticalScroll(rememberScrollState()),
+        modifier = modifier.verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(40.dp)
     ) {
-
-        Spacer(modifier = Modifier.height(56.dp))
         TopSection(
             issueSharingRating = issueSharingRating,
             onIssueSharingRatingChange = { issueSharingRating = it },
@@ -41,12 +42,11 @@ fun FeedbackMentorScreen2(
             fundingStrategyRating = fundingStrategyRating,
             onFundingStrategyRatingChange = { fundingStrategyRating = it }
         )
-        BottomSection(
-            onBackClick = {
-                // TODO: logika "Kembali"
-            },
-            onNextClick = {
+        BottomSection2(
+            onNavigateBackForm = {onNavigateBackForm(1)},
+            onNavigateNextForm = {
                 // TODO: logika "Berikutnya"
+                onNavigateNextForm(1)
                 val feedback = FeedbackMentor(
                     issueSharingRating,
                     stakeholderMappingRating,
@@ -55,7 +55,6 @@ fun FeedbackMentorScreen2(
                 onSaveFeedback(feedback)
             }
         )
-        Spacer(modifier = Modifier.height(56.dp))
     }
 }
 
@@ -69,7 +68,9 @@ fun TopSection(
     onFundingStrategyRatingChange: (Int) -> Unit
 ) {
     Column(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
         Text(
@@ -175,9 +176,9 @@ fun RatingSections(
 }
 
 @Composable
-fun BottomSection(
-    onBackClick: () -> Unit,
-    onNextClick: () -> Unit
+fun BottomSection2(
+    onNavigateBackForm: (Int) -> Unit,
+    onNavigateNextForm: (Int) -> Unit
 ) {
     Box(
         modifier = Modifier.fillMaxWidth(),
@@ -191,7 +192,7 @@ fun BottomSection(
             verticalAlignment = Alignment.CenterVertically
         ) {
             OutlinedButton(
-                onClick = onBackClick,
+                onClick = {onNavigateBackForm(1)},
                 modifier = Modifier.weight(1f),
                 shape = MaterialTheme.shapes.extraLarge,
                 border = BorderStroke(1.dp, ColorPalette.PrimaryColor700),
@@ -204,7 +205,7 @@ fun BottomSection(
             }
 
             Button(
-                onClick = onNextClick,
+                onClick = {onNavigateNextForm(1)},
                 modifier = Modifier.weight(1f),
                 shape = MaterialTheme.shapes.extraLarge,
                 colors = ButtonDefaults.buttonColors(

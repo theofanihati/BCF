@@ -4,7 +4,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Modifier
 import androidx.navigation.*
 import androidx.navigation.compose.composable
+import com.example.slicingbcf.implementation.mentor.pitchdeck.DetailPitchdeckScreen
+import com.example.slicingbcf.implementation.mentor.pitchdeck.MoreDetailPitchdeckScreen
+import com.example.slicingbcf.implementation.mentor.pitchdeck.PitchdeckScreen
 import com.example.slicingbcf.implementation.peserta.data_peserta.DataPesertaScreen
+import com.example.slicingbcf.implementation.peserta.form_feedback_mentor.FeedbackMentorScreen1
+import com.example.slicingbcf.implementation.peserta.form_feedback_mentor.FeedbackMentorScreen2
+import com.example.slicingbcf.implementation.peserta.form_feedback_mentor.FeedbackMentorScreen3
+import com.example.slicingbcf.implementation.peserta.form_feedback_mentor.FeedbackMentorScreen4
 import com.example.slicingbcf.implementation.peserta.kelompok_mentoring.KelompokMentoringScreen
 import com.example.slicingbcf.implementation.peserta.pengaturan.PengaturanScreen
 import com.example.slicingbcf.implementation.peserta.pengumuman_peserta.DetailPengumumanPesertaScreen
@@ -111,6 +118,69 @@ fun NavGraphBuilder.pesertaNavGraph(
         modifier = modifier,
         id = id
       )
+    }
+
+    // form feedback mentor
+    composable(
+      route = Screen.Peserta.FormFeedbackMentor.route
+    ) {
+
+      val onNavigateNext = { id : Int ->
+        navController.navigateSingleTop("form-mentor2/$id")
+      }
+
+      FeedbackMentorScreen1(
+        modifier = modifier,
+        onNavigateNextForm = onNavigateNext
+      )
+    }
+
+    composable(
+      route = "form-mentor2/{id}",
+      arguments = listOf(navArgument("id") { type = NavType.StringType })
+    ) {
+      val onNavigateNext = { id : Int ->
+        navController.navigateSingleTop("form-mentor3/$id")
+      }
+      val onNavigateBack = { id : Int ->
+        navController.navigateSingleTop("form-mentor")
+      }
+      FeedbackMentorScreen2(
+        modifier = modifier,
+        onNavigateNextForm = onNavigateNext,
+        onNavigateBackForm = onNavigateBack,
+        id = it.arguments?.getString("id") ?: "1"
+      )
+    }
+
+    composable(
+      route = "form-mentor3/{id}",
+      arguments = listOf(navArgument("id") { type = NavType.StringType })
+    ) {
+      val onNavigateNext = { id : Int ->
+        navController.navigateSingleTop("form-mentor4/$id")
+      }
+      val onNavigateBack = { id : Int ->
+        navController.navigateSingleTop("form-mentor2/$id")
+      }
+      FeedbackMentorScreen3(
+        modifier = modifier,
+        onNavigateNextForm = onNavigateNext,
+        onNavigateBackForm = onNavigateBack,
+        id = it.arguments?.getString("id") ?: "1"
+      )
+    }
+//
+    composable(
+      route = "form-mentor4/{id}",
+      arguments = listOf(navArgument("id") { type = NavType.StringType })
+    ) {
+      val id = it.arguments?.getString("id") ?: "1"
+
+      FeedbackMentorScreen4(
+        modifier = modifier,
+        id = it.arguments?.getString("id") ?: "1"
+        )
     }
   }
 }

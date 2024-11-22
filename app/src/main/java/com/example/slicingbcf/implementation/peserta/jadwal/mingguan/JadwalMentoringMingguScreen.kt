@@ -33,22 +33,28 @@ import java.util.*
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewWeeklyCalendarScreen() {
+fun JadwalMentoringMingguScreen(
+    modifier: Modifier = Modifier,
+    onNavigateMonthlyCalendar: (String) -> Unit = {},
+    id : String = "1"
+) {
     val userName = profilLembaga.firstOrNull()?.name ?: "Pengguna"
     val schedule = detailJadwal.groupBy { it.date }.mapValues { entry ->
         entry.value.map { (it.beginTime to it.endTime) to it.title }
     }
 
-    JadwalMentoringMingguScreen(
+    TopSection(
         userName = profilLembaga.firstOrNull()?.name ?: "Pengguna",
-        schedule = schedule
+        schedule = schedule,
+        onNavigateMonthlyCalendar = onNavigateMonthlyCalendar,
     )
 }
 
 @Composable
-fun JadwalMentoringMingguScreen(
+fun TopSection(
     userName: String,
-    schedule: Map<LocalDate, List<Pair<Pair<LocalTime, LocalTime>, String>>>
+    schedule: Map<LocalDate, List<Pair<Pair<LocalTime, LocalTime>, String>>>,
+    onNavigateMonthlyCalendar: (String) -> Unit,
 ) {
     var selectedWeekStart by remember { mutableStateOf(LocalDate.now().withDayOfWeek(7)) }
     val today = LocalDate.now()
@@ -167,29 +173,59 @@ fun JadwalMentoringMingguScreen(
 
                 DropdownMenu(
                     expanded = expanded,
-                    onDismissRequest = { expanded = false }
+                    onDismissRequest = { expanded = false },
                 ) {
-                    val currentDate = LocalDate.now()
-                    val startYear = currentDate.year - 1
-                    val endYear = currentDate.year + 1
 
-                    for (year in startYear..endYear) {
-                        for (week in 1..52) {
-                            val firstDayOfWeek = LocalDate.ofYearDay(year, (week - 1) * 7 + 1).withDayOfWeek(1)
+                    Box(
+                        Modifier
+                            .padding(top = 20.dp, bottom = 20.dp)
+                    ) {
+                        TextButton(onClick = { expanded = true }) {
+                            Text(
+                                text = "Pekan",
+                                style = StyledText.MobileXsRegular,
+                                color = ColorPalette.Black
+                            )
+                            Icon(
+                                Icons.Default.ArrowRight,
+                                contentDescription = "Dropdown for Month/Week",
+                                modifier = Modifier.size(24.dp),
+                                tint = ColorPalette.Black
+                            )
+                        }
+
+                        DropdownMenu(
+                            expanded = expanded,
+                            onDismissRequest = { expanded = false },
+                            modifier = Modifier
+                                .background(Color.White)
+                                .border(BorderStroke(1.dp, ColorPalette.Monochrome200))
+                        ) {
                             DropdownMenuItem(
                                 text = {
                                     Text(
-                                        text = "Pekan ${week} (${firstDayOfWeek.formatIndonesian()} - ${firstDayOfWeek.plusDays(6).formatIndonesian()})",
+                                        text = "Bulan",
                                         style = StyledText.MobileSmallRegular
                                     )
                                 },
                                 onClick = {
-                                    selectedWeekStart = firstDayOfWeek
                                     expanded = false
                                 }
                             )
+                            DropdownMenuItem(
+                                text = {
+                                    Text(
+                                        text = "Pekan",
+                                        style = StyledText.MobileSmallRegular
+                                    )
+                                },
+                                onClick = {
+                                    expanded = false
+                                    onNavigateMonthlyCalendar("1")}
+                            )
                         }
                     }
+
                 }
             }
         }

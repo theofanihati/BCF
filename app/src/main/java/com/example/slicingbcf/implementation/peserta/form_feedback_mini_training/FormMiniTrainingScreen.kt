@@ -40,9 +40,8 @@ fun FormMiniTrainingScreen(
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
-        Spacer(modifier = Modifier.height(56.dp))
         Text(
-            text = "Submisi Pitch Deck",
+            text = "Umpan Balik Mini Training",
             style = StyledText.MobileLargeSemibold,
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth().padding(bottom = 24.dp)
@@ -161,7 +160,6 @@ fun FormMiniTrainingScreen(
         ) {
             Text("Simpan", style = StyledText.MobileBaseSemibold)
         }
-        Spacer(modifier = Modifier.height(56.dp))
     }
 }
 

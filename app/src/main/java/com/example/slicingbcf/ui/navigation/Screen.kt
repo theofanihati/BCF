@@ -22,17 +22,19 @@ sealed class Screen(val route : String) {
   }
 
   sealed class Mentor(route : String) : Screen(route) {
+    // Penilaian Peserta
     object PenilaianPeserta : Mentor("penilaian-peserta")
     data class DetailPenilaianPeserta(val id : String) : Mentor("penilaian-peserta/$id")
+    // Feedback Peserta
     object FeedbackPeserta : Mentor("feedback-peserta")
-
+    // PitchDeck Mentor
     object Pitchdeck : Mentor("pitchdeck")
     data class DetailPitchdeck(val id : String) : Mentor("pitchdeck/$id")
     data class MoreDetailPitchdeck(val id : String) : Mentor("pitchdeck/$id/more")
-
+    // Forum Diskusi
     object ForumDiskusi : Mentor("forum-diskusi")
     data class DetailForumDiskusi(val id : String) : Mentor("forum-diskusi/$id")
-
+    // Data Peserta
     object DataPeserta : Mentor("data-peserta")
   }
 
@@ -41,12 +43,14 @@ sealed class Screen(val route : String) {
 //    data class JadwalMentoringBulan(val id : String): Kegiatan("jadwal_bulan/$id")
     data class JadwalMentoringMinggu(val id : String): Kegiatan("jadwal_minggu/$id")
     data class DetailJadwalMentoring(val id : String): Kegiatan("detail-jadwal/$id")
-    data class UmpanBalikKegiatan(val id : String): Kegiatan("mini-training/$id")
+    object UmpanBalikKegiatan: Kegiatan("mini-training")
   }
 
   sealed class Tugas(route: String) : Screen(route){
     object PitchDeck: Tugas ("pitch-deck")
+    data class PitchDeckExpanded(val id: String) : Tugas("expanded-pitchdeck/$id")
     data class PitchDeckDetail(val id: String) : Tugas("detail-pitchdeck/$id")
+
   }
 
 }

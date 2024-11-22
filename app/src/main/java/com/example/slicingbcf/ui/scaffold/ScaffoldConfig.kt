@@ -69,6 +69,13 @@ fun scaffoldConfig(currentRoute : String?)
       )
     }
 
+    "expanded-pitchdeck/{id}"            -> {
+      ScaffoldConfig(
+        showMainNav = false,
+        showBackNav = true,
+      )
+    }
+
     "detail-pitchdeck/{id}"            -> {
       ScaffoldConfig(
         showMainNav = false,

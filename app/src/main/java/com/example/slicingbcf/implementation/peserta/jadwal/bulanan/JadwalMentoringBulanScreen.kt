@@ -24,6 +24,8 @@ import com.example.slicingbcf.constant.ColorPalette
 import com.example.slicingbcf.constant.StyledText
 import com.example.slicingbcf.data.local.detailJadwal
 import com.example.slicingbcf.data.local.profilLembaga
+import com.example.slicingbcf.implementation.peserta.jadwal.mingguan.WeeklyCalendarView
+import com.example.slicingbcf.implementation.peserta.jadwal.mingguan.withDayOfWeek
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.TextStyle
@@ -31,7 +33,11 @@ import java.util.*
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewMonthlyCalendarScreen() {
+fun JadwalMentoringBulanScreen(
+    modifier: Modifier = Modifier,
+    onNavigateWeeklyCalendar: (String) -> Unit = {},
+    id : String = "1"
+) {
     val userName = profilLembaga.firstOrNull()?.name ?: "Pengguna"
     val schedule = detailJadwal.groupBy { it.date }.mapValues { entry ->
         entry.value.map {
@@ -39,17 +45,36 @@ fun PreviewMonthlyCalendarScreen() {
         }
     }
 
-    JadwalMentoringBulanScreen(
+    TopSection(
         userName = profilLembaga.firstOrNull()?.name ?: "Pengguna",
-        schedule = schedule
+        schedule = schedule,
+        onNavigateWeeklyCalendar = onNavigateWeeklyCalendar,
+        id  = "1"
     )
 }
 
 @Composable
-fun JadwalMentoringBulanScreen(userName: String, schedule: Map<LocalDate, List<Pair<String, Color>>>) {
+fun TopSection(
+    userName: String,
+    schedule: Map<LocalDate, List<Pair<String, Color>>>,
+    onNavigateWeeklyCalendar: (String) -> Unit,
+    id : String
+) {
     var selectedDate by remember { mutableStateOf(LocalDate.now()) }
     val today = LocalDate.now()
     val currentMonth = YearMonth.of(selectedDate.year, selectedDate.month)
+    var isMonthlyView by remember { mutableStateOf(true) }
+    val scheduleMonthly = detailJadwal.groupBy { it.date }.mapValues { entry ->
+        entry.value.map {
+            "${it.beginTime.formatTime()} - ${it.endTime.formatTime()} WIB ${it.type}" to Color(it.color)
+        }
+    }
+
+    var expanded by remember { mutableStateOf(false) }
+
+    val scheduleWeekly = detailJadwal.groupBy { it.date }.mapValues { entry ->
+        entry.value.map { (it.beginTime to it.endTime) to it.title }
+    }
 
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
         Spacer(modifier = Modifier.height(80.dp))
@@ -72,7 +97,6 @@ fun JadwalMentoringBulanScreen(userName: String, schedule: Map<LocalDate, List<P
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        var expanded by remember { mutableStateOf(false) }
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -148,38 +172,69 @@ fun JadwalMentoringBulanScreen(userName: String, schedule: Map<LocalDate, List<P
                     expanded = expanded,
                     onDismissRequest = { expanded = false },
                 ) {
-                    val currentYear = LocalDate.now().year
-                    for (year in currentYear - 5..currentYear + 5) {
-                        for (month in 1..12) {
-                            val yearMonth = YearMonth.of(year, month)
+
+                    Box(
+                        Modifier
+                            .padding(top = 20.dp, bottom = 20.dp)
+                    ) {
+                        TextButton(onClick = { expanded = true }) {
+                            Text(
+                                text = if (isMonthlyView) "Bulan" else "Pekan",
+                                style = StyledText.MobileXsRegular,
+                                color = ColorPalette.Black
+                            )
+                            Icon(
+                                Icons.Default.ArrowRight,
+                                contentDescription = "Dropdown for Month/Week",
+                                modifier = Modifier.size(24.dp),
+                                tint = ColorPalette.Black
+                            )
+                        }
+
+                        DropdownMenu(
+                            expanded = expanded,
+                            onDismissRequest = { expanded = false },
+                            modifier = Modifier
+                                .background(Color.White)
+                                .border(BorderStroke(1.dp, ColorPalette.Monochrome200))
+                        ) {
                             DropdownMenuItem(
                                 text = {
                                     Text(
-                                        text = "${yearMonth.month.getDisplayName(TextStyle.FULL, Locale.getDefault())} $year",
+                                        text = "Bulan",
                                         style = StyledText.MobileSmallRegular
                                     )
                                 },
                                 onClick = {
-                                    selectedDate = yearMonth.atDay(1)
                                     expanded = false
-                                }
+                                    }
+                            )
+                            DropdownMenuItem(
+                                text = {
+                                    Text(
+                                        text = "Pekan",
+                                        style = StyledText.MobileSmallRegular
+                                    )
+                                },
+                                onClick = {
+                                    expanded = false
+                                    onNavigateWeeklyCalendar(id)}
                             )
                         }
                     }
+
                 }
             }
         }
-
         Spacer(modifier = Modifier.height(32.dp))
 
         MonthlyCalendarView(
             currentMonth = currentMonth,
             today = today,
             selectedDate = selectedDate,
-            schedule = schedule,
+            schedule = scheduleMonthly,
             onDateSelected = { selectedDate = it }
         )
-        Spacer(modifier = Modifier.height(56.dp))
     }
 }
 @Composable

@@ -125,6 +125,13 @@ fun dropdownItemsMentor(
       },
       route = Screen.Mentor.DataPeserta.route
     ),
+    DropdownItem(
+      text = "Pitch Deck",
+      onClick = {
+        navigateAndCloseSideNav(Screen.Mentor.Pitchdeck.route)
+      },
+      route = Screen.Mentor.Pitchdeck.route
+    ),
   )
 }
 
@@ -170,16 +177,16 @@ fun dropdownItemsKegiatan(
     DropdownItem(
       text = "Jadwal Kegiatan",
       onClick = {
-        Log.d("SideNav", "Jadwal Kegiatan clicked")
+        navigateAndCloseSideNav(Screen.Kegiatan.JadwalMentoringBulan.route)
       },
-      route = null
+      route = Screen.Kegiatan.JadwalMentoringBulan.route
     ),
     DropdownItem(
       text = "Umpan Balik Kegiatan",
       onClick = {
-        Log.d("SideNav", "Umpan Balik Kegiatan clicked")
+        navigateAndCloseSideNav(Screen.Kegiatan.UmpanBalikKegiatan.route)
       },
-      route = null
+      route = Screen.Kegiatan.UmpanBalikKegiatan.route
     )
   )
 }

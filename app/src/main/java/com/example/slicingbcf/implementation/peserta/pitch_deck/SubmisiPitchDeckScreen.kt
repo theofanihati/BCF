@@ -43,13 +43,10 @@ fun PitchDeckDetailScreen(
     ) {
         val currentPitchDeck = pitchDeck.first()
 
-        Spacer(modifier = Modifier.height(56.dp))
         TopSection(
             pitchDeck = currentPitchDeck,
             tautanPeserta = tautanPeserta,
             onTautanChange = { tautanPeserta = it },)
-
-        Spacer(modifier = Modifier.height(56.dp))
     }
 }
 

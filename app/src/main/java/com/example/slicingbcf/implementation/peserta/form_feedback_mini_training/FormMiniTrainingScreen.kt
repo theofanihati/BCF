@@ -20,19 +20,14 @@ import androidx.compose.ui.unit.dp
 import com.example.slicingbcf.constant.ColorPalette
 import com.example.slicingbcf.constant.StyledText
 import com.example.slicingbcf.implementation.peserta.form_feedback_mentor.RatingSections
+import com.example.slicingbcf.ui.shared.dropdown.DropdownText
+import com.example.slicingbcf.ui.shared.textfield.CustomOutlinedTextFieldDropdown
 
 @Composable
-@Preview(showSystemUi = true)
 fun FormMiniTrainingScreen(
     modifier: Modifier = Modifier,
-    onSaveFeedback: (String, String, String, String, String) -> Unit = { _, _, _, _, _ -> }
-) {
-    var dateOfEvent by remember { mutableStateOf("") }
-    var speaker1Name by remember { mutableStateOf(TextFieldValue("")) }
-    var speaker2Name by remember { mutableStateOf(TextFieldValue("")) }
-    var eventDate by remember { mutableStateOf(TextFieldValue("")) }
-    var kritikSaran by remember { mutableStateOf(TextFieldValue("")) }
-
+){
+    var hariKegiatan by remember { mutableStateOf("") }
     Column(
         modifier = modifier
             .padding(16.dp)
@@ -40,6 +35,31 @@ fun FormMiniTrainingScreen(
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
+        TopSection(
+            onSaveFeedback = { dateOfEvent, speaker1, speaker2, kritik, eventDate ->
+                // TODO: Implement logic for saving feedback
+            },
+            hariKegiatan = hariKegiatan,
+            hariKegiatanOnValueChange = { newValue ->
+                hariKegiatan = newValue
+            }
+        )
+    }
+}
+
+@Composable
+fun TopSection(
+    onSaveFeedback: (String, String, String, String, String) -> Unit = { _, _, _, _, _ -> },
+    hariKegiatan : String,
+    hariKegiatanOnValueChange : (String) -> Unit
+) {
+    var hariKegiatan by remember { mutableStateOf("") }
+    var speaker1Name by remember { mutableStateOf(TextFieldValue("")) }
+    var speaker2Name by remember { mutableStateOf(TextFieldValue("")) }
+    var eventDate by remember { mutableStateOf(TextFieldValue("")) }
+    var kritikSaran by remember { mutableStateOf(TextFieldValue("")) }
+    var expandedHariKegiatan by remember { mutableStateOf(false) }
+
         Text(
             text = "Umpan Balik Mini Training",
             style = StyledText.MobileLargeSemibold,
@@ -49,11 +69,34 @@ fun FormMiniTrainingScreen(
 
         StyledDropdownField(
             label = "Hari Kegiatan Mentoring",
-            value = dateOfEvent,
-            onClick = {
-                // TODO: LOGIC PILIH TANGGAL
-            }
+            value = hariKegiatan,
+//            onClick = {
+//                // TODO: LOGIC PILIH TANGGAL
+//            },
+            onValueChange = hariKegiatanOnValueChange,
+            expanded = expandedHariKegiatan,
+            onChangeExpanded = { expandedHariKegiatan = it },
+            dropdownItems = listOf("Mini Training hari ke-1", "Mini Training hari ke-2", "Mini Training hari ke-3")
+
+
         )
+
+//    label: String,
+//    value: String,
+//    onValueChange: (String) -> Unit,
+//    dropdownItems: List<String>,
+//    expanded: Boolean,
+//    onExpandedChange: (Boolean) -> Unit
+
+//        CustomOutlinedTextFieldDropdown(
+//            value = hariKegiatan,
+//            onValueChange = hariKegiatanOnValueChange,
+//            expanded = expandedHariKegiatan,
+//            onChangeExpanded = { expandedHariKegiatan = it },
+//            label = "Periode Capaian Mentoring",
+//            placeholder = "Pilih Periode Capaian Mentoring",
+//            dropdownItems = listOf("Mini Training hari ke-1", "Mini Training hari ke-2", "Mini Training hari ke-3")
+//        )
 
         StyledInputField(
             label = "Nama Pemateri 1",
@@ -142,7 +185,7 @@ fun FormMiniTrainingScreen(
         Button(
             onClick = {
                 onSaveFeedback(
-                    dateOfEvent,
+                    hariKegiatan,
                     speaker1Name.text,
                     speaker2Name.text,
                     kritikSaran.text,
@@ -160,7 +203,6 @@ fun FormMiniTrainingScreen(
         ) {
             Text("Simpan", style = StyledText.MobileBaseSemibold)
         }
-    }
 }
 
 @Composable
@@ -224,63 +266,86 @@ fun StyledInputField(
 fun StyledDropdownField(
     label: String,
     value: String,
-    onClick: () -> Unit
+    onValueChange: (String) -> Unit,
+    dropdownItems: List<String>,
+    expanded: Boolean,
+    onChangeExpanded: (Boolean) -> Unit
 ) {
-    Box(
+    Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 8.dp)
     ) {
-        OutlinedButton(
-            onClick = onClick,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(56.dp),
-            shape = RoundedCornerShape(50),
-            border = BorderStroke(1.dp, ColorPalette.Monochrome400),
-            colors = ButtonDefaults.outlinedButtonColors(
-                containerColor = Color.Transparent
-            )
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(
-                    text = if (value.isEmpty()) "Pilih Hari" else value,
-                    style = StyledText.MobileSmallRegular,
-                    color = if (value.isEmpty()) ColorPalette.Monochrome400 else ColorPalette.Monochrome900
-                )
-                Icon(
-                    imageVector = Icons.Default.ArrowDropDown,
-                    contentDescription = null,
-                    tint = ColorPalette.Monochrome900
-                )
-            }
-        }
         Box(
             modifier = Modifier
-                .padding(start = 20.dp)
-                .offset(y = (-10).dp)
-                .background(Color.White)
+                .fillMaxWidth()
         ) {
-            Row{
-                Text(
-                    text = "$label",
-                    style = StyledText.MobileBaseSemibold,
-                    color = ColorPalette.PrimaryColor700,
+            OutlinedButton(
+                onClick = { onChangeExpanded(!expanded) },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp),
+                shape = RoundedCornerShape(50),
+                border = BorderStroke(1.dp, ColorPalette.Monochrome400),
+                colors = ButtonDefaults.outlinedButtonColors(
+                    containerColor = Color.Transparent
                 )
-                Text(
-                    text = "*",
-                    style = StyledText.MobileBaseSemibold,
-                    color = ColorPalette.Error,
-                )
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        text = if (value.isEmpty()) "Pilih Hari" else value,
+                        style = StyledText.MobileSmallRegular,
+                        color = if (value.isEmpty()) ColorPalette.Monochrome400 else ColorPalette.Monochrome900
+                    )
+                    Icon(
+                        imageVector = Icons.Default.ArrowDropDown,
+                        contentDescription = null,
+                        tint = ColorPalette.Monochrome900
+                    )
+                }
             }
 
+            Box(
+                modifier = Modifier
+                    .padding(start = 20.dp)
+                    .offset(y = (-10).dp)
+                    .background(Color.White)
+            ) {
+                Row {
+                    Text(
+                        text = label,
+                        style = StyledText.MobileBaseSemibold,
+                        color = ColorPalette.PrimaryColor700,
+                    )
+                    Text(
+                        text = "*",
+                        style = StyledText.MobileBaseSemibold,
+                        color = ColorPalette.Error,
+                    )
+                }
+            }
         }
+
+        DropdownText(
+            expanded = expanded,
+            onExpandedChange = {
+                onChangeExpanded(it)
+            },
+            onItemSelected = { item ->
+                onValueChange(item)
+                onChangeExpanded(false)
+            },
+            items = dropdownItems,
+            currentItem = value
+        )
     }
 }
+
+
 
 @Composable
 fun FeedbackEvaluationSection(

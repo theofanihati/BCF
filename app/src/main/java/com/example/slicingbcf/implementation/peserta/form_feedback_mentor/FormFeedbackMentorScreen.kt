@@ -31,6 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.slicingbcf.constant.ColorPalette
 import com.example.slicingbcf.constant.StyledText
+import com.example.slicingbcf.ui.shared.textfield.CustomOutlinedTextFieldDropdown
 
 @Composable
 //@Preview(showSystemUi = true)
@@ -71,6 +72,9 @@ fun TopSection(
     selectedPeriode: String,
     onPeriodeChange: (String) -> Unit
 ) {
+
+    var expandedEvaluasiCapaian by remember { mutableStateOf(false) }
+    var expandedPeriodeCapaianMentoring by remember { mutableStateOf(false) }
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -91,9 +95,19 @@ fun TopSection(
             textAlign = TextAlign.Left,
             color = ColorPalette.PrimaryColor700,
         )
-        DropdownButton(
-            text = selectedEvaluasi,
-            onClick = { /* TODO: LOGIC ON CLICK NYA */ }
+//        DropdownButton(
+//            text = selectedEvaluasi,
+//            onClick = { /* TODO: LOGIC ON CLICK NYA */ }
+//        )
+
+        CustomOutlinedTextFieldDropdown(
+            value = selectedEvaluasi,
+            onValueChange = onEvaluasiChange,
+            expanded = expandedEvaluasiCapaian,
+            onChangeExpanded = { expandedEvaluasiCapaian = it },
+            label = "Nama Lembaga",
+            placeholder = "Pilih Evaluasi Capaian Mentoring",
+            dropdownItems = listOf("Cluster", "Desain Program")
         )
 
         // Input Field Nama Mentor
@@ -133,9 +147,18 @@ fun TopSection(
             textAlign = TextAlign.Left,
             color = ColorPalette.PrimaryColor700,
         )
-        DropdownButton(
-            text = selectedPeriode,
-            onClick = { /* TODO: logic on click dropdown */ }
+//        DropdownButton(
+//            text = selectedPeriode,
+//            onClick = { /* TODO: logic on click dropdown */ }
+//        )
+        CustomOutlinedTextFieldDropdown(
+            value = selectedPeriode,
+            onValueChange = onPeriodeChange,
+            expanded = expandedPeriodeCapaianMentoring,
+            onChangeExpanded = { expandedPeriodeCapaianMentoring = it },
+            label = "Periode Capaian Mentoring",
+            placeholder = "Pilih Periode Capaian Mentoring",
+            dropdownItems = listOf("Capaian Mentoring 1", "Capaian Mentoring 2", "Capaian Mentoring 3")
         )
     }
 }

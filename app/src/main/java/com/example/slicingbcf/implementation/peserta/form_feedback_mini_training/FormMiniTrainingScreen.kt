@@ -26,6 +26,7 @@ import com.example.slicingbcf.ui.shared.textfield.CustomOutlinedTextAsterisk
 import com.example.slicingbcf.ui.shared.textfield.CustomOutlinedTextFieldDropdown
 import com.example.slicingbcf.ui.shared.textfield.TextFieldLong
 
+@Preview
 @Composable
 fun FormMiniTrainingScreen(
     modifier: Modifier = Modifier,
@@ -40,7 +41,7 @@ fun FormMiniTrainingScreen(
     ) {
         TopSection(
             onSaveFeedback = { dateOfEvent, speaker1, speaker2, kritik, eventDate ->
-                // TODO: Implement logic for saving feedback
+                // TODO simpan data
             },
             hariKegiatan = hariKegiatan,
             hariKegiatanOnValueChange = { newValue ->

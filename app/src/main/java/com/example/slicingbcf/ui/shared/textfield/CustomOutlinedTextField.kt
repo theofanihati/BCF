@@ -274,11 +274,11 @@ fun CustomOutlinedTextAsterisk(
   label: String,
   value: TextFieldValue,
   placeholder: String,
-  onValueChange: (TextFieldValue) -> Unit
+  onValueChange: (TextFieldValue) -> Unit,
+  modifier: Modifier = Modifier
 ) {
   Box(
-    modifier = Modifier
-      .fillMaxWidth()
+    modifier = modifier
       .padding(top = 8.dp)
   ) {
     OutlinedTextField(

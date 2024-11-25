@@ -1,10 +1,15 @@
 package com.example.slicingbcf.implementation.mentor.jadwal.tambah_jadwal
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
@@ -17,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.slicingbcf.constant.ColorPalette
 import com.example.slicingbcf.constant.StyledText
@@ -24,10 +30,47 @@ import com.example.slicingbcf.ui.shared.dropdown.CustomDropdownMenuAsterisk
 import com.example.slicingbcf.ui.shared.textfield.CustomOutlinedTextAsterisk
 import com.example.slicingbcf.ui.shared.textfield.TextFieldLong
 
+@Preview
 @Composable
 fun AddJadwalMentorScreen(
+    modifier: Modifier = Modifier,
+){
+    var tipeKegiatan by remember { mutableStateOf("") }
+    var namaLembaga by remember { mutableStateOf("") }
+    var namaPemateri by remember { mutableStateOf("") }
+    Column(
+        modifier = modifier
+            .padding(16.dp)
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(24.dp)
+    ) {
+        TopSection(
+            onSaveFeedback = { tipeKegiatan, namaPemateri, namaLembaga, eventDate, judulKegiatan, tautanKegiatan, deskripsiAgenda ->
+                // TODO simpan data
+            },
+            tipeKegiatan = tipeKegiatan,
+            namaPemateri = namaPemateri,
+            namaLembaga = namaLembaga,
+            tipeKegiatanOnValueChange = { newValue ->
+                tipeKegiatan = newValue
+            },
+            namaPemateriOnValueChange = { newValue ->
+                namaPemateri = newValue
+            },
+            namaLembagaOnValueChange = { newValue ->
+                namaLembaga = newValue
+            },
+        )
+    }
+}
+
+@Composable
+fun TopSection(
     onSaveFeedback: (String, String, String, String, String, String, String) -> Unit = { _, _, _, _, _, _, _ -> },
     tipeKegiatan : String,
+    namaPemateri : String,
+    namaLembaga: String,
     tipeKegiatanOnValueChange : (String) -> Unit,
     namaPemateriOnValueChange : (String) -> Unit,
     namaLembagaOnValueChange : (String) -> Unit
@@ -38,6 +81,8 @@ fun AddJadwalMentorScreen(
     var namaLembaga by remember { mutableStateOf("") }
     var eventDate by remember { mutableStateOf(TextFieldValue("")) }
     var judulKegiatan by remember { mutableStateOf(TextFieldValue("")) }
+    var waktuMulai by remember { mutableStateOf(TextFieldValue("")) }
+    var waktuSelesai by remember { mutableStateOf(TextFieldValue("")) }
     var tautanKegiatan by remember { mutableStateOf(TextFieldValue("")) }
     var deskripsiAgenda by remember { mutableStateOf(TextFieldValue("")) }
     var expandedTipeKegiatan by remember { mutableStateOf(false) }
@@ -71,6 +116,30 @@ fun AddJadwalMentorScreen(
         placeholder = "DD/MM/YYYY",
         onValueChange = { eventDate = it }
     )
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        CustomOutlinedTextAsterisk(
+            label = "Waktu Mulai",
+            value = waktuMulai,
+            placeholder = "HH:MM",
+            onValueChange = { waktuMulai = it },
+            modifier = Modifier
+                .weight(1f)
+        )
+
+        CustomOutlinedTextAsterisk(
+            label = "Waktu Selesai",
+            value = waktuSelesai,
+            placeholder = "HH:MM",
+            onValueChange = { waktuSelesai = it },
+            modifier = Modifier
+                .weight(1f)
+        )
+    }
     CustomDropdownMenuAsterisk(
         label = "Nama Pemateri",
         value = namaPemateri,
@@ -90,7 +159,7 @@ fun AddJadwalMentorScreen(
         dropdownItems = listOf("Bakrie CenterFoundation", "The Next Gen", "Indonesia Jaya")
     )
     TextFieldLong(
-        label = "Silakan berikan kritik dan saran Anda mengenai kualitas sesi Mini Training secara keseluruhan",
+        label = "Deskripsi Agenda",
         placeholder = "Isi detail acara disini",
         value = deskripsiAgenda,
         onValueChange = { deskripsiAgenda = it }
@@ -142,5 +211,4 @@ fun AddJadwalMentorScreen(
             Text("Kembali", style = StyledText.MobileBaseSemibold)
         }
     }
-
 }

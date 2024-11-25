@@ -58,7 +58,6 @@ fun TopSection(
     userName: String,
     schedule: Map<LocalDate, List<Pair<String, Color>>>,
     onNavigateWeeklyCalendar: (String) -> Unit,
-//    id : String
 ) {
     var selectedDate by remember { mutableStateOf(LocalDate.now()) }
     val today = LocalDate.now()
@@ -76,7 +75,10 @@ fun TopSection(
         entry.value.map { (it.beginTime to it.endTime) to it.title }
     }
 
-    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .padding(16.dp)
+    ) {
         Spacer(modifier = Modifier.height(80.dp))
         Text(
             text = "Halo, $userName",
@@ -156,7 +158,7 @@ fun TopSection(
             ) {
                 TextButton(onClick = { expanded = true }) {
                     Text(
-                        text = "Bulan",
+                        text = if (isMonthlyView) "Bulan" else "Pekan",
                         style = StyledText.MobileXsRegular,
                         color = ColorPalette.Black
                     )
@@ -171,58 +173,35 @@ fun TopSection(
                 DropdownMenu(
                     expanded = expanded,
                     onDismissRequest = { expanded = false },
+                    modifier = Modifier
+                        .background(Color.White)
+                        .border(BorderStroke(1.dp, ColorPalette.Monochrome200))
                 ) {
-
-                    Box(
-                        Modifier
-                            .padding(top = 20.dp, bottom = 20.dp)
-                    ) {
-                        TextButton(onClick = { expanded = true }) {
+                    DropdownMenuItem(
+                        text = {
                             Text(
-                                text = if (isMonthlyView) "Bulan" else "Pekan",
-                                style = StyledText.MobileXsRegular,
-                                color = ColorPalette.Black
+                                text = "Bulan",
+                                style = StyledText.MobileSmallRegular
                             )
-                            Icon(
-                                Icons.Default.ArrowRight,
-                                contentDescription = "Dropdown for Month/Week",
-                                modifier = Modifier.size(24.dp),
-                                tint = ColorPalette.Black
-                            )
+                        },
+                        onClick = {
+                            expanded = false
+                            isMonthlyView = true
                         }
-
-                        DropdownMenu(
-                            expanded = expanded,
-                            onDismissRequest = { expanded = false },
-                            modifier = Modifier
-                                .background(Color.White)
-                                .border(BorderStroke(1.dp, ColorPalette.Monochrome200))
-                        ) {
-                            DropdownMenuItem(
-                                text = {
-                                    Text(
-                                        text = "Bulan",
-                                        style = StyledText.MobileSmallRegular
-                                    )
-                                },
-                                onClick = {
-                                    expanded = false
-                                    }
+                    )
+                    DropdownMenuItem(
+                        text = {
+                            Text(
+                                text = "Pekan",
+                                style = StyledText.MobileSmallRegular
                             )
-                            DropdownMenuItem(
-                                text = {
-                                    Text(
-                                        text = "Pekan",
-                                        style = StyledText.MobileSmallRegular
-                                    )
-                                },
-                                onClick = {
-                                    expanded = false
-                                    onNavigateWeeklyCalendar("1")}
-                            )
+                        },
+                        onClick = {
+                            expanded = false
+                            isMonthlyView = false
+                            onNavigateWeeklyCalendar("1")
                         }
-                    }
-
+                    )
                 }
             }
         }

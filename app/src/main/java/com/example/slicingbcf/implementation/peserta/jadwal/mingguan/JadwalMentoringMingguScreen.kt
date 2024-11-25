@@ -64,6 +64,7 @@ fun TopSection(
     var selectedDate by remember { mutableStateOf(LocalDate.now()) }
     val currentMonth = YearMonth.of(selectedDate.year, selectedDate.month)
     var expanded by remember { mutableStateOf(false) }
+    var isWeeklyView by remember { mutableStateOf(true) }
 
     Column(modifier = Modifier
         .fillMaxSize()
@@ -82,7 +83,9 @@ fun TopSection(
             text = "Hari ini: ${today.dayOfWeek.getDisplayName(TextStyle.FULL, Locale("id", "ID"))}, " +
                     "${today.dayOfMonth} ${today.month.getDisplayName(TextStyle.FULL, Locale("id", "ID"))} ${today.year}",
             style = StyledText.MobileBaseRegular,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 4.dp),
             textAlign = TextAlign.Start,
             color = ColorPalette.Monochrome400
         )
@@ -150,17 +153,12 @@ fun TopSection(
                 }
             }
             Box(
-                modifier = Modifier
-                    .padding(0.dp)
+                Modifier
+                    .padding(top = 20.dp, bottom = 20.dp)
             ) {
-                TextButton(
-                    onClick = { expanded = true },
-                    modifier = Modifier
-                        .width(75.dp)
-                        .padding(6.dp)
-                ) {
+                TextButton(onClick = { expanded = true }) {
                     Text(
-                        text = "Pekan",
+                        text = if (isWeeklyView) "Pekan" else "Bulan",
                         style = StyledText.MobileXsRegular,
                         color = ColorPalette.Black
                     )
@@ -168,64 +166,42 @@ fun TopSection(
                         Icons.Default.ArrowRight,
                         contentDescription = "Dropdown for Month",
                         modifier = Modifier.size(24.dp),
-                        tint = ColorPalette.Black)
+                        tint = ColorPalette.Black
+                    )
                 }
 
                 DropdownMenu(
                     expanded = expanded,
                     onDismissRequest = { expanded = false },
+                    modifier = Modifier
+                        .background(Color.White)
+                        .border(BorderStroke(1.dp, ColorPalette.Monochrome200))
                 ) {
-
-                    Box(
-                        Modifier
-                            .padding(top = 20.dp, bottom = 20.dp)
-                    ) {
-                        TextButton(onClick = { expanded = true }) {
+                    DropdownMenuItem(
+                        text = {
+                            Text(
+                                text = "Bulan",
+                                style = StyledText.MobileSmallRegular
+                            )
+                        },
+                        onClick = {
+                            expanded = false
+                            isWeeklyView = false
+                            onNavigateMonthlyCalendar("1")
+                        }
+                    )
+                    DropdownMenuItem(
+                        text = {
                             Text(
                                 text = "Pekan",
-                                style = StyledText.MobileXsRegular,
-                                color = ColorPalette.Black
+                                style = StyledText.MobileSmallRegular
                             )
-                            Icon(
-                                Icons.Default.ArrowRight,
-                                contentDescription = "Dropdown for Month/Week",
-                                modifier = Modifier.size(24.dp),
-                                tint = ColorPalette.Black
-                            )
+                        },
+                        onClick = {
+                            expanded = false
+                            isWeeklyView = true
                         }
-
-                        DropdownMenu(
-                            expanded = expanded,
-                            onDismissRequest = { expanded = false },
-                            modifier = Modifier
-                                .background(Color.White)
-                                .border(BorderStroke(1.dp, ColorPalette.Monochrome200))
-                        ) {
-                            DropdownMenuItem(
-                                text = {
-                                    Text(
-                                        text = "Bulan",
-                                        style = StyledText.MobileSmallRegular
-                                    )
-                                },
-                                onClick = {
-                                    expanded = false
-                                }
-                            )
-                            DropdownMenuItem(
-                                text = {
-                                    Text(
-                                        text = "Pekan",
-                                        style = StyledText.MobileSmallRegular
-                                    )
-                                },
-                                onClick = {
-                                    expanded = false
-                                    onNavigateMonthlyCalendar("1")}
-                            )
-                        }
-                    }
-
+                    )
                 }
             }
         }

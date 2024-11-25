@@ -72,7 +72,7 @@ fun dropdownItemsPeserta(
     DropdownItem(
       text = "Feedback Peserta",
       onClick = {
-        navigateAndCloseSideNav(Screen.Mentor.FeedbackPeserta.route)
+        navigateAndCloseSideNav(Screen.Peserta.FeedbackPeserta.route)
       },
       route = Screen.Mentor.FeedbackPeserta.route
     ),
@@ -117,6 +117,13 @@ fun dropdownItemsMentor(
         Log.d("SideNav", "Umpan Balik Mentor clicked")
       },
       route = null
+    ),
+    DropdownItem(
+      text = "Form Umpan Balik Peserta",
+      onClick = {
+        navigateAndCloseSideNav(Screen.Mentor.FeedbackPeserta.route)
+      },
+      route = Screen.Mentor.FeedbackPeserta.route
     ),
     DropdownItem(
       text = "Forum Diskusi",

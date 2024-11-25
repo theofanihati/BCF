@@ -8,6 +8,7 @@ import com.example.slicingbcf.implementation.mentor.pitchdeck.DetailPitchdeckScr
 import com.example.slicingbcf.implementation.mentor.pitchdeck.MoreDetailPitchdeckScreen
 import com.example.slicingbcf.implementation.mentor.pitchdeck.PitchdeckScreen
 import com.example.slicingbcf.implementation.peserta.data_peserta.DataPesertaScreen
+import com.example.slicingbcf.implementation.peserta.feedback_peserta.FeedbackPesertaScreen
 import com.example.slicingbcf.implementation.peserta.form_feedback_mentor.FeedbackMentorScreen1
 import com.example.slicingbcf.implementation.peserta.form_feedback_mentor.FeedbackMentorScreen2
 import com.example.slicingbcf.implementation.peserta.form_feedback_mentor.FeedbackMentorScreen3
@@ -88,6 +89,13 @@ fun NavGraphBuilder.pesertaNavGraph(
     }
 
     // Feedback Peserta
+    composable(
+      route = Screen.Peserta.FeedbackPeserta.route,
+    ) {
+      FeedbackPesertaScreen(
+        modifier = modifier,
+      )
+    }
 
     // Pengaturan
     composable(

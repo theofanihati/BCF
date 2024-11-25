@@ -86,7 +86,6 @@ fun TopSection() {
             ),
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
-        Spacer(modifier = Modifier.height(56.dp))
         Text(
             text = "Umpan Balik Peserta",
             style = StyledText.MobileLargeSemibold,
@@ -314,7 +313,6 @@ fun TopSection() {
 
             DokumentasiMentoringSection()
         }
-        Spacer(modifier = Modifier.height(56.dp))
     }
 }
 

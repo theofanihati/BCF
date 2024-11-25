@@ -192,10 +192,9 @@ fun dropdownItemsKegiatan(
       text = "Jadwal Kegiatan",
       onClick = {
         Log.d("SideNav", "Jadwal clicked")
-//        navigateAndCloseSideNav(Screen.Kegiatan.JadwalMentoringBulan.route)
+        navigateAndCloseSideNav(Screen.Kegiatan.JadwalMentoringBulan.route)
       },
-      route = null
-//      Screen.Kegiatan.JadwalMentoringBulan.route
+      route = Screen.Kegiatan.JadwalMentoringBulan.route
     ),
     DropdownItem(
       text = "Umpan Balik Kegiatan",

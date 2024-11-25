@@ -36,7 +36,7 @@ import java.util.*
 fun JadwalMentoringBulanScreen(
     modifier: Modifier = Modifier,
     onNavigateWeeklyCalendar: (String) -> Unit = {},
-    id : String = "1"
+//    id : String = "1"
 ) {
     val userName = profilLembaga.firstOrNull()?.name ?: "Pengguna"
     val schedule = detailJadwal.groupBy { it.date }.mapValues { entry ->
@@ -49,7 +49,7 @@ fun JadwalMentoringBulanScreen(
         userName = profilLembaga.firstOrNull()?.name ?: "Pengguna",
         schedule = schedule,
         onNavigateWeeklyCalendar = onNavigateWeeklyCalendar,
-        id  = "1"
+//        id  = "1"
     )
 }
 
@@ -58,7 +58,7 @@ fun TopSection(
     userName: String,
     schedule: Map<LocalDate, List<Pair<String, Color>>>,
     onNavigateWeeklyCalendar: (String) -> Unit,
-    id : String
+//    id : String
 ) {
     var selectedDate by remember { mutableStateOf(LocalDate.now()) }
     val today = LocalDate.now()
@@ -218,7 +218,7 @@ fun TopSection(
                                 },
                                 onClick = {
                                     expanded = false
-                                    onNavigateWeeklyCalendar(id)}
+                                    onNavigateWeeklyCalendar("1")}
                             )
                         }
                     }

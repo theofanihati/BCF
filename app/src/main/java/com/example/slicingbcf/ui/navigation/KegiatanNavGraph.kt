@@ -29,22 +29,19 @@ fun NavGraphBuilder.kegiatanNavGraph(
         }
     }
 
-//    composable(
-//        route = "jadwal-bulan/$id",
+    composable(
+        route = "jadwal-bulan",
 //        arguments = listOf(navArgument("id") { type = NavType.StringType })
-//    ) { backStackEntry ->
-//        val id = backStackEntry.arguments?.getString("id") ?: ""
-//        if (id.isEmpty()) throw IllegalStateException("id must not be empty")
-//
-//        val onNavigateWeeklyCalendar = { id : String ->
-//            navController.navigateSingleTop("jadwal-minggu/$id")
-//        }
-//
-//        JadwalMentoringBulanScreen(
-//            modifier = modifier,
-//            onNavigateWeeklyCalendar = onNavigateWeeklyCalendar
-//        )
-//    }
+    ) {
+        val onNavigateWeeklyCalendar = { id : String ->
+            navController.navigateSingleTop("jadwal-minggu/$id")
+        }
+
+        JadwalMentoringBulanScreen(
+            modifier = modifier,
+            onNavigateWeeklyCalendar = onNavigateWeeklyCalendar
+        )
+    }
 
 //    composable(
 //        route = Screen.Kegiatan.JadwalMentoringBulan.route,

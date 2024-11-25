@@ -7,6 +7,9 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
+import com.example.slicingbcf.implementation.mentor.jadwal.bulan.JadwalBulanMentorScreen
+import com.example.slicingbcf.implementation.mentor.jadwal.detail.DetailJadwalMentorScreen
+import com.example.slicingbcf.implementation.mentor.jadwal.minggu.JadwalMingguMentorScreen
 import com.example.slicingbcf.implementation.mentor.penilaian_peserta.PenilaianPesertaScreen
 import com.example.slicingbcf.implementation.peserta.form_feedback_mini_training.FormMiniTrainingScreen
 import com.example.slicingbcf.implementation.peserta.jadwal.bulanan.JadwalMentoringBulanScreen
@@ -31,10 +34,10 @@ fun NavGraphBuilder.kegiatanNavGraph(
     }
 
     composable(
-        route = "jadwal-bulan"
+        route = "jadwal-bulan-peserta"
     ) {
         val onNavigateWeeklyCalendar = { id : String ->
-            navController.navigateSingleTop("jadwal-minggu/$id")
+            navController.navigateSingleTop("jadwal-minggu-peserta/$id")
         }
 
         JadwalMentoringBulanScreen(
@@ -43,31 +46,19 @@ fun NavGraphBuilder.kegiatanNavGraph(
         )
     }
 
-//    composable(
-//        route = Screen.Kegiatan.JadwalMentoringBulan.route,
-//    ) {
-//        val onNavigateWeeklyCalendar = { id : String ->
-//            navController.navigateSingleTop("jadwal-minggu/$id")
-//        }
-//
-//        JadwalMentoringBulanScreen(
-//            modifier = modifier,
-//            onNavigateWeeklyCalendar = onNavigateWeeklyCalendar
-//        )
-//    }
     composable(
-        route = "jadwal-minggu/{id}",
+        route = "jadwal-minggu-peserta/{id}",
         arguments = listOf(navArgument("id") { type = NavType.StringType })
     ) { backStackEntry ->
         val id = backStackEntry.arguments?.getString("id") ?: ""
         if (id.isEmpty()) throw IllegalStateException("id must not be empty")
 
         val onNavigateMonthlyCalendar = { _: String ->
-            navController.navigateSingleTop("jadwal-bulan")
+            navController.navigateSingleTop("jadwal-bulan-peserta")
         }
 
         val onNavigateDetailCalendar = { id: String ->
-            navController.navigateSingleTop("detail-jadwal/$id")
+            navController.navigateSingleTop("detail-jadwal-peserta/$id")
         }
 
         JadwalMentoringMingguScreen(
@@ -79,7 +70,7 @@ fun NavGraphBuilder.kegiatanNavGraph(
     }
 
     composable(
-        route = "detail-jadwal/{id}",
+        route = "detail-jadwal-peserta/{id}",
         arguments = listOf(navArgument("id") { type = NavType.StringType })
     ) { backStackEntry ->
         val id = backStackEntry.arguments?.getString("id") ?: ""
@@ -92,5 +83,54 @@ fun NavGraphBuilder.kegiatanNavGraph(
         )
     }
 
+    composable(
+        route = "jadwal-bulan-mentor"
+    ) {
+        val onNavigateWeeklyCalendar = { id : String ->
+            navController.navigateSingleTop("jadwal-minggu-mentor/$id")
+        }
+
+        JadwalBulanMentorScreen(
+            modifier = modifier,
+            onNavigateWeeklyCalendar = onNavigateWeeklyCalendar
+        )
+    }
+
+    composable(
+        route = "jadwal-minggu-mentor/{id}",
+        arguments = listOf(navArgument("id") { type = NavType.StringType })
+    ) { backStackEntry ->
+        val id = backStackEntry.arguments?.getString("id") ?: ""
+        if (id.isEmpty()) throw IllegalStateException("id must not be empty")
+
+        val onNavigateMonthlyCalendar = { _: String ->
+            navController.navigateSingleTop("jadwal-bulan-mentor")
+        }
+
+        val onNavigateDetailCalendar = { id: String ->
+            navController.navigateSingleTop("detail-jadwal-mentor/$id")
+        }
+
+        JadwalMingguMentorScreen(
+            modifier = modifier,
+            id = id,
+            onNavigateMonthlyCalendar = onNavigateMonthlyCalendar,
+            onNavigateDetailCalendar = onNavigateDetailCalendar
+        )
+    }
+
+    composable(
+        route = "detail-jadwal-mentor/{id}",
+        arguments = listOf(navArgument("id") { type = NavType.StringType })
+    ) { backStackEntry ->
+        val id = backStackEntry.arguments?.getString("id") ?: ""
+        println("id diterima: $id")
+        if (id.isEmpty()) throw IllegalStateException("id must not be empty")
+
+        DetailJadwalMentorScreen(
+            modifier = modifier,
+            id = id
+        )
+    }
 
 }

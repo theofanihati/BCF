@@ -20,8 +20,11 @@ import androidx.compose.ui.unit.dp
 import com.example.slicingbcf.constant.ColorPalette
 import com.example.slicingbcf.constant.StyledText
 import com.example.slicingbcf.implementation.peserta.form_feedback_mentor.RatingSections
+import com.example.slicingbcf.ui.shared.dropdown.CustomDropdownMenuAsterisk
 import com.example.slicingbcf.ui.shared.dropdown.DropdownText
+import com.example.slicingbcf.ui.shared.textfield.CustomOutlinedTextAsterisk
 import com.example.slicingbcf.ui.shared.textfield.CustomOutlinedTextFieldDropdown
+import com.example.slicingbcf.ui.shared.textfield.TextFieldLong
 
 @Composable
 fun FormMiniTrainingScreen(
@@ -67,52 +70,31 @@ fun TopSection(
             modifier = Modifier.fillMaxWidth().padding(bottom = 24.dp)
         )
 
-        StyledDropdownField(
+        CustomDropdownMenuAsterisk(
             label = "Hari Kegiatan Mentoring",
             value = hariKegiatan,
-//            onClick = {
-//                // TODO: LOGIC PILIH TANGGAL
-//            },
+            placeholder = "Pilih Hari",
             onValueChange = hariKegiatanOnValueChange,
             expanded = expandedHariKegiatan,
             onChangeExpanded = { expandedHariKegiatan = it },
             dropdownItems = listOf("Mini Training hari ke-1", "Mini Training hari ke-2", "Mini Training hari ke-3")
-
-
         )
 
-//    label: String,
-//    value: String,
-//    onValueChange: (String) -> Unit,
-//    dropdownItems: List<String>,
-//    expanded: Boolean,
-//    onExpandedChange: (Boolean) -> Unit
-
-//        CustomOutlinedTextFieldDropdown(
-//            value = hariKegiatan,
-//            onValueChange = hariKegiatanOnValueChange,
-//            expanded = expandedHariKegiatan,
-//            onChangeExpanded = { expandedHariKegiatan = it },
-//            label = "Periode Capaian Mentoring",
-//            placeholder = "Pilih Periode Capaian Mentoring",
-//            dropdownItems = listOf("Mini Training hari ke-1", "Mini Training hari ke-2", "Mini Training hari ke-3")
-//        )
-
-        StyledInputField(
+        CustomOutlinedTextAsterisk(
             label = "Nama Pemateri 1",
             value = speaker1Name,
             placeholder = "Masukkan nama pemateri",
             onValueChange = { speaker1Name = it }
         )
 
-        StyledInputField(
+        CustomOutlinedTextAsterisk(
             label = "Nama Pemateri 2",
             value = speaker2Name,
             placeholder = "Masukkan nama pemateri",
             onValueChange = { speaker2Name = it }
         )
 
-        StyledInputField(
+        CustomOutlinedTextAsterisk(
             label = "Tanggal Kegiatan",
             value = eventDate,
             placeholder = "DD/MM/YYYY",
@@ -173,7 +155,7 @@ fun TopSection(
             )
         }
 
-        KritikSaranInputField(
+        TextFieldLong(
             label = "Silakan berikan kritik dan saran Anda mengenai kualitas sesi Mini Training secara keseluruhan",
             placeholder = "Tuliskan kritik dan saran setelah mengikuti kegiatan Mini Training hari ini!",
             value = kritikSaran,
@@ -206,148 +188,6 @@ fun TopSection(
 }
 
 @Composable
-fun StyledInputField(
-    label: String,
-    value: TextFieldValue,
-    placeholder: String,
-    onValueChange: (TextFieldValue) -> Unit
-) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 8.dp)
-    ) {
-        OutlinedTextField(
-            value = value,
-            onValueChange = onValueChange,
-            placeholder = {
-                Text(
-                    text = placeholder,
-                    style = StyledText.MobileSmallRegular,
-                    color = ColorPalette.Monochrome400
-                )
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 8.dp)
-                .height(56.dp),
-            shape = RoundedCornerShape(50),
-            colors = TextFieldDefaults.colors(
-                unfocusedContainerColor = Color.Transparent,
-                focusedContainerColor = Color.Transparent,
-                unfocusedIndicatorColor = ColorPalette.Monochrome400,
-                focusedIndicatorColor = ColorPalette.PrimaryColor700
-            ),
-            singleLine = true
-        )
-        Box(
-            modifier = Modifier
-                .padding(start = 20.dp)
-                .offset(y = (-3).dp)
-                .background(Color.White)
-        ) {
-            Row{
-                Text(
-                    text = "$label",
-                    style = StyledText.MobileBaseSemibold,
-                    color = ColorPalette.PrimaryColor700,
-                )
-                Text(
-                    text = "*",
-                    style = StyledText.MobileBaseSemibold,
-                    color = ColorPalette.Error,
-                )
-            }
-        }
-    }
-}
-
-@Composable
-fun StyledDropdownField(
-    label: String,
-    value: String,
-    onValueChange: (String) -> Unit,
-    dropdownItems: List<String>,
-    expanded: Boolean,
-    onChangeExpanded: (Boolean) -> Unit
-) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 8.dp)
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-            OutlinedButton(
-                onClick = { onChangeExpanded(!expanded) },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp),
-                shape = RoundedCornerShape(50),
-                border = BorderStroke(1.dp, ColorPalette.Monochrome400),
-                colors = ButtonDefaults.outlinedButtonColors(
-                    containerColor = Color.Transparent
-                )
-            ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(
-                        text = if (value.isEmpty()) "Pilih Hari" else value,
-                        style = StyledText.MobileSmallRegular,
-                        color = if (value.isEmpty()) ColorPalette.Monochrome400 else ColorPalette.Monochrome900
-                    )
-                    Icon(
-                        imageVector = Icons.Default.ArrowDropDown,
-                        contentDescription = null,
-                        tint = ColorPalette.Monochrome900
-                    )
-                }
-            }
-
-            Box(
-                modifier = Modifier
-                    .padding(start = 20.dp)
-                    .offset(y = (-10).dp)
-                    .background(Color.White)
-            ) {
-                Row {
-                    Text(
-                        text = label,
-                        style = StyledText.MobileBaseSemibold,
-                        color = ColorPalette.PrimaryColor700,
-                    )
-                    Text(
-                        text = "*",
-                        style = StyledText.MobileBaseSemibold,
-                        color = ColorPalette.Error,
-                    )
-                }
-            }
-        }
-
-        DropdownText(
-            expanded = expanded,
-            onExpandedChange = {
-                onChangeExpanded(it)
-            },
-            onItemSelected = { item ->
-                onValueChange(item)
-                onChangeExpanded(false)
-            },
-            items = dropdownItems,
-            currentItem = value
-        )
-    }
-}
-
-
-
-@Composable
 fun FeedbackEvaluationSection(
     speakerLabel: String
 ) {
@@ -365,62 +205,5 @@ fun FeedbackEvaluationSection(
                 onRatingSelected = { /* TODO: Handle rating */ }
             )
         }
-    }
-}
-
-@Composable
-fun KritikSaranInputField(
-    label: String,
-    placeholder: String,
-    value: TextFieldValue,
-    onValueChange: (TextFieldValue) -> Unit
-) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        Box(
-            modifier = Modifier
-                .offset(y = (-3).dp)
-                .background(Color.White)
-        ) {
-            Row{
-                Text(
-                    text = label,
-                    style = StyledText.MobileBaseSemibold,
-                    color = ColorPalette.PrimaryColor700,
-                    textAlign = TextAlign.Justify
-                )
-                Text(
-                    text = "*",
-                    style = StyledText.MobileBaseSemibold,
-                    color = ColorPalette.Error,
-                )
-            }
-        }
-
-        OutlinedTextField(
-            value = value,
-            onValueChange = onValueChange,
-            placeholder = {
-                Text(
-                    text = placeholder,
-                    style = StyledText.MobileSmallRegular,
-                    color = ColorPalette.Monochrome400
-                )
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(120.dp),
-            shape = RoundedCornerShape(8.dp),
-            colors = TextFieldDefaults.colors(
-                unfocusedContainerColor = Color.Transparent,
-                focusedContainerColor = Color.Transparent,
-                unfocusedIndicatorColor = ColorPalette.Monochrome400,
-                focusedIndicatorColor = ColorPalette.PrimaryColor700
-            )
-        )
     }
 }

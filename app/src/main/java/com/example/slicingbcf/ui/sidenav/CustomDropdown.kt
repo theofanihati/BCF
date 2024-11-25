@@ -74,7 +74,14 @@ fun dropdownItemsPeserta(
       onClick = {
         navigateAndCloseSideNav(Screen.Peserta.FeedbackPeserta.route)
       },
-      route = Screen.Mentor.FeedbackPeserta.route
+      route = Screen.Peserta.FeedbackPeserta.route
+    ),
+    DropdownItem(
+      text = "Form Umpan Balik Mentor",
+      onClick = {
+        navigateAndCloseSideNav(Screen.Peserta.FormFeedbackMentor.route)
+      },
+      route = Screen.Peserta.FormFeedbackMentor.route
     ),
     DropdownItem(
       text = "Pengaturan",
@@ -89,14 +96,7 @@ fun dropdownItemsPeserta(
         navigateAndCloseSideNav(Screen.Peserta.WorksheetPeserta.route)
       },
       route = Screen.Peserta.WorksheetPeserta.route
-    ),
-    DropdownItem(
-      text = "Form Umpan Balik Mentor",
-      onClick = {
-        navigateAndCloseSideNav(Screen.Peserta.FormFeedbackMentor.route)
-      },
-      route = Screen.Peserta.FormFeedbackMentor.route
-    ),
+    )
   )
 }
 
@@ -121,9 +121,9 @@ fun dropdownItemsMentor(
     DropdownItem(
       text = "Form Umpan Balik Peserta",
       onClick = {
-        navigateAndCloseSideNav(Screen.Mentor.FeedbackPeserta.route)
+        navigateAndCloseSideNav(Screen.Mentor.FormFeedbackPeserta.route)
       },
-      route = Screen.Mentor.FeedbackPeserta.route
+      route = Screen.Mentor.FormFeedbackPeserta.route
     ),
     DropdownItem(
       text = "Forum Diskusi",
@@ -192,10 +192,18 @@ fun dropdownItemsKegiatan(
       text = "Jadwal Kegiatan",
       onClick = {
         Log.d("SideNav", "Jadwal clicked")
-        navigateAndCloseSideNav(Screen.Kegiatan.JadwalMentoringBulan.route)
+        navigateAndCloseSideNav(Screen.Kegiatan.JadwalBulanPeserta.route)
       },
-      route = Screen.Kegiatan.JadwalMentoringBulan.route
+      route = Screen.Kegiatan.JadwalBulanPeserta.route
     ),
+    DropdownItem(
+      text = "Jadwal Kegiatan (Mentor)",
+      onClick = {
+        navigateAndCloseSideNav(Screen.Kegiatan.JadwalBulanMentor.route)
+      },
+      route = Screen.Kegiatan.UmpanBalikKegiatan.route
+    ),
+
     DropdownItem(
       text = "Umpan Balik Kegiatan",
       onClick = {

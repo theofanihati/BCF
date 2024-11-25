@@ -24,8 +24,6 @@ import com.example.slicingbcf.constant.ColorPalette
 import com.example.slicingbcf.constant.StyledText
 import com.example.slicingbcf.data.local.detailJadwal
 import com.example.slicingbcf.data.local.profilLembaga
-import com.example.slicingbcf.implementation.peserta.jadwal.mingguan.WeeklyCalendarView
-import com.example.slicingbcf.implementation.peserta.jadwal.mingguan.withDayOfWeek
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.TextStyle
@@ -36,7 +34,7 @@ import java.util.*
 fun JadwalMentoringBulanScreen(
     modifier: Modifier = Modifier,
     onNavigateWeeklyCalendar: (String) -> Unit = {},
-//    id : String = "1"
+//    id : String
 ) {
     val userName = profilLembaga.firstOrNull()?.name ?: "Pengguna"
     val schedule = detailJadwal.groupBy { it.date }.mapValues { entry ->

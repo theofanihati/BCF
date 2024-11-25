@@ -1,0 +1,146 @@
+package com.example.slicingbcf.implementation.mentor.jadwal.tambah_jadwal
+
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import com.example.slicingbcf.constant.ColorPalette
+import com.example.slicingbcf.constant.StyledText
+import com.example.slicingbcf.ui.shared.dropdown.CustomDropdownMenuAsterisk
+import com.example.slicingbcf.ui.shared.textfield.CustomOutlinedTextAsterisk
+import com.example.slicingbcf.ui.shared.textfield.TextFieldLong
+
+@Composable
+fun AddJadwalMentorScreen(
+    onSaveFeedback: (String, String, String, String, String, String, String) -> Unit = { _, _, _, _, _, _, _ -> },
+    tipeKegiatan : String,
+    tipeKegiatanOnValueChange : (String) -> Unit,
+    namaPemateriOnValueChange : (String) -> Unit,
+    namaLembagaOnValueChange : (String) -> Unit
+) {
+
+    var tipeKegiatan by remember { mutableStateOf("") }
+    var namaPemateri by remember { mutableStateOf("") }
+    var namaLembaga by remember { mutableStateOf("") }
+    var eventDate by remember { mutableStateOf(TextFieldValue("")) }
+    var judulKegiatan by remember { mutableStateOf(TextFieldValue("")) }
+    var tautanKegiatan by remember { mutableStateOf(TextFieldValue("")) }
+    var deskripsiAgenda by remember { mutableStateOf(TextFieldValue("")) }
+    var expandedTipeKegiatan by remember { mutableStateOf(false) }
+    var expandedNamaPemateri by remember { mutableStateOf(false) }
+    var expandedNamaLembaga by remember { mutableStateOf(false) }
+
+    Text(
+        text = "Tambah Jadwal Kegiatan",
+        style = StyledText.MobileLargeSemibold,
+        textAlign = TextAlign.Center,
+        modifier = Modifier.fillMaxWidth().padding(bottom = 24.dp)
+    )
+    CustomOutlinedTextAsterisk(
+        label = "Judul Kegiatan",
+        value = judulKegiatan,
+        placeholder = "Masukkan judul kegiatan",
+        onValueChange = { judulKegiatan = it }
+    )
+    CustomDropdownMenuAsterisk(
+        label = "Tipe Kegiatan",
+        value = tipeKegiatan,
+        placeholder = "Pilih Tipe Kegiatan",
+        onValueChange = tipeKegiatanOnValueChange,
+        expanded = expandedTipeKegiatan,
+        onChangeExpanded = { expandedTipeKegiatan = it },
+        dropdownItems = listOf("Cluster", "Desain Program")
+    )
+    CustomOutlinedTextAsterisk(
+        label = "Tanggal Kegiatan",
+        value = eventDate,
+        placeholder = "DD/MM/YYYY",
+        onValueChange = { eventDate = it }
+    )
+    CustomDropdownMenuAsterisk(
+        label = "Nama Pemateri",
+        value = namaPemateri,
+        placeholder = "Pilih Nama Pemateri",
+        onValueChange = namaPemateriOnValueChange,
+        expanded = expandedNamaPemateri,
+        onChangeExpanded = { expandedNamaPemateri = it },
+        dropdownItems = listOf("Lisa Blekpink", "Bruno Maret", "Jukowaw")
+    )
+    CustomDropdownMenuAsterisk(
+        label = "Lembaga",
+        value = namaLembaga,
+        placeholder = "Pilih Nama Lembaga",
+        onValueChange = namaLembagaOnValueChange,
+        expanded = expandedNamaLembaga,
+        onChangeExpanded = { expandedNamaLembaga = it },
+        dropdownItems = listOf("Bakrie CenterFoundation", "The Next Gen", "Indonesia Jaya")
+    )
+    TextFieldLong(
+        label = "Silakan berikan kritik dan saran Anda mengenai kualitas sesi Mini Training secara keseluruhan",
+        placeholder = "Isi detail acara disini",
+        value = deskripsiAgenda,
+        onValueChange = { deskripsiAgenda = it }
+    )
+    CustomOutlinedTextAsterisk(
+        label = "Tautan Kegiatan",
+        value = tautanKegiatan,
+        placeholder = "Masukkan Tautan Kegiatan",
+        onValueChange = { tautanKegiatan = it }
+    )
+
+    Row(){
+        Button(
+            onClick = {
+                onSaveFeedback(
+                    tipeKegiatan,
+                    namaPemateri,
+                    namaLembaga,
+                    eventDate.text,
+                    judulKegiatan.text,
+                    tautanKegiatan.text,
+                    deskripsiAgenda.text,
+                )
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp),
+            shape = RoundedCornerShape(50),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = ColorPalette.PrimaryColor700,
+                contentColor = Color.White
+            )
+        ) {
+            Text("Simpan", style = StyledText.MobileBaseSemibold)
+        }
+        Button(
+            onClick = {
+                // TODO KEMBALIIIIII
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp),
+            shape = RoundedCornerShape(50),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = ColorPalette.PrimaryColor100,
+                contentColor = ColorPalette.PrimaryColor700
+            )
+        ) {
+            Text("Kembali", style = StyledText.MobileBaseSemibold)
+        }
+    }
+
+}

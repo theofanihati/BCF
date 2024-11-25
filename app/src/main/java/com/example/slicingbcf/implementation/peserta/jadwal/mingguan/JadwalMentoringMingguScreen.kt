@@ -56,21 +56,19 @@ fun TopSection(
     schedule: Map<LocalDate, List<Pair<Pair<LocalTime, LocalTime>, String>>>,
     onNavigateMonthlyCalendar: (String) -> Unit,
 ) {
-    var selectedWeekStart by remember { mutableStateOf(LocalDate.now().withDayOfWeek(7)) }
+    var selectedWeekStart by remember { mutableStateOf(LocalDate.now().withDayOfWeek(1)) }
     val today = LocalDate.now()
-    val weekDates = (0 until 7).map { selectedWeekStart.plusDays(it.toLong()) }
-    var selectedWeek by remember { mutableStateOf(LocalDate.now().withDayOfWeek(1)) }
-    val currentWeekDates = (0..6).map { selectedWeek.plusDays(it.toLong()) }
-    var selectedDate by remember { mutableStateOf(LocalDate.now()) }
-    val currentMonth = YearMonth.of(selectedDate.year, selectedDate.month)
+    val currentWeekDates = (0..6).map { selectedWeekStart.plusDays(it.toLong()) }
+    val currentMonth = YearMonth.of(selectedWeekStart.year, selectedWeekStart.month)
     var expanded by remember { mutableStateOf(false) }
     var isWeeklyView by remember { mutableStateOf(true) }
 
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .padding(16.dp)
-        .verticalScroll(rememberScrollState())
-    ){
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+            .verticalScroll(rememberScrollState())
+    ) {
         Spacer(modifier = Modifier.height(80.dp))
         Text(
             text = "Halo, $userName",
@@ -100,7 +98,7 @@ fun TopSection(
             verticalAlignment = Alignment.CenterVertically
         ) {
             OutlinedButton(
-                onClick = { selectedDate = today },
+                onClick = { selectedWeekStart = today.withDayOfWeek(1) }, // Reset ke minggu saat ini
                 colors = ButtonDefaults.outlinedButtonColors(
                     containerColor = Color.Transparent,
                     contentColor = ColorPalette.PrimaryColor700
@@ -123,35 +121,36 @@ fun TopSection(
                 horizontalArrangement = Arrangement.spacedBy(-4.dp),
                 modifier = Modifier.padding(0.dp)
             ) {
-                IconButton(onClick = { selectedWeek = selectedWeek.minusWeeks(1) }) {
+                IconButton(onClick = { selectedWeekStart = selectedWeekStart.minusWeeks(1) }) {
                     Icon(
                         Icons.Default.ArrowBackIosNew,
-                        contentDescription = "Previous Month",
+                        contentDescription = "Minggu Sebelumnya",
                         modifier = Modifier.size(10.dp)
                     )
                 }
-                Column(){
+
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
                     Text(
                         text = currentMonth.month.getDisplayName(TextStyle.FULL, Locale.getDefault()) + " ${currentMonth.year}",
                         style = StyledText.MobileSmallSemibold,
                     )
                     Text(
-                        text = "${currentWeekDates.first()} - ${currentWeekDates.last()}",
+                        text = "${currentWeekDates.first().formatShort()} - ${currentWeekDates.last().formatShort()}",
                         style = StyledText.Mobile2xsRegular
                     )
                 }
 
-                IconButton(
-                    onClick = { selectedDate = selectedDate.plusWeeks(1)}
-                    ) {
+                IconButton(onClick = { selectedWeekStart = selectedWeekStart.plusWeeks(1) }) {
                     Icon(
                         Icons.Default.ArrowForwardIos,
-                        contentDescription = "Next Month",
-                        modifier = Modifier
-                            .size(10.dp)
+                        contentDescription = "Minggu Berikutnya",
+                        modifier = Modifier.size(10.dp)
                     )
                 }
             }
+
             Box(
                 Modifier
                     .padding(top = 20.dp, bottom = 20.dp)
@@ -205,10 +204,11 @@ fun TopSection(
                 }
             }
         }
+
         Spacer(modifier = Modifier.height(32.dp))
 
         WeeklyCalendarView(
-            weekDates = weekDates,
+            weekDates = currentWeekDates,
             schedule = schedule
         )
         Spacer(modifier = Modifier.height(56.dp))
@@ -225,7 +225,6 @@ fun WeeklyCalendarView(
             .fillMaxWidth()
             .clip(RoundedCornerShape(16.dp))
     ) {
-        // Header Row (Days of Week)
         Row(
             Modifier
                 .fillMaxWidth()
@@ -332,4 +331,11 @@ fun LocalDate.formatIndonesian(): String {
     val month = this.month.getDisplayName(TextStyle.FULL, Locale("id", "ID"))
     val year = this.year
     return "$day $month $year"
+}
+
+fun LocalDate.formatShort(): String {
+    val day = this.dayOfMonth.toString().padStart(2, '0')
+    val month = this.monthValue.toString().padStart(2, '0')
+    val year = this.year
+    return "$day/$month/$year"
 }

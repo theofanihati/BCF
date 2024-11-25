@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -75,7 +76,6 @@ fun TopSection(
     namaPemateriOnValueChange : (String) -> Unit,
     namaLembagaOnValueChange : (String) -> Unit
 ) {
-
     var tipeKegiatan by remember { mutableStateOf("") }
     var namaPemateri by remember { mutableStateOf("") }
     var namaLembaga by remember { mutableStateOf("") }
@@ -171,7 +171,25 @@ fun TopSection(
         onValueChange = { tautanKegiatan = it }
     )
 
-    Row(){
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.End,
+    ){
+        Button(
+            onClick = {
+                // TODO KEMBALIIIIII
+            },
+            modifier = Modifier
+                .width(120.dp)
+                .height(50.dp),
+            shape = RoundedCornerShape(50),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = ColorPalette.PrimaryColor100,
+                contentColor = ColorPalette.PrimaryColor700
+            )
+        ) {
+            Text("Kembali", style = StyledText.MobileBaseSemibold)
+        }
         Button(
             onClick = {
                 onSaveFeedback(
@@ -185,7 +203,7 @@ fun TopSection(
                 )
             },
             modifier = Modifier
-                .fillMaxWidth()
+                .width(120.dp)
                 .height(50.dp),
             shape = RoundedCornerShape(50),
             colors = ButtonDefaults.buttonColors(
@@ -194,21 +212,6 @@ fun TopSection(
             )
         ) {
             Text("Simpan", style = StyledText.MobileBaseSemibold)
-        }
-        Button(
-            onClick = {
-                // TODO KEMBALIIIIII
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(50.dp),
-            shape = RoundedCornerShape(50),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = ColorPalette.PrimaryColor100,
-                contentColor = ColorPalette.PrimaryColor700
-            )
-        ) {
-            Text("Kembali", style = StyledText.MobileBaseSemibold)
         }
     }
 }

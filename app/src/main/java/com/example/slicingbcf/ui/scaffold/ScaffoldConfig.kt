@@ -82,6 +82,24 @@ fun scaffoldConfig(currentRoute : String?)
         showBackNav = true,
       )
     }
+    "detail-jadwal-peserta/{id}"            -> {
+      ScaffoldConfig(
+        showMainNav = false,
+        showBackNav = true,
+      )
+    }
+    "detail-jadwal-mentor/{id}"            -> {
+      ScaffoldConfig(
+        showMainNav = false,
+        showBackNav = true,
+      )
+    }
+    "add-jadwal-mentor/{id}"            -> {
+      ScaffoldConfig(
+        showMainNav = false,
+        showBackNav = true,
+      )
+    }
 
     else                             -> ScaffoldConfig()
 

@@ -4,6 +4,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 data class DetailJadwal(
+    val id: String,
     val title: String,
     val type: String,
     val date: LocalDate,
@@ -17,9 +18,10 @@ data class DetailJadwal(
 
 val detailJadwal = listOf(
     DetailJadwal(
+        id = "1234",
         title = "Melangkah Bersama: Membimbing Menuju Masa Depan Pendidikan yang Lebih Baik",
         type = "Mentoring",
-        date = LocalDate.of(2024, 11, 18),
+        date = LocalDate.of(2024, 11, 26),
         beginTime = LocalTime.of(9, 0),
         endTime = LocalTime.of(12, 0),
         speaker = "Dodi Supriyadi",
@@ -28,6 +30,7 @@ val detailJadwal = listOf(
         color = 0xFF8E24AA.toInt()
     ),
     DetailJadwal(
+        id = "1235",
         title = "Melangkah Bersama: Membimbing Menuju Masa Depan Pendidikan yang Lebih Baik",
         type = "Mentoring",
         date = LocalDate.of(2024, 11, 20),

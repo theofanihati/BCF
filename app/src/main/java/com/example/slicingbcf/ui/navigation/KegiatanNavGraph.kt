@@ -10,6 +10,7 @@ import androidx.navigation.navigation
 import com.example.slicingbcf.implementation.mentor.penilaian_peserta.PenilaianPesertaScreen
 import com.example.slicingbcf.implementation.peserta.form_feedback_mini_training.FormMiniTrainingScreen
 import com.example.slicingbcf.implementation.peserta.jadwal.bulanan.JadwalMentoringBulanScreen
+import com.example.slicingbcf.implementation.peserta.jadwal.detail.DetailJadwalScreen
 import com.example.slicingbcf.implementation.peserta.jadwal.mingguan.JadwalMentoringMingguScreen
 import com.example.slicingbcf.implementation.peserta.pitch_deck.PitchDeckPesertaScreen
 
@@ -65,9 +66,31 @@ fun NavGraphBuilder.kegiatanNavGraph(
             navController.navigateSingleTop("jadwal-bulan")
         }
 
+        val onNavigateDetailCalendar = { id: String ->
+            navController.navigateSingleTop("detail-jadwal/$id")
+        }
+
         JadwalMentoringMingguScreen(
             modifier = modifier,
-            onNavigateMonthlyCalendar = onNavigateMonthlyCalendar
+            id = id,
+            onNavigateMonthlyCalendar = onNavigateMonthlyCalendar,
+            onNavigateDetailCalendar = onNavigateDetailCalendar
         )
     }
+
+    composable(
+        route = "detail-jadwal/{id}",
+        arguments = listOf(navArgument("id") { type = NavType.StringType })
+    ) { backStackEntry ->
+        val id = backStackEntry.arguments?.getString("id") ?: ""
+        println("id diterima: $id")
+        if (id.isEmpty()) throw IllegalStateException("id must not be empty")
+
+        DetailJadwalScreen(
+            modifier = modifier,
+            id = id
+        )
+    }
+
+
 }

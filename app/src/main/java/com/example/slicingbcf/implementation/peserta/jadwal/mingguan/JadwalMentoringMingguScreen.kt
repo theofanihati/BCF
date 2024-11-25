@@ -1,8 +1,11 @@
 package com.example.slicingbcf.implementation.peserta.jadwal.mingguan
 
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -31,12 +34,13 @@ import java.time.YearMonth
 import java.time.format.TextStyle
 import java.util.*
 
-@Preview(showBackground = true)
+//@Preview(showBackground = true)
 @Composable
 fun JadwalMentoringMingguScreen(
     modifier: Modifier = Modifier,
     onNavigateMonthlyCalendar: (String) -> Unit = {},
-    id : String = "1"
+    onNavigateDetailCalendar: (String) -> Unit = {},
+    id : String
 ) {
     val userName = profilLembaga.firstOrNull()?.name ?: "Pengguna"
     val schedule = detailJadwal.groupBy { it.date }.mapValues { entry ->
@@ -218,8 +222,10 @@ fun TopSection(
 @Composable
 fun WeeklyCalendarView(
     weekDates: List<LocalDate>,
-    schedule: Map<LocalDate, List<Pair<Pair<LocalTime, LocalTime>, String>>>
+    schedule: Map<LocalDate, List<Pair<Pair<LocalTime, LocalTime>, String>>>,
+    onNavigateDetailCalendar: (String) -> Unit = {}
 ) {
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -293,6 +299,7 @@ fun WeeklyCalendarView(
                             val (beginTime, endTime) = timeRange
                             val eventColor = detailJadwal.find { it.title == title && it.beginTime == beginTime && it.endTime == endTime }?.color?.let { Color(it) } ?: ColorPalette.Monochrome100
                             val eventTime = "${beginTime.formatTime()} - ${endTime.formatTime()} WIB"
+                            val id = detailJadwal.find { it.title == title && it.beginTime == beginTime && it.endTime == endTime }?.id
 
                             Box(
                                 modifier = Modifier
@@ -300,6 +307,12 @@ fun WeeklyCalendarView(
                                     .height(48.dp)
                                     .padding(2.dp)
                                     .background(eventColor)
+                                    .clickable {
+                                        if (id != null) {
+                                            println("id di klik : $id")
+                                            onNavigateDetailCalendar(id)
+                                        }
+                                    }
                             ) {
                                 Text(
                                     text = "$eventTime $title",

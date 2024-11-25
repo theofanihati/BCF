@@ -35,16 +35,29 @@ import com.example.slicingbcf.constant.ColorPalette
 import com.example.slicingbcf.constant.StyledText
 import com.example.slicingbcf.data.local.detailJadwal
 
-@Preview(showBackground = true)
+//@Preview(showBackground = true)
 @Composable
-fun PreviewScheduleDetailView() {
-    DetailJadwalScreen(
-        detailJadwal = detailJadwal.first()
-    )
+fun DetailJadwalScreen(
+    modifier: Modifier,
+    id : String
+) {
+    val detail = detailJadwal.find { it.id == id }
+
+    println("id di terima : $id")
+    if (detail != null) {
+        TopSection(detailJadwal = detail)
+    } else {
+        Text(
+            text = "Data TIDACK ADA",
+            style = StyledText.MobileBaseRegular,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxSize().padding(16.dp)
+        )
+    }
 }
 
 @Composable
-fun DetailJadwalScreen(detailJadwal: DetailJadwal) {
+fun TopSection(detailJadwal: DetailJadwal) {
     val currentContext = LocalContext.current
     Column(
         modifier = Modifier

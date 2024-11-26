@@ -34,7 +34,7 @@ import java.util.*
 fun JadwalMentoringBulanScreen(
     modifier: Modifier = Modifier,
     onNavigateWeeklyCalendar: (String) -> Unit = {},
-//    id : String
+    onNavigateDetailScreen: (String) -> Unit = {}
 ) {
     val userName = profilLembaga.firstOrNull()?.name ?: "Pengguna"
     val schedule = detailJadwal.groupBy { it.date }.mapValues { entry ->
@@ -47,7 +47,7 @@ fun JadwalMentoringBulanScreen(
         userName = profilLembaga.firstOrNull()?.name ?: "Pengguna",
         schedule = schedule,
         onNavigateWeeklyCalendar = onNavigateWeeklyCalendar,
-//        id  = "1"
+        onNavigateDetailScreen = onNavigateDetailScreen
     )
 }
 
@@ -56,6 +56,7 @@ fun TopSection(
     userName: String,
     schedule: Map<LocalDate, List<Pair<String, Color>>>,
     onNavigateWeeklyCalendar: (String) -> Unit,
+    onNavigateDetailScreen: (String) -> Unit,
 ) {
     var selectedDate by remember { mutableStateOf(LocalDate.now()) }
     val today = LocalDate.now()
@@ -63,7 +64,11 @@ fun TopSection(
     var isMonthlyView by remember { mutableStateOf(true) }
     val scheduleMonthly = detailJadwal.groupBy { it.date }.mapValues { entry ->
         entry.value.map {
-            "${it.beginTime.formatTime()} - ${it.endTime.formatTime()} WIB ${it.type}" to Color(it.color)
+            Triple(
+                "${it.beginTime.formatTime()} - ${it.endTime.formatTime()} WIB ${it.type}", // event
+                it.title,
+                Color(it.color)
+            )
         }
     }
 
@@ -210,7 +215,8 @@ fun TopSection(
             today = today,
             selectedDate = selectedDate,
             schedule = scheduleMonthly,
-            onDateSelected = { selectedDate = it }
+            onDateSelected = { selectedDate = it },
+            onNavigateDetailScreen = onNavigateDetailScreen
         )
     }
 }
@@ -219,8 +225,9 @@ fun MonthlyCalendarView(
     currentMonth: YearMonth,
     today: LocalDate,
     selectedDate: LocalDate,
-    schedule: Map<LocalDate, List<Pair<String, Color>>>,
-    onDateSelected: (LocalDate) -> Unit
+    schedule: Map<LocalDate, List<Triple<String, String, Color>>>,
+    onDateSelected: (LocalDate) -> Unit,
+    onNavigateDetailScreen: (String) -> Unit = {}
 ) {
     val daysInMonth = currentMonth.lengthOfMonth()
     val firstDayOfWeek = (currentMonth.atDay(1).dayOfWeek.value % 7)
@@ -262,7 +269,7 @@ fun MonthlyCalendarView(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(64.dp) // Set the height of each row
+                    .height(64.dp)
                     .border(1.dp, ColorPalette.Monochrome200)
             ) {
                 for (day in 0..6) {
@@ -311,13 +318,20 @@ fun MonthlyCalendarView(
                                 )
                             }
 
-                            schedule[date]?.forEach { (event, color) ->
+                            schedule[date]?.forEach { (event, title, color) ->
+                                val id = detailJadwal.find { it.title == title }?.id ?: "GA DAPET ID NYA"
                                 Box(
                                     modifier = Modifier
                                         .padding(top = 2.dp)
                                         .fillMaxWidth()
                                         .height(16.dp)
                                         .background(color, RoundedCornerShape(4.dp))
+                                        .clickable {
+                                            println("id di kirim : $id")
+                                            println("judul di klik: $title")
+                                            onNavigateDetailScreen(id)
+                                        }
+
                                 ) {
                                     Text(
                                         text = event,

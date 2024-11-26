@@ -216,39 +216,3 @@ fun BottomSection(
         }
     }
 }
-
-@Composable
-fun DropdownButton(
-    text: String,
-    onClick: () -> Unit
-) {
-    OutlinedButton(
-        onClick = onClick,
-        modifier = Modifier
-            .height(50.dp)
-            .fillMaxWidth(),
-        shape = MaterialTheme.shapes.extraLarge,
-        border = BorderStroke(1.dp, ColorPalette.Monochrome900),
-        colors = ButtonDefaults.outlinedButtonColors(
-            containerColor = Color.Transparent
-        )
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            Text(
-                text = text,
-                style = StyledText.MobileSmallRegular,
-                color = if (text == "Pilih evaluasi capaian mentoring" || text == "Pilih periode capaian mentoring") ColorPalette.Monochrome400 else ColorPalette.Monochrome900,
-                modifier = Modifier.weight(1f)
-            )
-            Icon(
-                imageVector = Icons.Default.ArrowDropDown,
-                contentDescription = "Dropdown Icon",
-                tint = ColorPalette.Monochrome900,
-                modifier = Modifier.size(35.dp)
-            )
-        }
-    }
-}

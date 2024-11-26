@@ -39,10 +39,13 @@ fun NavGraphBuilder.kegiatanNavGraph(
         val onNavigateWeeklyCalendar = { id : String ->
             navController.navigateSingleTop("jadwal-minggu-peserta/$id")
         }
-
+        val onNavigateDetailScreen = { id : String ->
+            navController.navigateSingleTop("detail-jadwal-mentor/$id")
+        }
         JadwalMentoringBulanScreen(
             modifier = modifier,
-            onNavigateWeeklyCalendar = onNavigateWeeklyCalendar
+            onNavigateWeeklyCalendar = onNavigateWeeklyCalendar,
+            onNavigateDetailScreen = onNavigateDetailScreen
         )
     }
 
@@ -91,7 +94,6 @@ fun NavGraphBuilder.kegiatanNavGraph(
         }
 
         val onNavigateDetailScreen = { id : String ->
-            println("Navigating to detail-jadwal-mentor/$id")
             navController.navigateSingleTop("detail-jadwal-mentor/$id")
         }
         JadwalBulanMentorScreen(
@@ -137,5 +139,4 @@ fun NavGraphBuilder.kegiatanNavGraph(
             id = id
         )
     }
-
 }

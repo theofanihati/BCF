@@ -33,7 +33,7 @@ val detailJadwal = listOf(
         id = "1235",
         title = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
         type = "Mentoring",
-        date = LocalDate.of(2024, 11, 20),
+        date = LocalDate.of(2024, 11, 29),
         beginTime = LocalTime.of(13, 0),
         endTime = LocalTime.of(15, 0),
         speaker = "Dodi Supriyadi",
@@ -41,5 +41,4 @@ val detailJadwal = listOf(
         link = "https://tel.meet/wvc-qcnf-jtb?pin=3575142989705",
         color = 0xFF40E0D0.toInt()
     )
-
 )

@@ -77,7 +77,7 @@ fun TopSection(
     userName: String,
     schedule: Map<LocalDate, List<Pair<String, Color>>>,
     onNavigateWeeklyCalendar: (String) -> Unit,
-    onNavigateDetailScreen: (String) -> Unit = {},
+    onNavigateDetailScreen: (String) -> Unit,
 ) {
     var selectedDate by remember { mutableStateOf(LocalDate.now()) }
     val today = LocalDate.now()
@@ -236,7 +236,8 @@ fun TopSection(
             today = today,
             selectedDate = selectedDate,
             schedule = scheduleMonthly,
-            onDateSelected = { selectedDate = it }
+            onDateSelected = { selectedDate = it },
+            onNavigateDetailScreen = onNavigateDetailScreen
         )
     }
 }

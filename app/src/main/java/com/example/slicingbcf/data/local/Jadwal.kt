@@ -31,7 +31,7 @@ val detailJadwal = listOf(
     ),
     DetailJadwal(
         id = "1235",
-        title = "Melangkah Bersama: Membimbing Menuju Masa Depan Pendidikan yang Lebih Baik",
+        title = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
         type = "Mentoring",
         date = LocalDate.of(2024, 11, 20),
         beginTime = LocalTime.of(13, 0),

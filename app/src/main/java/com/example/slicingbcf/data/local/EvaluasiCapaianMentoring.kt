@@ -45,7 +45,6 @@ val evaluasiMentoring = listOf(
     )
 )
 
-
 data class EvaluasiLembaga(
     val no: Int,
     val aspek_penilaian: String,

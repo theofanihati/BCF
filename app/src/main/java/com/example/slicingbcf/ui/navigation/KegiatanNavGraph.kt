@@ -90,9 +90,14 @@ fun NavGraphBuilder.kegiatanNavGraph(
             navController.navigateSingleTop("jadwal-minggu-mentor/$id")
         }
 
+        val onNavigateDetailScreen = { id : String ->
+            println("Navigating to detail-jadwal-mentor/$id")
+            navController.navigateSingleTop("detail-jadwal-mentor/$id")
+        }
         JadwalBulanMentorScreen(
             modifier = modifier,
-            onNavigateWeeklyCalendar = onNavigateWeeklyCalendar
+            onNavigateWeeklyCalendar = onNavigateWeeklyCalendar,
+            onNavigateDetailScreen = onNavigateDetailScreen
         )
     }
 
@@ -124,7 +129,7 @@ fun NavGraphBuilder.kegiatanNavGraph(
         arguments = listOf(navArgument("id") { type = NavType.StringType })
     ) { backStackEntry ->
         val id = backStackEntry.arguments?.getString("id") ?: ""
-        println("id diterima: $id")
+        println("ID diterima di NavHost: $id")
         if (id.isEmpty()) throw IllegalStateException("id must not be empty")
 
         DetailJadwalMentorScreen(

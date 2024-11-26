@@ -10,6 +10,7 @@ import androidx.navigation.navigation
 import com.example.slicingbcf.implementation.mentor.jadwal.bulan.JadwalBulanMentorScreen
 import com.example.slicingbcf.implementation.mentor.jadwal.detail.DetailJadwalMentorScreen
 import com.example.slicingbcf.implementation.mentor.jadwal.minggu.JadwalMingguMentorScreen
+import com.example.slicingbcf.implementation.mentor.jadwal.tambah_jadwal.AddJadwalMentorScreen
 import com.example.slicingbcf.implementation.mentor.penilaian_peserta.PenilaianPesertaScreen
 import com.example.slicingbcf.implementation.peserta.form_feedback_mini_training.FormMiniTrainingScreen
 import com.example.slicingbcf.implementation.peserta.jadwal.bulanan.JadwalMentoringBulanScreen
@@ -63,7 +64,6 @@ fun NavGraphBuilder.kegiatanNavGraph(
         val onNavigateDetailCalendar = { id: String ->
             navController.navigateSingleTop("detail-jadwal-peserta/$id")
         }
-
         JadwalMentoringMingguScreen(
             modifier = modifier,
             id = id,
@@ -92,14 +92,17 @@ fun NavGraphBuilder.kegiatanNavGraph(
         val onNavigateWeeklyCalendar = { id : String ->
             navController.navigateSingleTop("jadwal-minggu-mentor/$id")
         }
-
         val onNavigateDetailScreen = { id : String ->
             navController.navigateSingleTop("detail-jadwal-mentor/$id")
+        }
+        val onNavigateAddCalendar = { id: String ->
+            navController.navigateSingleTop("add-jadwal-mentor/$id")
         }
         JadwalBulanMentorScreen(
             modifier = modifier,
             onNavigateWeeklyCalendar = onNavigateWeeklyCalendar,
-            onNavigateDetailScreen = onNavigateDetailScreen
+            onNavigateDetailScreen = onNavigateDetailScreen,
+            onNavigateAddCalendar = onNavigateAddCalendar
         )
     }
 
@@ -113,16 +116,19 @@ fun NavGraphBuilder.kegiatanNavGraph(
         val onNavigateMonthlyCalendar = { _: String ->
             navController.navigateSingleTop("jadwal-bulan-mentor")
         }
-
         val onNavigateDetailCalendar = { id: String ->
             navController.navigateSingleTop("detail-jadwal-mentor/$id")
+        }
+        val onNavigateAddCalendar = { id: String ->
+            navController.navigateSingleTop("add-jadwal-mentor/$id")
         }
 
         JadwalMingguMentorScreen(
             modifier = modifier,
             id = id,
             onNavigateMonthlyCalendar = onNavigateMonthlyCalendar,
-            onNavigateDetailCalendar = onNavigateDetailCalendar
+            onNavigateDetailCalendar = onNavigateDetailCalendar,
+            onNavigateAddCalendar = onNavigateAddCalendar
         )
     }
 
@@ -135,6 +141,20 @@ fun NavGraphBuilder.kegiatanNavGraph(
         if (id.isEmpty()) throw IllegalStateException("id must not be empty")
 
         DetailJadwalMentorScreen(
+            modifier = modifier,
+            id = id
+        )
+    }
+
+    composable(
+        route = "add-jadwal-mentor/{id}",
+        arguments = listOf(navArgument("id") { type = NavType.StringType })
+    ) { backStackEntry ->
+        val id = backStackEntry.arguments?.getString("id") ?: ""
+        println("ID diterima di NavHost: $id")
+        if (id.isEmpty()) throw IllegalStateException("id must not be empty")
+
+        AddJadwalMentorScreen(
             modifier = modifier,
             id = id
         )

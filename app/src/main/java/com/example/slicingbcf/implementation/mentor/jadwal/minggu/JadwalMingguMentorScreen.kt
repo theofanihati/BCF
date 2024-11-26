@@ -57,6 +57,7 @@ fun JadwalMingguMentorScreen(
     modifier: Modifier = Modifier,
     onNavigateMonthlyCalendar: (String) -> Unit = {},
     onNavigateDetailCalendar: (String) -> Unit = {},
+    onNavigateAddCalendar: (String) -> Unit,
     id : String
 ) {
     val userName = profilLembaga.firstOrNull()?.name ?: "Pengguna"
@@ -68,7 +69,8 @@ fun JadwalMingguMentorScreen(
         userName = profilLembaga.firstOrNull()?.name ?: "Pengguna",
         schedule = schedule,
         onNavigateMonthlyCalendar = onNavigateMonthlyCalendar,
-        onNavigateDetailCalendar = onNavigateDetailCalendar
+        onNavigateDetailCalendar = onNavigateDetailCalendar,
+        onNavigateAddCalendar = onNavigateAddCalendar
     )
 }
 
@@ -77,7 +79,8 @@ fun TopSection(
     userName: String,
     schedule: Map<LocalDate, List<Pair<Pair<LocalTime, LocalTime>, String>>>,
     onNavigateMonthlyCalendar: (String) -> Unit,
-    onNavigateDetailCalendar: (String) -> Unit
+    onNavigateDetailCalendar: (String) -> Unit,
+    onNavigateAddCalendar: (String) -> Unit
 ) {
     var selectedWeekStart by remember { mutableStateOf(LocalDate.now().withDayOfWeek(1)) }
     val today = LocalDate.now()
@@ -233,7 +236,8 @@ fun TopSection(
         WeeklyCalendarView(
             weekDates = currentWeekDates,
             schedule = schedule,
-            onNavigateDetailCalendar = onNavigateDetailCalendar
+            onNavigateDetailCalendar = onNavigateDetailCalendar,
+            onNavigateAddCalendar = onNavigateAddCalendar
         )
         Spacer(modifier = Modifier.height(56.dp))
     }
@@ -243,7 +247,8 @@ fun TopSection(
 fun WeeklyCalendarView(
     weekDates: List<LocalDate>,
     schedule: Map<LocalDate, List<Pair<Pair<LocalTime, LocalTime>, String>>>,
-    onNavigateDetailCalendar: (String) -> Unit
+    onNavigateDetailCalendar: (String) -> Unit,
+    onNavigateAddCalendar: (String) -> Unit
 ) {
 
     Column(
@@ -302,44 +307,57 @@ fun WeeklyCalendarView(
                 )
 
                 weekDates.forEach { date ->
-                    Box(
-                        modifier = Modifier
-                            .weight(1f)
-                            .height(48.dp)
-                            .background(Color.Transparent)
-                            .border(1.dp, ColorPalette.Monochrome200)
-                    ) {
-                        val events = schedule[date]?.filter { event ->
-                            val (start, end) = event.first
-                            hour in start.hour until end.hour
-                        }
+                    val events = schedule[date]?.filter { event ->
+                        val (start, end) = event.first
+                        hour in start.hour until end.hour
+                    }
 
-                        events?.forEach { event ->
-                            val (timeRange, title) = event
-                            val (beginTime, endTime) = timeRange
-                            val eventColor = detailJadwal.find { it.title == title && it.beginTime == beginTime && it.endTime == endTime }?.color?.let { Color(it) } ?: ColorPalette.Monochrome100
-                            val eventTime = "${beginTime.formatTime()} - ${endTime.formatTime()} WIB"
-                            val id = detailJadwal.find { it.title == title && it.beginTime == beginTime && it.endTime == endTime }?.id
+                    if (events.isNullOrEmpty()) {
+                        Box(
+                            modifier = Modifier
+                                .weight(1f)
+                                .height(48.dp)
+                                .background(Color.Transparent)
+                                .border(1.dp, ColorPalette.Monochrome200)
+                                .clickable {
+                                    onNavigateAddCalendar("1")
+                                }
+                        ) {}
+                    } else {
+                        Box(
+                            modifier = Modifier
+                                .weight(1f)
+                                .height(48.dp)
+                                .background(Color.Transparent)
+                                .border(1.dp, ColorPalette.Monochrome200)
+                        ) {
+                            events.forEach { event ->
+                                val (timeRange, title) = event
+                                val (beginTime, endTime) = timeRange
+                                val eventColor = detailJadwal.find { it.title == title && it.beginTime == beginTime && it.endTime == endTime }?.color?.let { Color(it) } ?: ColorPalette.Monochrome100
+                                val eventTime = "${beginTime.formatTime()} - ${endTime.formatTime()} WIB"
+                                val id = detailJadwal.find { it.title == title && it.beginTime == beginTime && it.endTime == endTime }?.id
 
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(48.dp)
-                                    .padding(2.dp)
-                                    .background(eventColor)
-                                    .clickable {
-                                        if (id != null) {
-                                            onNavigateDetailCalendar(id)
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(48.dp)
+                                        .padding(2.dp)
+                                        .background(eventColor)
+                                        .clickable {
+                                            if (id != null) {
+                                                onNavigateDetailCalendar(id)
+                                            }
                                         }
-                                    }
-                            ) {
-                                Text(
-                                    text = "$eventTime $title",
-                                    style = StyledText.Mobile3xsRegular,
-                                    color = Color.White,
-                                    modifier = Modifier.padding(4.dp),
-                                    maxLines = 1
-                                )
+                                ) {
+                                    Text(
+                                        text = "$eventTime $title",
+                                        style = StyledText.Mobile3xsRegular,
+                                        color = Color.White,
+                                        modifier = Modifier.padding(4.dp),
+                                        maxLines = 1
+                                    )
+                                }
                             }
                         }
                     }
@@ -348,6 +366,7 @@ fun WeeklyCalendarView(
         }
     }
 }
+
 
 fun LocalDate.withDayOfWeek(day: Int): LocalDate {
     val adjustedDay = if (this.dayOfWeek.value == 7) 0 else this.dayOfWeek.value

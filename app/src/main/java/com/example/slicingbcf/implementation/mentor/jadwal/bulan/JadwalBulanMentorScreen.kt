@@ -55,7 +55,8 @@ import java.util.Locale
 fun JadwalBulanMentorScreen(
     modifier: Modifier = Modifier,
     onNavigateWeeklyCalendar: (String) -> Unit = {},
-    onNavigateDetailScreen: (String) -> Unit = {}
+    onNavigateDetailScreen: (String) -> Unit = {},
+    onNavigateAddCalendar: (String) -> Unit
 ) {
     val userName = profilLembaga.firstOrNull()?.name ?: "Pengguna"
     val schedule = detailJadwal.groupBy { it.date }.mapValues { entry ->
@@ -68,7 +69,8 @@ fun JadwalBulanMentorScreen(
         userName = profilLembaga.firstOrNull()?.name ?: "Pengguna",
         schedule = schedule,
         onNavigateWeeklyCalendar = onNavigateWeeklyCalendar,
-        onNavigateDetailScreen = onNavigateDetailScreen
+        onNavigateDetailScreen = onNavigateDetailScreen,
+        onNavigateAddCalendar = onNavigateAddCalendar
     )
 }
 
@@ -78,6 +80,7 @@ fun TopSection(
     schedule: Map<LocalDate, List<Pair<String, Color>>>,
     onNavigateWeeklyCalendar: (String) -> Unit,
     onNavigateDetailScreen: (String) -> Unit,
+    onNavigateAddCalendar: (String) -> Unit
 ) {
     var selectedDate by remember { mutableStateOf(LocalDate.now()) }
     val today = LocalDate.now()
@@ -237,7 +240,8 @@ fun TopSection(
             selectedDate = selectedDate,
             schedule = scheduleMonthly,
             onDateSelected = { selectedDate = it },
-            onNavigateDetailScreen = onNavigateDetailScreen
+            onNavigateDetailScreen = onNavigateDetailScreen,
+            onNavigateAddCalendar = onNavigateAddCalendar
         )
     }
 }
@@ -248,7 +252,8 @@ fun MonthlyCalendarView(
     selectedDate: LocalDate,
     schedule: Map<LocalDate, List<Triple<String, String, Color>>>,
     onDateSelected: (LocalDate) -> Unit,
-    onNavigateDetailScreen: (String) -> Unit = {}
+    onNavigateDetailScreen: (String) -> Unit = {},
+    onNavigateAddCalendar: (String) -> Unit
 ) {
     val daysInMonth = currentMonth.lengthOfMonth()
     val firstDayOfWeek = (currentMonth.atDay(1).dayOfWeek.value % 7)
@@ -324,7 +329,10 @@ fun MonthlyCalendarView(
                                             selectedDate -> Color.LightGray
                                             else -> Color.Transparent
                                         }
-                                    ),
+                                    )
+                                    .clickable {
+                                        onNavigateAddCalendar("1")
+                                    },
                                 contentAlignment = Alignment.Center
                             ) {
                                 Text(
@@ -348,8 +356,6 @@ fun MonthlyCalendarView(
                                         .height(16.dp)
                                         .background(color, RoundedCornerShape(4.dp))
                                         .clickable {
-                                            println("id di kirim : $id")
-                                            println("judul di klik: $title")
                                             onNavigateDetailScreen(id)
                                         }
 

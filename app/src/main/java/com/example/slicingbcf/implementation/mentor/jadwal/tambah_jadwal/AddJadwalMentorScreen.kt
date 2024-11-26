@@ -31,10 +31,10 @@ import com.example.slicingbcf.ui.shared.dropdown.CustomDropdownMenuAsterisk
 import com.example.slicingbcf.ui.shared.textfield.CustomOutlinedTextAsterisk
 import com.example.slicingbcf.ui.shared.textfield.TextFieldLong
 
-@Preview
 @Composable
 fun AddJadwalMentorScreen(
     modifier: Modifier = Modifier,
+    id: String
 ){
     var tipeKegiatan by remember { mutableStateOf("") }
     var namaLembaga by remember { mutableStateOf("") }

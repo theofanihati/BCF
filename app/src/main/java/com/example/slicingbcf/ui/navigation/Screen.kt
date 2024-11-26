@@ -43,7 +43,6 @@ sealed class Screen(val route : String) {
     data class DetailForumDiskusi(val id : String) : Mentor("forum-diskusi/$id")
     // Data Peserta
     object DataPeserta : Mentor("data-peserta")
-
   }
 
   sealed class Kegiatan(route: String) : Screen(route){

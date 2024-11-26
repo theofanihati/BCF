@@ -68,6 +68,7 @@ fun JadwalMingguMentorScreen(
         userName = profilLembaga.firstOrNull()?.name ?: "Pengguna",
         schedule = schedule,
         onNavigateMonthlyCalendar = onNavigateMonthlyCalendar,
+        onNavigateDetailCalendar = onNavigateDetailCalendar
     )
 }
 
@@ -76,6 +77,7 @@ fun TopSection(
     userName: String,
     schedule: Map<LocalDate, List<Pair<Pair<LocalTime, LocalTime>, String>>>,
     onNavigateMonthlyCalendar: (String) -> Unit,
+    onNavigateDetailCalendar: (String) -> Unit
 ) {
     var selectedWeekStart by remember { mutableStateOf(LocalDate.now().withDayOfWeek(1)) }
     val today = LocalDate.now()
@@ -119,7 +121,7 @@ fun TopSection(
             verticalAlignment = Alignment.CenterVertically
         ) {
             OutlinedButton(
-                onClick = { selectedWeekStart = today.withDayOfWeek(1) }, // Reset ke minggu saat ini
+                onClick = { selectedWeekStart = today.withDayOfWeek(1) },
                 colors = ButtonDefaults.outlinedButtonColors(
                     containerColor = Color.Transparent,
                     contentColor = ColorPalette.PrimaryColor700
@@ -230,7 +232,8 @@ fun TopSection(
 
         WeeklyCalendarView(
             weekDates = currentWeekDates,
-            schedule = schedule
+            schedule = schedule,
+            onNavigateDetailCalendar = onNavigateDetailCalendar
         )
         Spacer(modifier = Modifier.height(56.dp))
     }
@@ -240,7 +243,7 @@ fun TopSection(
 fun WeeklyCalendarView(
     weekDates: List<LocalDate>,
     schedule: Map<LocalDate, List<Pair<Pair<LocalTime, LocalTime>, String>>>,
-    onNavigateDetailCalendar: (String) -> Unit = {}
+    onNavigateDetailCalendar: (String) -> Unit
 ) {
 
     Column(
@@ -326,7 +329,6 @@ fun WeeklyCalendarView(
                                     .background(eventColor)
                                     .clickable {
                                         if (id != null) {
-                                            println("id di klik : $id")
                                             onNavigateDetailCalendar(id)
                                         }
                                     }
@@ -347,16 +349,13 @@ fun WeeklyCalendarView(
     }
 }
 
-
 fun LocalDate.withDayOfWeek(day: Int): LocalDate {
     val adjustedDay = if (this.dayOfWeek.value == 7) 0 else this.dayOfWeek.value
     return this.minusDays((adjustedDay - (day % 7)).toLong())
 }
-
 fun LocalTime.formatTime(): String {
     return this.toString().substring(0, 5).replace(":", ".")
 }
-
 fun LocalDate.formatShort(): String {
     val day = this.dayOfMonth.toString().padStart(2, '0')
     val month = this.monthValue.toString().padStart(2, '0')

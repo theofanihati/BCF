@@ -7,6 +7,7 @@ sealed class Screen(val route : String) {
   sealed class Auth(route : String) : Screen(route) {
     object Login : Auth("login")
     object ForgotPassword : Auth("forgot-password")
+    object Registrasi : Peserta("registrasi")
   }
 
   sealed class Peserta(route : String) : Screen(route) {
@@ -21,28 +22,24 @@ sealed class Screen(val route : String) {
     data class DetailPusatInformasi(val id : String) : Mentor("pusat-informasi/$id")
     // form feedback mentor
     object FormFeedbackMentor : Peserta("form-mentor")
-    data class FormFeedbackMentor2(val id : String) : Mentor("form-mentor2/$id")
-    data class FormFeedbackMentor3(val id : String) : Mentor("form-mentor3/$id")
-    data class FormFeedbackMentor4(val id : String) : Mentor("form-mentor4/$id")
     // feedback peserta
     object FeedbackPeserta: Peserta("feedback-peserta")
+
+    object PenilaianPeserta : Peserta("penilaian-peserta")
+
   }
 
   sealed class Mentor(route : String) : Screen(route) {
-    // Penilaian Peserta
     object PenilaianPeserta : Mentor("penilaian-peserta")
     data class DetailPenilaianPeserta(val id : String) : Mentor("penilaian-peserta/$id")
-    // Feedback Peserta
     object FormFeedbackPeserta : Mentor("form-feedback-peserta")
-    // PitchDeck Mentor
     object Pitchdeck : Mentor("pitchdeck")
     data class DetailPitchdeck(val id : String) : Mentor("pitchdeck/$id")
     data class MoreDetailPitchdeck(val id : String) : Mentor("pitchdeck/$id/more")
-    // Forum Diskusi
     object ForumDiskusi : Mentor("forum-diskusi")
     data class DetailForumDiskusi(val id : String) : Mentor("forum-diskusi/$id")
-    // Data Peserta
     object DataPeserta : Mentor("data-peserta")
+
   }
 
   sealed class Kegiatan(route: String) : Screen(route){

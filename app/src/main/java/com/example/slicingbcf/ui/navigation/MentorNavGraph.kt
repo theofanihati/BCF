@@ -20,11 +20,10 @@ fun NavGraphBuilder.mentorNavGraph(
   navigation(
     startDestination = Screen.Mentor.MoreDetailPitchdeck("1").route, route = "mentor"
   ) {
-
-
     composable(
       route = Screen.Mentor.PenilaianPeserta.route
     ) {
+
       val onNavigateDetailPenilaianPeserta = { id : String ->
         navController.navigate("penilaian-peserta/$id")
       }
@@ -38,12 +37,13 @@ fun NavGraphBuilder.mentorNavGraph(
       route = "penilaian-peserta/{id}",
       arguments = listOf(navArgument("id") { type = NavType.StringType })
     ) {
+
+
       DetailPenilaianPesertaScreen(
         modifier = modifier,
         id = it.arguments?.getString("id") ?: "1"
       )
     }
-
     composable(
       route = Screen.Mentor.FormFeedbackPeserta.route
     ) {
@@ -51,8 +51,6 @@ fun NavGraphBuilder.mentorNavGraph(
         modifier = modifier
       )
     }
-
-    // Pitch Deck Mentor
     composable(
       route = Screen.Mentor.Pitchdeck.route
     ) {
@@ -66,7 +64,6 @@ fun NavGraphBuilder.mentorNavGraph(
         onNavigateDetailPitchdeck = onNavigateDetailPitchdeck
       )
     }
-
     composable(
       route = "pitchdeck/{id}",
       arguments = listOf(navArgument("id") { type = NavType.StringType })

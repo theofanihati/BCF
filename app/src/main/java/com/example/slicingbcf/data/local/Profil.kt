@@ -1,6 +1,5 @@
 package com.example.slicingbcf.data.local
 
-
 data class WilayahJangkauan(
     val no: Int,
     val provinsi: String,
@@ -57,6 +56,7 @@ data class ProfilPeserta(
     val profileImageUrl: String,
     var pertanyaanUmum: PertanyaanUmum
 )
+
 data class PertanyaanUmum(
     var pernahMempelajari: String = "",
     var mengetahuiLEAD: String = "",
@@ -90,4 +90,26 @@ val profilPeserta = listOf(
             pengalamanRegistrasi = "Pengisian data sederhana dan to the point."
         )
     )
+)
+
+data class MentoringPeserta(
+    val mentorName: String,
+    val mentoringType: String,
+    val batch: Int,
+    val capaianProgram: String
+)
+
+val mentoringPeserta = listOf(
+    MentoringPeserta(
+        mentorName = "Dodit Saputra",
+        mentoringType = "Cluster",
+        batch = 5,
+        capaianProgram = "Februari 2023"
+    ),
+    MentoringPeserta(
+        mentorName = "Dodit Saputra",
+        mentoringType = "Desain Program",
+        batch = 5,
+        capaianProgram = "Februari 2023"
+    ),
 )

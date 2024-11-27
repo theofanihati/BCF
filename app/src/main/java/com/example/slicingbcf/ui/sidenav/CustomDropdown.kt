@@ -51,9 +51,9 @@ fun dropdownItemsPeserta(
     DropdownItem(
       text = "Penilaian Peserta",
       onClick = {
-        navigateAndCloseSideNav(Screen.Mentor.PenilaianPeserta.route)
+        navigateAndCloseSideNav(Screen.Peserta.PenilaianPeserta.route)
       },
-      route = Screen.Mentor.PenilaianPeserta.route
+      route = Screen.Peserta.PenilaianPeserta.route
     ),
     DropdownItem(
       text = "Kelompok Mentoring",
@@ -83,6 +83,7 @@ fun dropdownItemsPeserta(
       },
       route = Screen.Peserta.FormFeedbackMentor.route
     ),
+
     DropdownItem(
       text = "Pengaturan",
       onClick = {
@@ -96,7 +97,7 @@ fun dropdownItemsPeserta(
         navigateAndCloseSideNav(Screen.Peserta.WorksheetPeserta.route)
       },
       route = Screen.Peserta.WorksheetPeserta.route
-    )
+    ),
   )
 }
 
@@ -126,6 +127,13 @@ fun dropdownItemsMentor(
       route = Screen.Mentor.FormFeedbackPeserta.route
     ),
     DropdownItem(
+      text = "Pitchdeck",
+      onClick = {
+        navigateAndCloseSideNav(Screen.Mentor.Pitchdeck.route)
+      },
+      route = Screen.Mentor.Pitchdeck.route
+    ),
+    DropdownItem(
       text = "Forum Diskusi",
       onClick = {
         navigateAndCloseSideNav(Screen.Mentor.ForumDiskusi.route)
@@ -140,12 +148,12 @@ fun dropdownItemsMentor(
       route = Screen.Mentor.DataPeserta.route
     ),
     DropdownItem(
-      text = "Pitch Deck",
+      text = "Penilaian Peserta",
       onClick = {
-        navigateAndCloseSideNav(Screen.Mentor.Pitchdeck.route)
+        navigateAndCloseSideNav(Screen.Mentor.PenilaianPeserta.route)
       },
-      route = Screen.Mentor.Pitchdeck.route
-    ),
+      route = Screen.Mentor.PenilaianPeserta.route
+    )
   )
 }
 

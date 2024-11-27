@@ -57,7 +57,6 @@ fun MainScaffold(
   val onNavigateProfile = {
     navController.navigateSingleTop(Screen.ProfilPeserta.route)
   }
-
   Box(
     modifier = Modifier.fillMaxSize()
 
@@ -141,7 +140,8 @@ fun PrimaryNav(
       )
     },
     actions = {
-      IconButton(onClick = onAvatarClick
+      IconButton(
+        onClick = onAvatarClick
       ){
         Image(
           painter = painterResource(id = R.drawable.avatar_sampul),
@@ -152,7 +152,6 @@ fun PrimaryNav(
             .clip(CircleShape)
         )
       }
-
       IconButton(
         onClick = onMenuClick
       ) {
